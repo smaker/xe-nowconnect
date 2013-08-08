@@ -1,0 +1,13 @@
+<div class="x_page-header">
+	<h1>{$lang->nowconnect}</h1>
+</div>
+
+<ul class="x_nav x_nav-tabs">
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminNowList'" cond="Context::get('module') == 'admin'"><a href="{getUrl('act', 'dispNowconnectAdminNowList')}">{$lang->nowconnect_list}</a></li>
+	<li cond="Context::get('module') != 'admin'"><a href="{getUrl('mid', $module_info->mid, 'act', '')}">{$lang->cmd_back}</a></li>
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminModuleConfig'" cond="$module_info->module_srl"><a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}">{$lang->cmd_nowconnect_config}</a></li>
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminModuleConfig'" cond="!$module_info->module_srl"><a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}">{$lang->cmd_create_nowconnect}</a></li>
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminGlobalConfig'" style="display:none;"><a href="{getUrl('act', 'dispNowconnectAdminGlobalConfig')}">{$lang->cmd_module_config}</a></li>
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminGrantInfo'" cond="$module_info->module_srl"><a href="{getUrl('act', 'dispNowconnectAdminGrantInfo')}">{$lang->cmd_manage_grant}</a></li>
+	<li class="x_active"|cond="$act == 'dispNowconnectAdminSkinInfo'" cond="$module_info->module_srl"><a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}">{$lang->cmd_manage_skin}</a></li>
+</ul>

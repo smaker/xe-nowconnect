@@ -1,0 +1,171 @@
+.ncxe * {font-family:"나눔고딕", "맑은 고딕", NanumGothic, "Malgun Gothic", Sans-serif, Verdena}
+
+.ncxe table {border-collapse:collapse;text-align:center;font-size:12px}
+.ncxe table caption {margin:0 0 12px;text-align:left;}
+.ncxe table caption img {vertical-align:middle}
+.ncxe table caption strong {color:#F60;font-family:Tahoma;font-size:11px;}
+.ncxe table caption .title {float:left;font:bold 16px "나눔고딕", "맑은 고딕", NanumGothic, "Malgun Gothic", Sans-serif, Verdena;padding:7px 0 6px 42px; background:url(../img/h.png) no-repeat;}
+.ncxe table caption .userCount {float:left;margin:5px 12px 0 7px; font:bold 16px Verdena,Tahoma;color:#ff6600;}
+.ncxe table caption .adminMenu {margin:7px 0 0 0;float:right;font-weight:normal}
+.ncxe table caption .adminMenu a {color:#333;text-decoration:none;font-size:12px}
+.ncxe table .realtime {margin:7px 0 0 0;float:left; font-size:12px;font-weight:normal}
+.ncxe table .realtime input {vertical-align:middle;display:none}
+.ncxe table .realtime label {cursor:pointer}
+
+.ncxe th {white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ncxe td {padding:8px 0;border:0 none;}
+.ncxe td.no {white-space:nowrap;}
+.ncxe td.user {text-align:left;padding:8px 0 8px 15px;white-space:nowrap;}
+.ncxe td.ipaddress {white-space:nowrap}
+.ncxe td.location {text-align:left;padding:8px 0 8px 36px;background-image:url(../img/bullet.png);background-repeat:no-repeat;background-position:0 -7px;}
+.ncxe th div { padding:8px 0; }
+.ncxe .rNone  {border-right:1px none !important}
+
+.ncxe a {text-decoration:none}
+
+.ncxe .pagination { margin:10px 0 0 0; text-align:center;}
+.ncxe .pagination a { padding:3px; border:1px solid #EFEFEF; }
+.ncxe .pagination strong { color:red; }
+
+
+.ncxe .userIcon { padding:0; background-image:url('../img/iconset.png'); background-repeat:no-repeat; display:inline-block; width:16px; height:16px; }
+.ncxe .userIcon.guest{ background-position:left top; }
+.ncxe .userIcon.member{ background-position:0 -16px; }
+.ncxe .userIcon.mobile{ background-position:0 -33px; }
+
+.ncxe .userName { margin:0 0 0 6px; vertical-align:top; }
+.ncxe .userName img { vertical-align:top; }
+
+.ncxeButton, .ncxeButton span {
+	display: inline-block;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+.ncxeButton {
+	white-space: nowrap;
+	line-height:1em;
+	position:relative;
+	outline: none;
+	overflow: visible; /* removes extra side padding in IE */
+	cursor: pointer;
+	border: 1px solid #999;/* IE */
+	border: rgba(0, 0, 0, .2) 1px solid;/* Saf4+, Chrome, FF3.6 */
+	border-bottom:rgba(0, 0, 0, .4) 1px solid;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	background: -moz-linear-gradient(
+		center top,
+		rgba(255, 255, 255, .1) 0%,
+		rgba(0, 0, 0, .1) 100%
+	);/* FF3.6 */
+	background: -webkit-gradient(
+		linear,
+		center bottom,
+		center top,
+		from(rgba(0, 0, 0, .1)),
+		to(rgba(255, 255, 255, .1))
+	);/* Saf4+, Chrome */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000'); /* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#19FFFFFF', EndColorStr='#19000000')"; /* IE8 */
+	-moz-user-select: none;
+	-webkit-user-select:none;
+	-khtml-user-select: none;
+	user-select: none;
+	margin-bottom:10px;
+}
+.ncxeButton.full, .ncxeButton.full span {
+	display: block;
+}
+.ncxeButton:hover, .ncxeButton.hover {
+	background: -moz-linear-gradient(
+		center top,
+		rgba(255, 255, 255, .2) 0%,
+		rgba(255, 255, 255, .1) 100%
+	);/* FF3.6 */
+	background: -webkit-gradient(
+		linear,
+		center bottom,
+		center top,
+		from(rgba(255, 255, 255, .1)),
+		to(rgba(255, 255, 255, .2))
+	);/* Saf4+, Chrome */
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19FFFFFF'); /* IE6,IE7 */
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#33FFFFFF', EndColorStr='#19FFFFFF')"; /* IE8 */
+}
+.ncxeButton:active, .ncxeButton.active {
+	top:1px;
+}
+.ncxeButton span {
+	position: relative;
+	color:#fff;
+	text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);
+	border-top: rgba(255, 255, 255, .2) 1px solid;
+	padding:0.6em 1.3em;
+	line-height:1em;
+	text-decoration:none;
+	text-align:center;
+	white-space: nowrap;
+}
+.ncxeButton.small span {
+	font-size:12px;
+}
+.ncxeButton.medium span {
+	font-size:14px;
+}
+.ncxeButton.large span {
+	font-size:18px;
+}
+
+.ncxeButton.black {
+	background-color: #333333;
+}
+.ncxeButton.gray {
+	background-color: #666666;
+}
+.ncxeButton.white {
+	background-color: #FFFFFF;
+}
+.ncxeButton.white span{
+	color: #666666;
+}
+.ncxeButton.red {
+	background-color: #e62727;
+}
+.ncxeButton.orange {
+	background-color: #ff5c00;
+}
+.ncxeButton.magenta {
+	background-color: #A9014B;
+}
+.ncxeButton.yellow {
+	background-color: #ffb515;
+}
+.ncxeButton.blue {
+	background-color: #00ADEE;
+}
+.ncxeButton.pink {
+	background-color: #e22092;
+}
+.ncxeButton.green {
+	background-color: #91bd09;
+}
+.ncxeButton.rosy {
+	background-color: #F16C7C;
+}
+.ncxeButton.brown {
+	background-color: #804000;
+}
+.ncxeButton.purple {
+	background-color: #800080;
+}
+.ncxeButton.cyan {
+	background-color: #46C7C7;
+}
+.ncxeButton.gold {
+	background-color: #D4A017;
+}
+
+.ncxe .unchecked { display:inline-block; width:16px; height:16px; background:url(../img/unchecked.png) no-repeat; vertical-align:middle; }
+.ncxe .checked { display:inline-block; width:16px; height:16px; background:url(../img/checked.png) no-repeat; vertical-align:middle; }

@@ -1,0 +1,19 @@
+.nowconnect.theme-blue tbody td { border-bottom:1px solid #efefef; }
+.nowconnect.theme-blue thead { border:1px solid #003FAD;}
+.nowconnect.theme-blue thead th {
+	color:#fff;
+	background:#FF5C00;
+	background:-webkit-gradient(linear, 0 0, 0 100%, from(#21A0C9) to(#4242EC));
+	background:-webkit-linear-gradient(#0084AF, #0036C0);
+	background:-moz-linear-gradient(#FD9200, #FF5C00);
+	background:-o-linear-gradient(#FD9200, #FF5C00);
+	background:-ms-linear-gradient(#FD9200, #FF5C00);
+	background:linear-gradient(#FD9200, #FF5C00);
+	text-shadow:0 0 5px #297891;
+}
+
+.nowconnect.theme-blue thead th div {
+	border-right:1px solid #096AB8;
+}
+
+.nowconnect.theme-blue a { /*color:#F09829; */ color:#45B5CA; text-decoration:underline; }

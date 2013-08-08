@@ -1,0 +1,200 @@
+<?php
+if(!class_exists('Crypt'))
+{
+	require_once(_XE_PATH_.'modules/nowconnect/libs/Crypt.php');
+}
+if(!class_exists('ApiBase'))
+{
+require_once(_XE_PATH_.'modules/nowconnect/libs/ApiBase.php');
+}
+
+if(!class_exists('CommunicatorBase'))
+{
+	require_once(_XE_PATH_.'modules/nowconnect/libs/Communicator.php');
+}
+
+/**
+ * @class nowconnect
+ * @author 퍼니엑스이 (admin@funnyxe.com)
+ * @brief nowconnect 모듈의 high class
+ **/
+
+class nowconnect extends ModuleObject
+{
+	/**
+	 * @brief 모듈 설치
+	 */
+	function moduleInstall()
+	{
+		$oModuleController = &getController('module');
+		$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
+		return new Object();
+	}
+
+	/**
+	 * @brief 모듈 삭제
+	 */
+	function moduleUninstall()
+	{
+		return new Object();
+	}
+
+	/**
+	 * @brief 업데이트가 필요한지 확인
+	 **/
+	function checkUpdate()
+	{
+		$oModuleModel = &getModel('module');
+		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
+		{
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @brief 모듈 업데이트
+	 **/
+	function moduleUpdate()
+	{
+		$oModuleModel = &getModel('module');
+		$oModuleController = &getController('module');
+
+		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
+		{
+			$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
+		}
+
+		return new Object(0, 'success_updated');
+	}
+
+	/**
+	 * @brief 캐시 파일 재생성
+	 **/
+	function recompileCache()
+	{
+	}
+
+	/**
+	 * @brief 액션값으로 현재 위치를 구합니다
+	 */
+	function _getLocationByAct($act)
+	{
+		$loactionList = Context::getLang('loactionList');
+		return $locationList[$act];
+	}
+}
+
+function _unserializeSession($val) {
+	$result = array();
+
+	// prefixing with semicolon to make it easier to write the regular expression
+	$val = ';' . $val;
+
+	// regularexpression to find the keys
+	$keyreg = '/;([^|{}"]+)\|/';
+
+	// find all keys
+	$matches = array();
+	preg_match_all($keyreg, $val, $matches);
+
+	// only go further if we found some keys
+	if(isset($matches[1]))
+	{
+		$keys = $matches[1];
+
+		// find the values by splitting the input on the key regular expression
+		$values = preg_split($keyreg, $val);
+
+		// unshift the first value since it's always empty (due to our semicolon prefix)
+		if(count($values) > 1)
+		{
+			array_shift($values);
+		}
+
+		// combine the $keys and $values
+		$result = @array_combine($keys, $values);
+	}
+
+	return $result;
+}
+
+function getUserAgentInfo($user_agent = null)
+{
+	if(!$user_agent)
+	{
+		$user_agent = $_SERVER['USER_AGENT'];
+	}
+
+	$user_agent = strtolower($user_agent);
+	if(strpos($user_agent, 'Mac OS X'))
+	{
+		$platform = 'Mac OS X';
+	}
+	if(strpos($user_agent, 'Windows 6.2'))
+	{
+		$platform = 'Windows 8';
+	}
+	elseif(strpos($user_agent, 'Windows 6.1'))
+	{
+		$platform = 'Windows 7';
+	}
+	elseif(strpos($user_agent, 'Windows 6.0'))
+	{
+		$platform = 'Windows Vista';
+	}
+	elseif(strpos($user_agent, 'Windows 5.2'))
+	{
+		$platform = 'Windows XP 64bit';
+	}
+	elseif(strpos($user_agent, 'Windows 5.1'))
+	{
+		$platform = 'Windows XP';
+	}
+	elseif(strpos($user_agent, 'Windows 5.0'))
+	{
+		$platform = 'Windows NT';
+	}
+
+	$info = array(
+		'platform' => $platform,
+		'browser' => $browser
+	);
+	return $info;
+}
+
+function isBotUser()
+{
+	$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	//$GooglebotIP = array('66.249.67.*', '66.249.71.0 - 66.249.71.206');
+
+	$crawlers = array('Googlebot', 'Feedfetcher-Google', 'Yeti/1.0', 'Cowbot', 'NaverRobot', 'NAVER Blog Rssbot', 'Daumoa', 'DaumSearch validator', 'DAUM RSS Robot', 'bingbot', 'AhrefsBot', 'YandexBot', 'Ezooms', 'archive');
+	foreach($crawlers as $key => $crawler)
+	{
+		if(strpos($user_agent, strtolower($crawler)) !== FALSE)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+if (!function_exists('http_build_query')) {
+function http_build_query($data, $prefix='', $sep='', $key='') {
+   $ret = array();
+   foreach ((array)$data as $k => $v) {
+       if (is_int($k) && $prefix != null) $k = urlencode($prefix . $k);
+       if (!empty($key)) $k = $key.'['.urlencode($k).']';
+       
+       if (is_array($v) || is_object($v))
+           array_push($ret, http_build_query($v, '', $sep, $k));
+       else    array_push($ret, $k.'='.urlencode($v));
+   }
+ 
+   if (empty($sep)) $sep = ini_get('arg_separator.output');
+   return implode($sep, $ret);
+}}
+/* End of file : nowconnect.class.php */
+/* Location : ./modules/nowconnect/nowconnect.class.php */

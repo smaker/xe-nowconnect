@@ -1,0 +1,29 @@
+<query id="getConnectedUsers" action="select">
+	<tables>
+		<table name="session" />
+		<table name="modules" />
+	</tables>
+	<columns>
+		<column name="member_srl" />
+		<column name="ipaddress" />
+		<column name="session_key" />
+		<column name="val" />
+	</columns>
+	<conditions>
+		<condition operation="equal" column="session.cur_mid" default="modules.mid" pipe="and" />
+		<condition operation="equal" column="modules.site_srl" var="site_srl" default="0" pipe="and" />
+		<condition operation="more" column="member_srl" var="member_srl" pipe="and" />
+		<condition operation="notin" column="member_srl" var="but_member_srl" pipe="and" />
+		<condition operation="more" column="last_update" var="last_update" notnull="notnull" pipe="and" />
+		<condition operation="equal" column="cur_mid" var="mid" pipe="and" />
+	</conditions>
+	<groups>
+		<group column="session.ipaddress" />
+	</groups>
+	<navigation>
+		<index var="sort_index" default="last_update" order="order_type" />
+		<list_count var="list_count" default="20" />
+		<page_count var="page_count" default="10" />
+		<page var="page" default="1" />
+	</navigation>
+</query>

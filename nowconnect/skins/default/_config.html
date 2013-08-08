@@ -1,0 +1,35 @@
+{@
+	$selectedTheme = $module_info->colorset;
+	if(!$selectedTheme) $selectedTheme = 'white';
+}
+<block cond="!$module_info->noColumnMinWidth">
+{@ $module_info->noColumnMinWidth = 60; }
+</block>
+<block cond="!$module_info->noColumnWidth">
+{@ $module_info->noColumnWidth = 60; }
+</block>
+<block cond="!$module_info->nicknameColumnMinWidth">
+{@ $module_info->nicknameColumnMinWidth = 165; }
+</block>
+<block cond="!$module_info->nicknameColumnWidth">
+{@ $module_info->nicknameColumnWidth = 165; }
+</block>
+<block cond="!$module_info->ipColumnMinWidth">
+{@ $module_info->ipColumnMinWidth = 130; }
+</block>
+<block cond="!$module_info->ipColumnWidth">
+{@ $module_info->ipColumnWidth = 130; }
+</block>
+
+<script type="text/javascript">
+<!--@if($module_info->use_realtime == 'Y' && ((int)$module_info->realtime_duration) >= 1000)-->
+var nowconnectRefresh = true;
+var nowconnectRefreshDuration = {(int)$module_info->realtime_duration};
+<!--@end-->
+</script>
+
+<style type="text/css">
+.ncxe col.no { width:{$module_info->noColumnWidth}px; }
+.ncxe col.user { width:{$module_info->nicknameColumnWidth}px; }
+.ncxe col.ipaddress { width:{$module_info->ipColumnWidth}px; }
+</style>

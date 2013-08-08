@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.2">
+	<title xml:lang="ko">현재 접속자</title>
+	<description xml:lang="ko">현재 접속자 정보를 수집하고 접속자 목록을 보여줍니다.</description>
+	<version>0.2.1</version>
+	<date>2013-01-16</date>
+	<category>service</category>
+
+	<author email_address="admin@funnyxe.com" link="http://funnyxe.com">
+		<name xml:lang="ko">퍼니엑스이</name>
+	</author>
+</module>

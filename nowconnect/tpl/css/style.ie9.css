@@ -1,0 +1,2 @@
+.nowconnect thead th { border:1px solid; filter:none !important; }
+.nowconnect thead th:last-child div { border-right:0 none; }

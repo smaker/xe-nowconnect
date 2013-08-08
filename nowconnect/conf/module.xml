@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<grants>
+		<grant name="list">
+			<title xml:lang="ko">접속자 목록</title>
+		</grant>
+	</grants>
+	<permissions />
+	<actions>
+		<action name="dispNowconnectAdminNowList" type="view" admin_index="true" menu_name="nowconnect" menu_index="true" />
+		<action name="dispNowconnectAdminGlobalConfig" type="view" menu_name="nowconnect" />
+		<action name="dispNowconnectAdminModuleConfig" type="view" menu_name="nowconnect" />
+		<action name="dispNowconnectAdminGrantInfo" type="view" menu_name="nowconnect" />
+		<action name="dispNowconnectAdminSkinInfo" type="view" menu_name="nowconnect" />
+		<action name="dispNowconnectAdminMobileSkinInfo" type="view" menu_name="nowconnect" />
+
+		<action name="dispNowconnect" type="view" index="true" />
+
+		<action name="getNowconnectedUsers" type="model" />
+
+		<action name="procNowconnectAdminInsertConfig" type="controller" />
+		<action name="procNowconnectAdminCreate" type="controller" ruleset="insertNowconnect" />
+		<action name="procNowconnectAdminUpdate" type="controller" ruleset="insertNowconnect" />
+	</actions>
+	<menus>
+		<menu name="nowconnect">
+			<title xml:lang="ko">현재 접속자</title>
+		</menu>
+	</menus>
+</module>
