@@ -2,22 +2,21 @@
 {@
 	$selectedTheme = $module_info->colorset;
 	if(!$selectedTheme) $selectedTheme = 'white';
+	$myId = session_id();
 }
-
 	<!--// 현재 접속자 목록 -->
-	<table width="100%" cellspacing="0" border="0">
+	<table width="100%" cellspacing="0" cellpadding="0" border="0">
 	<caption>
 		<span class="title">{$lang->nowconnect}</span>
 		<span class="userCount">{number_format($total_count)}</span>
 		<span class="realtime" cond="$module_info->use_realtime == 'Y'">
 			<input type="checkbox" id="use_realtime" class="checkbox" /> 
-			<label for="use_realtime" title="클릭하여 실시간 새로고침 기능을 켜거나 끌 수 있습니다."><i class="unchecked"></i>실시간 새로고침</label>
+			<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}"><i class="unchecked"></i>{$lang->realtime_update}</label>
 		</span>
-		<span class="adminMenu">
-			<block cond="$module_info->module_srl && $logged_info->is_admin == 'Y'">
-				<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}"><img src="./img/iconConfig.png" width="16" height="16" alt="" /> {$lang->cmd_module_config}</a>&nbsp;&nbsp;
-				<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}"><img src="./img/iconSkinConfig.png" width="16" height="16" alt="" /> {$lang->cmd_manage_skin}</a></span>
-			</block>
+		<span class="adminMenu" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'">
+			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}"><img src="./img/iconConfig.png" width="16" height="16" alt="" /> {$lang->cmd_module_config}</a>&nbsp;&nbsp;
+			<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}"><img src="./img/iconSkinConfig.png" width="16" height="16" alt="" /> {$lang->cmd_manage_skin}</a>
+		</span>
 		</caption>
 	<colgroup>
 		<col class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')" />
@@ -33,7 +32,7 @@
 	</tr>
 	</thead>
 	{@ $no = 1;}
-	<tr class="itsMe"|cond="$user->itsMe" loop="$user_list => $key, $user">
+	<tr class="itsMe"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
 		<td class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>
 		<td class="user">
 			<span class="userIcon member" cond="$user->member_srl && !$user->isCrawler"></span>
@@ -42,7 +41,7 @@
 			<span class="userName" cond="!$user->member_srl">{$user->nick_name}</span>
 			<span class="userIcon mobile" cond="$user->isMobileDevice"></span>
 		</td>
-		<td class="ipaddress" cond="!$module_info->display_ipaddress || $module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.*.$3.$4', $user->ipaddress)}</td>
+		<td class="ipaddress" cond="!$module_info->display_ipaddress || $module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.$2.*.$4', $user->ipaddress)}</td>
 		<td class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
 			<block cond="$user->location">
 				<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>

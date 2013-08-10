@@ -91,16 +91,9 @@ class nowconnectModel extends nowconnect
 		// 관리자를 제외할 경우 관리자 회원 번호를 모두 가져옵니다.
 		if($args->exclude_admin == 'Y')
 		{
-			$adminOutput = executeQueryArray('nowconnect.getAdminUsers');
-			if(count($adminOutput->data))
-			{
-				foreach($adminOutput->data as $key => $val)
-				{
-					$admin_member_srls[] = $val->member_srl;
-				}
-				$admin_member_srl = implode(',', $admin_member_srls);
-			}
-
+			/**
+			 * @TODO 최고 관리자 제외 옵션 추가
+			 */
 		}
 
 		if(!$args->list_count) $args->list_count = 20;
@@ -129,6 +122,13 @@ class nowconnectModel extends nowconnect
 			'site_url' => $module_info->api_site_url
 		);
 
+		if($isPage)
+		{
+			$params['isPage'] = 'Y';
+			$params['listCount'] = $args->list_count;
+			$params['page'] = $args->page;
+		}
+
 		$output = $oCommunicator->post('api/users', $params);
 		$tmp = $output->getResult();
 		if(!$tmp)
@@ -137,7 +137,10 @@ class nowconnectModel extends nowconnect
 			$tmp->result = array();
 		}
 
-		$tmp->page_navigation = new PageHandler($tmp->count, 1, $args->page, $args->page_count);
+		if($isPage)
+		{
+			$tmp->page_navigation = new PageHandler($tmp->count, $tmp->totalPage, $args->page, $args->page_count);
+		}
 
 		return $tmp;
 
@@ -145,13 +148,15 @@ class nowconnectModel extends nowconnect
 
 	}
 
+	/**
+	 * 현재 접속자 모듈 정보를 가져옵니다
+	 */
 	function getNowconnectInfo() {
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 
 		$output = executeQuery('nowconnect.getNowconnect');
 		if(!$output->data->module_srl) return;
 
-		$module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
-		return $module_info;
+		return $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
 	}
 }

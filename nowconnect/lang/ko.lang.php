@@ -34,15 +34,16 @@ $lang->api_site_url = '대표 URL';
 
 $lang->exclude_admin = '최고관리자 제외';
 $lang->about_exclude_admin = '현재 접속자 목록에서 최고관리자를 제외할 수 있습니다.';
-$lang->use_realtime = '실시간 새로고침 기능';
-$lang->realtime_duration = '실시간 새로고침 주기';
-$lang->about_use_realtime = '페이지를 새로고침하지 않고 접속자 목록을 실시간으로 볼 수 있습니다.';
+$lang->use_realtime = '실시간 업데이트 기능';
+$lang->realtime_update = '실시간 업데이트';
+$lang->realtime_duration = '실시간 업데이트 주기';
+$lang->about_use_realtime = '페이지 새로고침 없이 현재 접속자 목록을 다시 가져옵니다.';
 $lang->about_realtime_duration = '접속자 목록을 얼마나 자주 새로고침할 지 입력해주세요. (1000 = 1초)';
 $lang->about_api_key = '발급받은 현재 접속자 API 키를 정확히 입력해 주세요.';
 $lang->about_api_site_url = '사이트의 대표 URL을 입력해주세요. (API 키 발급 시 입력한 사이트 URL을 입력해주세요.)';
 
-$lang->msg_db_session_required = '인증 세션 DB를 사용하지 않고 있습니다.<br />제어판 > 설정 > 일반에서 인증 세션 DB 사용을 활성화시켜야 모든 현재 접속자 목록을 볼 수 있습니다.';
-
 $lang->cmd_refresh = '새로고침';
 
 $lang->about_nowconnect_list_count = '한 페이지에 표시될 접속자 수를 지정할 수 있습니다. (기본 20개)';
+
+$lang->click_to_enable_realtime_update = '클릭하여 실시간 업데이트 기능을 켜거나 끌 수 있습니다.';

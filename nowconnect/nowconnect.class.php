@@ -22,9 +22,9 @@ if(!class_exists('CommunicatorBase'))
 class nowconnect extends ModuleObject
 {
 	/**
-	 * @brief 모듈 설치
+	 * 모듈 설치
 	 */
-	function moduleInstall()
+	public function moduleInstall()
 	{
 		$oModuleController = &getController('module');
 		$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
@@ -32,15 +32,15 @@ class nowconnect extends ModuleObject
 	}
 
 	/**
-	 * @brief 모듈 삭제
+	 * 모듈 삭제
 	 */
-	function moduleUninstall()
+	public function moduleUninstall()
 	{
 		return new Object();
 	}
 
 	/**
-	 * @brief 업데이트가 필요한지 확인
+	 * 업데이트가 필요한지 확인
 	 **/
 	function checkUpdate()
 	{
@@ -54,7 +54,7 @@ class nowconnect extends ModuleObject
 	}
 
 	/**
-	 * @brief 모듈 업데이트
+	 * 모듈 업데이트
 	 **/
 	function moduleUpdate()
 	{
@@ -70,7 +70,7 @@ class nowconnect extends ModuleObject
 	}
 
 	/**
-	 * @brief 캐시 파일 재생성
+	 * 캐시 파일 재생성
 	 **/
 	function recompileCache()
 	{
