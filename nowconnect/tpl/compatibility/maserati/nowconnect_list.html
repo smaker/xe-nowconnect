@@ -1,0 +1,41 @@
+<table width="100%" cellspacing="0" border="0" class="x_table x_table-striped x_table-hover">
+<caption>
+	<strong>
+	Total : {number_format($total_count)}
+	Page: 1/3
+	</strong>
+</caption>
+<thead>
+<tr>
+	<th class="no">{$lang->no}</th>
+	<th class="user">{$lang->nick_name}</th>
+	<th class="user">IP</th>
+	<th class="location">현재 위치</th>
+</tr>
+</thead>
+{@
+	$no = 1;
+	$myId = session_id();
+}
+<tr class="x_warning"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
+	<td cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>
+	<td class="user">
+		<img src="../../img/guest.png" width="16" height="16" alt="손님" title="" style="vertical-align:middle; margin-right:6px;" cond="!$user->member_srl" />
+		<img src="../../img/member.png" width="16" height="16" alt="회원" title="" style="vertical-align:middle; margin-right:6px;" cond="$user->member_srl" />
+		<span class="member_{$user->member_srl}"|cond="$user->member_srl">{$user->nick_name}</span>
+	</td>
+	<td cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
+	<td class="location" cond="$module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
+		<block cond="$user->location">
+			<img src="../../img/bot.png" width="16" height="16" alt="검색봇" title="검색봇" style="vertical-align:middle; margin-right:6px;" cond="$user->isCrawler" />
+			<img src="../../img/mobile.png" width="16" height="16" alt="모바일 기기" title="모바일 기기" style="vertical-align:middle; margin-right:6px;" cond="$user->isMobileDevice" />
+			<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
+			<a href="{$user->location_url}">{$user->location}</a>
+		</block>
+		<block cond="!$user->location">
+			{$lang->locationList['Unknown']} <i class="x_icon-question-sign" title="{$user->location_url}"></i>
+		</block>
+	</td>
+	{@$no++}
+</tr>
+</table>
