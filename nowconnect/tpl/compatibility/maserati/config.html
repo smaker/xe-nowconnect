@@ -128,6 +128,13 @@
 			</div>
 		</div>
 		<div class="x_control-group">
+			<label class="x_control-label" for="exclude_ip">제외 IP</label>
+			<div class="x_controls">
+				<textarea name="exclude_ip" rows="4" id="exclude_ip">{htmlspecialchars($module_info->exclude_ip)}</textarea>
+				<p class="x_help-inline">특정 IP를 접속자 현황 수집에서 제외할 수 있습니다.</p>
+			</div>
+		</div>
+		<div class="x_control-group">
 			<label class="x_control-label" for="module_category_srl">{$lang->module_category}</label>
 			<div class="x_controls">
 				<select name="module_category_srl" id="module_category_srl">

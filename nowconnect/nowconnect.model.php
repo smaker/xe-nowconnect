@@ -14,6 +14,9 @@ class nowconnectModel extends nowconnect
 	{
 	}
 
+	/**
+	 * 현재 접속자 수 API
+	 */
 	function getNowconnectUserCount()
 	{
 		$excludeAdmin = (Context::get('exclude_admin') == 'Y');
@@ -47,30 +50,42 @@ class nowconnectModel extends nowconnect
 	 */
 	function getNowconnectedUserCount($args)
 	{
-		// 관리자를 제외할 경우 관리자 회원 번호를 모두 가져옵니다.
-		if($args->exclude_admin == 'Y')
+		if(!$args->site_srl)
 		{
-			$adminOutput = executeQueryArray('nowconnect.getAdminUsers');
-			if(count($adminOutput->data))
-			{
-				foreach($adminOutput->data as $key => $val)
-				{
-					$admin_member_srls[] = $val->member_srl;
-				}
-			}
-
-			$admin_member_srl = implode(',', $admin_member_srls);
+			$site_module_info = Context::get('site_module_info');
+			$args->site_srl = (int)$site_module_info->site_srl;
 		}
 
-		if(!$args->list_count) $args->list_count = 20;
-		if(!$args->page) $args->page = 1;
 		if(!$args->period_time) $args->period_time = 3;
 		$args->last_update = date('YmdHis', time() - $args->period_time*60);
-		$args->but_member_srl = $admin_member_srl;
 
-		$output = executeQueryArray('nowconnect.getConnectedUsers', $args);
-		if(!$output->toBool()) return $output;
+		$module_info = $this->getNowconnectInfo();
+		if(!$module_info->api_key)
+		{
+			return NULL;
+		}
 
+		if(!$module_info->api_site_url)
+		{
+			return NULL;
+		}
+
+		// Communicator 객체 생성
+		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
+
+		$params = array(
+			'site_url' => $module_info->api_site_url
+		);
+
+		// 관리자를 제외할 경우 excludeAdmin 피라미터 추가
+		if($args->exclude_admin == 'Y')
+		{
+			$params['excludeAdmin'] = 'Y';
+		}
+
+		$output = $oCommunicator->post('api/users/count', $params);
+		return $output->getResult()->totalCount;
 	}
 
 	/**
@@ -88,20 +103,11 @@ class nowconnectModel extends nowconnect
 			$args->site_srl = (int)$site_module_info->site_srl;
 		}
 
-		// 관리자를 제외할 경우 관리자 회원 번호를 모두 가져옵니다.
-		if($args->exclude_admin == 'Y')
-		{
-			/**
-			 * @TODO 최고 관리자 제외 옵션 추가
-			 */
-		}
-
 		if(!$args->list_count) $args->list_count = 20;
 		if(!$args->page_count) $args->page_count = 10;
 		if(!$args->page) $args->page = 1;
 		if(!$args->period_time) $args->period_time = 3;
 		$args->last_update = date('YmdHis', time() - $args->period_time*60);
-		$args->but_member_srl = $admin_member_srl;
 
 		$module_info = $this->getNowconnectInfo();
 		if(!$module_info->api_key)
@@ -129,6 +135,12 @@ class nowconnectModel extends nowconnect
 			$params['page'] = $args->page;
 		}
 
+		// 관리자를 제외할 경우 excludeAdmin 피라미터 추가
+		if($args->exclude_admin == 'Y')
+		{
+			$params['excludeAdmin'] = 'Y';
+		}
+
 		$output = $oCommunicator->post('api/users', $params);
 		$tmp = $output->getResult();
 		if(!$tmp)
@@ -139,24 +151,24 @@ class nowconnectModel extends nowconnect
 
 		if($isPage)
 		{
-			$tmp->page_navigation = new PageHandler($tmp->count, $tmp->totalPage, $args->page, $args->page_count);
+			$tmp->page_navigation = new PageHandler($tmp->totalCount, $tmp->totalPage, $args->page, $args->page_count);
 		}
 
 		return $tmp;
-
-		$val->ipaddress =  preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.*.$3.$4', $val->ipaddress);
-
 	}
 
 	/**
 	 * 현재 접속자 모듈 정보를 가져옵니다
 	 */
 	function getNowconnectInfo() {
+		// 현재 접속자 모듈의 module_srl을 가져옴
+		$output = executeQuery('nowconnect.getNowconnect');
+		if(!$output->data->module_srl) return NULL;
+
+		// moduleModel 객체 생성
 		$oModuleModel = getModel('module');
 
-		$output = executeQuery('nowconnect.getNowconnect');
-		if(!$output->data->module_srl) return;
-
+		// 모듈 정보를 구해서 return
 		return $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
 	}
 }

@@ -49,7 +49,7 @@ class nowconnectAdminView extends nowconnect
 		Context::set('user_list', $output->result);
 		Context::set('page_navigation', $output->page_navigation);
 		Context::set('total_page', $output->totalPage);
-		Context::set('total_count', $output->count);
+		Context::set('total_count', $output->totalCount);
 
 		// 템플릿 파일 지정
 		$this->setTemplateFile('nowconnect_list');

@@ -67,10 +67,10 @@ class nowconnectView extends nowconnect
 		{
 			case 'XMLRPC':
 				$selectedTheme = Context::get('selectedTheme');
-				$oTemplateHandler = &TemplateHandler::getInstance();
+				$oTemplateHandler = TemplateHandler::getInstance();
 				Context::set('user_list', $output->result);
 				Context::set('page_navigation', $output->page_navigation);
-				Context::set('total_count', $output->count);
+				Context::set('total_count', $output->totalCount);
 				Context::set('from_ajax', true);
 				$html = $oTemplateHandler->compile($this->getTemplatePath(), '_nowconnect.list');
 				$this->add('html', $html);
@@ -78,7 +78,7 @@ class nowconnectView extends nowconnect
 			case 'HTML':
 				Context::set('user_list', $output->result);
 				Context::set('page_navigation', $output->page_navigation);
-				Context::set('total_count', $output->count);
+				Context::set('total_count', $output->totalCount);
 				$this->setTemplateFile('nowconnect');
 				break;
 		}

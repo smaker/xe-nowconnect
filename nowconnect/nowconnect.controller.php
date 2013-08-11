@@ -27,26 +27,51 @@ class nowconnectController extends nowconnect
 		if(!$act) $act = $oModule->act;
 
 		$location = Context::getBrowserTitle();
-		if(!$location || ($module != $module_info->module))
+		$locationByAct = _getLocationByAct($act);
+		if(!$location)
 		{
-			$location = $this->_getLocationByAct($act);
+			$location = $module_info->browser_title;
+		}
+
+		if($locationByAct)
+		{
+			$location .= ' - ' . $locationByAct;
 		}
 
 		$logged_info = Context::get('logged_info');
 
 		$oNowconnectModel = getModel('nowconnect');
-		$nowconnect_info = $oNowconnectModel->getNowconnectInfo();
+
+		// 현재 접속자 모듈일 경우, DB에서 모듈 정보를 가져오지 않도록 합니다
+		if($module_info->module == 'nowconnect')
+		{
+			$nowconnect_info = $module_info;
+		}
+		else
+		{
+			// 현재 접속자 모듈 정보를 DB에서 가져옵니다
+			$nowconnect_info = $oNowconnectModel->getNowconnectInfo();
+		}
 
 		if(!$nowconnect_info->api_key)
 		{
 			return new Object();
 		}
 
+		$exclude_ip_list = explode("\n", $nowconnect_info->exclude_ip);
+		if(count($exclude_ip_list) > 0)
+		{
+			if(in_array($_SERVER['REMOTE_ADDR'], $exclude_ip_list))
+			{
+				return new Object();
+			}
+		}
+
 		$member_srl = (int)$logged_info->member_srl;
 		$nick_name = $logged_info->nick_name;
 		$uid = session_id();
 
-		// 로그인하지 않은 경우 임의로 닉네임을 발급함
+		// 로그인하지 않은 경우 임의로 닉네임을 생성함
 		if(!$nick_name)
 		{
 			$nick_name = '손님'.substr(sha1($uid),0, 5);
@@ -68,6 +93,8 @@ class nowconnectController extends nowconnect
 			'uid' => $uid,
 			'user-agent' => $user_agent,
 			'is_admin' => $logged_info->is_admin,
+			'isMobileDevice' => Mobile::isMobileCheckByAgent(),
+			'isMobile' => Mobile::isFromMobilePhone(),
 			'location' => array(
 				'title' => $location,
 				'uri' => $uri
@@ -78,11 +105,12 @@ class nowconnectController extends nowconnect
 			)
 		);
 
+		// 암호화 옵션
 		$options = array(
-			'key'		=>	$nowconnect_info->api_key, # required
-			'mode'		=>	'ecb',                 # optional
-			'algorithm'	=>	'blowfish',            # optional
-			'base64'	=>	true                   # optional default
+			'key'		=>	$nowconnect_info->api_key,
+			'mode'		=>	'ecb',
+			'algorithm'	=>	'blowfish',
+			'base64'	=>	true
 		);
 
 		$oCrypt = new Crypt($options);
@@ -97,9 +125,6 @@ class nowconnectController extends nowconnect
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
 		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
-
-		// API 키 지정
-		$oCommunicator->setApiKey($module_info->api_key);
 
 		// API 요청
 		$output = $oCommunicator->post('api/tick', $params);

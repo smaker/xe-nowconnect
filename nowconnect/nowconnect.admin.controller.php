@@ -14,13 +14,28 @@ class nowconnectAdminController extends nowconnect
 	{
 	}
 
+	/**
+	 * 현재 접속자 모듈 생성
+	 */
 	function procNowconnectAdminCreate()
 	{
-		$oModuleController = &getController('module');
-
 		$output = executeQuery('nowconnect.getNowconnect');
 		$module_info = $output->data;
-		if($module_info) return new Object(-1,'msg_invalid_request');
+		if($module_info)
+		{
+			return new Object(-1,'msg_invalid_request');
+		}
+
+		$oModuleController = getController('module');
+
+		/**
+		 * @TODO : 모듈 생성 전에 API 키를 확인할 것
+		 */
+		$api_key = Context::get('api_key');
+		if(!$api_key)
+		{
+			return new Object(-1, 'msg_api_key_required');
+		}
 
 		$args->module = 'nowconnect';
 		$args->mid = Context::get('nowconnect_name');

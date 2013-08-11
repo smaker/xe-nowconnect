@@ -1,61 +1,44 @@
 <include target="_config.html" />
 <include target="./header.html" />
 
-<load target="./css/style.css" />
-
+<table width="100%" cellspacing="0" border="0" class="table">
+<caption>
+	<strong>
+	Total : {number_format($total_count)}
+	Page: {$page}/{$total_page}
+	</strong>
+</caption>
+<thead>
+<tr>
+	<th class="no">{$lang->no}</th>
+	<th class="user">{$lang->nick_name}</th>
+	<th class="user">IP</th>
+	<th class="location">{$lang->current_location}</th>
+</tr>
+</thead>
 {@
-	$selectedTheme = 'white';
+	$no = 1;
+	$myId = session_id();
 }
-
-<load target="./css/theme-white.css" cond="$selectedTheme == 'white'" />
-<load target="./css/theme-black.css" cond="$selectedTheme == 'black'" />
-<load target="./css/theme-orange.css" cond="$selectedTheme == 'orange'" />
-
-<div class="nowconnect theme-{$selectedTheme}">
-	<table width="100%" cellspacing="0" border="0">
-	<caption>
-		<span class="sideLeft">{$lang->connected_users} <span class="sBubble">{number_format($total_count)}</span></span>
-		<span class="sideRight" >
-			<block cond="$module_info->module_srl && $logged_info->is_admin == 'Y'">
-				<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}"><img src="./img/iconConfig.png" width="16" height="16" alt="" /> {$lang->cmd_module_config}</a> 
-				<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}"><img src="./img/iconSkinConfig.png" width="16" height="16" alt="" /> {$lang->cmd_manage_skin}</a></span>
-			</block>
-		</caption>
-	<colgroup>
-		<col class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')" />
-		<col class="user" />
-		<col class="ipaddress" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')" />
-	</colgroup>
-	<thead>
-	<tr>
-		<th class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')"><div>{$lang->no}</div></th>
-		<th class="user"><div>{$lang->nick_name}</div></th>
-		<th class="user" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')"><div>IP</div></th>
-		<th class="location" cond="$module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')"><div>현재 위치</div></th>
-	</tr>
-	</thead>
-	{@ $no = 1;}
-	<tr class="itsMe"|cond="$user->itsMe" loop="$user_list => $key, $user">
-		<td cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>
-		<td class="user">
-			<img src="img/guest.png" width="16" height="16" alt="손님" title="" style="vertical-align:middle; margin-right:6px;" cond="!$user->member_srl" />
-			<img src="img/member.png" width="16" height="16" alt="회원" title="" style="vertical-align:middle; margin-right:6px;" cond="$user->member_srl" />
-			<span class="member_{$user->member_srl}"|cond="$user->member_srl">{$user->nick_name}</span>
-		</td>
-		<td cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
-		<td class="location" cond="$module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
-			<block cond="$user->location">
-				<img src="img/bot.png" width="16" height="16" alt="검색봇" title="검색봇" style="vertical-align:middle; margin-right:6px;" cond="$user->isCrawler" />
-				<img src="img/mobile.png" width="16" height="16" alt="모바일 기기" title="모바일 기기" style="vertical-align:middle; margin-right:6px;" cond="$user->isMobileDevice" />
-				<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
-				<a href="{$user->location_url}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)">{$user->location}</a>
-				<span cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location}"|cond="cut_str($user->location, $module_info->cut_location_size) != $user->location">{cut_str($user->location, $module_info->cut_location_size)}</span>
-			</block>
-			<block cond="!$user->location">
-				{$lang->locationList['Unknown']}<img src="./img/question.png" alt="" title="{$user->location_url}"|cond="$logged_info->is_admin == 'Y'" style="vertical-align:middle; margin-left:6px;" cond="$logged_info->is_admin == 'Y'"/>
-			</block>
-		</td>
-		{@$no++}
-	</tr>
-	</table>
-</div>
+<tr class="itsMe"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
+	<td>{$no}</td>
+	<td class="user">
+		<img src="img/guest.png" width="16" height="16" alt="손님" title="" style="vertical-align:middle; margin-right:6px;" cond="!$user->member_srl" />
+		<img src="img/member.png" width="16" height="16" alt="회원" title="" style="vertical-align:middle; margin-right:6px;" cond="$user->member_srl" />
+		<span class="member_{$user->member_srl}"|cond="$user->member_srl">{$user->nick_name}</span>
+	</td>
+	<td>{$user->ipaddress}</td>
+	<td class="location">
+		<block cond="$user->location">
+			<img src="img/bot.png" width="16" height="16" alt="검색봇" title="검색봇" style="vertical-align:middle; margin-right:6px;" cond="$user->isCrawler" />
+			<img src="img/mobile.png" width="16" height="16" alt="모바일 기기" title="모바일 기기" style="vertical-align:middle; margin-right:6px;" cond="$user->isMobileDevice" />
+			<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
+			<a href="{$user->location_url}">{$user->location}</a>
+		</block>
+		<block cond="!$user->location">
+			{$lang->locationList['Unknown']} <img src="./img/question.png" alt="" title="{$user->location_url}" style="vertical-align:middle; margin-left:6px;" />
+		</block>
+	</td>
+	{@$no++}
+</tr>
+</table>
