@@ -9,15 +9,18 @@ $lang->cmd_nowconnect_config = '현재 접속자 모듈 정보';
 $lang->about_create_nowconnect = '현재 접속자 모듈이 생성되지 않았습니다. 헌재 접속자 모듈은 하나만 생성 가능합니다.';
 
 $lang->locationList = array(
-	'dispMemberInfo' => '회원 정보 보기',
-	'dispMemberModifyInfo' => '회원 정보 수정',
+	'dispMemberInfo' => '회원정보 보기',
+	'dispMemberModifyInfo' => '회원정보 수정',
 	'dispMemberModifyPassword' => '비밀번호 변경',
 	'dispMemberFindAccount' => '비밀번호 찾기',
-	'dispMemberResendAuthMail' => '인증 메일 재발송',
+	'dispMemberResendAuthMail' => '인증메일 재발송',
 	'dispMemberLoginForm' => '로그인',
-	'dispMemberSignUpForm' => '회원 가입',
+	'dispMemberSignUpForm' => '회원가입',
 	'dispMemberLeave' => '회원 탈퇴',
 	'dispBoardWrite' => '글쓰기',
+	'dispBoardDelete' => '글삭제',
+	'dispModuleChangeLang' => '언어 변경',
+	'dispMenuMenu' => '메뉴 보기',
 	'rss' => 'RSS Feed',
 	'atom' => 'Atom Feed',
 	'Unknown' => '알 수 없음',
@@ -47,3 +50,9 @@ $lang->cmd_refresh = '새로고침';
 $lang->about_nowconnect_list_count = '한 페이지에 표시될 접속자 수를 지정할 수 있습니다. (기본 20개)';
 
 $lang->click_to_enable_realtime_update = '클릭하여 실시간 업데이트 기능을 켜거나 끌 수 있습니다.';
+
+$lang->msg_api_key_required = 'API 키를 입력해주세요.';
+$lang->msg_api_site_url_required = '대표 URL을 입력해주세요.';
+
+$lang->msg_invalid_api_site_url = '라이선스가 등록되지 않은 사이트입니다. 대표 URL을 확인해주세요.';
+$lang->msg_invalid_api_key = '등록되지 않은 API 키입니다.';

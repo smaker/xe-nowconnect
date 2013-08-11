@@ -26,7 +26,7 @@ class nowconnect extends ModuleObject
 	 */
 	public function moduleInstall()
 	{
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
 		return new Object();
 	}
@@ -44,7 +44,7 @@ class nowconnect extends ModuleObject
 	 **/
 	function checkUpdate()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
 		{
 			return true;
@@ -58,7 +58,7 @@ class nowconnect extends ModuleObject
 	 **/
 	function moduleUpdate()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$oModuleController = &getController('module');
 
 		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
@@ -75,15 +75,15 @@ class nowconnect extends ModuleObject
 	function recompileCache()
 	{
 	}
+}
 
-	/**
-	 * @brief 액션값으로 현재 위치를 구합니다
-	 */
-	function _getLocationByAct($act)
-	{
-		$loactionList = Context::getLang('loactionList');
-		return $locationList[$act];
-	}
+/**
+ * 액션값으로 현재 위치를 구합니다
+ */
+function _getLocationByAct($act)
+{
+	$locationList = Context::getLang('locationList');
+	return $locationList[$act];
 }
 
 function getUserAgentInfo($user_agent = null)
