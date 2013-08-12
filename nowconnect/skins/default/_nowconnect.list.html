@@ -9,13 +9,13 @@
 	<caption>
 		<span class="title">{$lang->nowconnect}</span>
 		<span class="userCount">{number_format($total_count)}</span>
-		<span class="realtime" cond="$module_info->use_realtime == 'Y'">
-			<input type="checkbox" id="use_realtime" class="checkbox" /> 
-			<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}"><i class="unchecked"></i>{$lang->realtime_update}</label>
-		</span>
-		<span class="adminMenu" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'">
-			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}"><img src="./img/iconConfig.png" width="16" height="16" alt="" /> {$lang->cmd_module_config}</a>&nbsp;&nbsp;
-			<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}"><img src="./img/iconSkinConfig.png" width="16" height="16" alt="" /> {$lang->cmd_manage_skin}</a>
+		<span class="adminMenu">
+			<span class="realtime" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000">
+				<input type="checkbox" id="use_realtime" class="checkbox" /> 
+				<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}"><i class="unchecked"></i>{$lang->realtime_update}</label>
+			</span>
+			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="icon-cog"></i> {$lang->cmd_module_config}</a>&nbsp;&nbsp;
+			<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-danger"><i class="icon-th"></i> {$lang->cmd_manage_skin}</a>
 		</span>
 		</caption>
 	<colgroup>
@@ -41,15 +41,16 @@
 			<span class="userName" cond="!$user->member_srl">{$user->nick_name}</span>
 			<span class="userIcon mobile" cond="$user->isMobileDevice"></span>
 		</td>
-		<td class="ipaddress" cond="!$module_info->display_ipaddress || $module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.$2.*.$4', $user->ipaddress)}</td>
+		<td class="ipaddress" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
+		<td class="ipaddress" cond="($module_info->display_ipaddress == 'show' && $logged_info->is_admin != 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.$2.*.$4', $user->ipaddress)}</td>
 		<td class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
-			<block cond="$user->location">
+			<block cond="$user->location && ($user->is_admin =='N' || $user->is_admin == 'Y' && $logged_info->is_admin == 'Y')">
 				<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
 				<a href="{$user->location_url}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)">{$user->location}</a>
 				<span cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location}"|cond="cut_str($user->location, $module_info->cut_location_size) != $user->location">{cut_str($user->location, $module_info->cut_location_size)}</span>
 			</block>
-			<block cond="!$user->location">
-				<span class="location" title="URL :&#10;{$user->location_url}">{$lang->locationList['Unknown']}</span>
+			<block cond="!$user->location || ($user->is_admin == 'Y' && $logged_info->is_admin != 'Y')">
+				<span class="location" title="알 수 없음"><a href="{$user->location_url}">{$lang->locationList['Unknown']}</a></span>
 			</block>
 		</td>
 		{@$no++}
