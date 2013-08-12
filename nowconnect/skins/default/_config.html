@@ -20,7 +20,9 @@
 <block cond="!$module_info->ipColumnWidth">
 {@ $module_info->ipColumnWidth = 130; }
 </block>
-
+<block cond="!$module_info->display_ipaddress">
+{@ $module_info->display_ipaddress = 'show'; }
+</block>
 <script type="text/javascript">
 <!--@if($module_info->use_realtime == 'Y' && ((int)$module_info->realtime_duration) >= 1000)-->
 var nowconnectRefresh = true;
@@ -29,7 +31,7 @@ var nowconnectRefreshDuration = {(int)$module_info->realtime_duration};
 </script>
 
 <style type="text/css">
-.ncxe col.no { width:{$module_info->noColumnWidth}px; }
-.ncxe col.user { width:{$module_info->nicknameColumnWidth}px; }
-.ncxe col.ipaddress { width:{$module_info->ipColumnWidth}px; }
+.ncxe col.no { width:{htmlspecialchars($module_info->noColumnWidth)}px; }
+.ncxe col.user { width:{htmlspecialchars($module_info->nicknameColumnWidth)}px; }
+.ncxe col.ipaddress { width:{htmlspecialchars($module_info->ipColumnWidth)}px; }
 </style>
