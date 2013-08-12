@@ -152,6 +152,7 @@ class nowconnectModel extends nowconnect
 		if($isPage)
 		{
 			$tmp->page_navigation = new PageHandler($tmp->totalCount, $tmp->totalPage, $args->page, $args->page_count);
+			$tmp->page = $tmp->page_navigation->cur_page;
 		}
 
 		return $tmp;
