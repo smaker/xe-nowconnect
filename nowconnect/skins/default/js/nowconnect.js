@@ -1,10 +1,9 @@
-var nowconnectRefreshDuration = 12000;
 var nowconnectTimer;
 var nowconnectChecker = false;
 
 (function($){
 	$(document).ready(function(){
-		if(nowconnectRefresh) {
+		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
 			$('#use_realtime').change(function(){
 				if(this.checked) {
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
