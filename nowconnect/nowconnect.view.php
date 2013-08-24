@@ -60,6 +60,11 @@ class nowconnectView extends nowconnect
 		$args->page = Context::get('page');
 		$args->hide_ipaddress = ($logged_info->is_admin == 'Y') ? FALSE : TRUE;
 
+		if(!$args->page)
+		{
+			Context::set('page', 1);
+		}
+
 		$output = $oNowconnectModel->getConnectedUsers($args);
 
 		$responseMethod = Context::getResponseMethod();
