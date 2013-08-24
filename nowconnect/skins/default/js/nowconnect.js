@@ -27,7 +27,7 @@ function refreshNowconnect()
 	if(jQuery('#use_realtime').is(':checked')) {
 		var response_tags = new Array('error', 'message', 'html');
 		show_waiting_message = false;
-		jQuery.exec_xml('nowconnect', 'dispNowconnect', { 'mid' : current_mid }, callbackRefreshNowconnect, response_tags);
+		jQuery.exec_xml('nowconnect', 'dispNowconnect', { 'mid' : current_mid, 'page' : current_page }, callbackRefreshNowconnect, response_tags);
 		show_waiting_message = true;
 	} else {
 		clearInterval(nowconnectTimer);
