@@ -23,8 +23,21 @@
 <block cond="!$module_info->display_ipaddress">
 {@ $module_info->display_ipaddress = 'show'; }
 </block>
+<block cond="$module_info->colorset == 'white'">
+{@ $labelClass = ' label-warning'; }
+</block>
+<block cond="$module_info->colorset == 'black'">
+{@ $labelClass = ' label-default'; }
+</block>
+<block cond="$module_info->colorset == 'orange'">
+{@ $labelClass = ' label-warning'; }
+</block>
+<block cond="$module_info->colorset == 'red'">
+{@ $labelClass = ' label-danger'; }
+</block>
 <script type="text/javascript">
 <!--@if($module_info->use_realtime == 'Y' && ((int)$module_info->realtime_duration) >= 1000)-->
+var current_page = {$page};
 var nowconnectRefresh = true;
 var nowconnectRefreshDuration = {(int)$module_info->realtime_duration};
 <!--@end-->

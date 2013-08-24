@@ -20,11 +20,15 @@
 		<color name="orange">
 			<title xml:lang="ko">주황색</title>
 		</color>
-		<color name="red">
+		<!--<color name="red">
 			<title xml:lang="ko">빨간색</title>
-		</color>
+		</color>-->
 	</colorset>
 	<extra_vars>
+		<var name="title" type="text">
+			<title xml:lang="ko">상단 제목</title>
+			<description xml:lang="ko">상단에 출력할 제목을 입력해주세요.</description>
+		</var>
 		<var name="noColumnWidth" type="text" default="65">
 			<title xml:lang="ko">'번호' 가로폭</title>
 			<description xml:lang="ko">'번호' 항목의 가로폭을 입력해 주세요.

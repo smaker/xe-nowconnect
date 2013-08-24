@@ -7,8 +7,11 @@
 	<!--// 현재 접속자 목록 -->
 	<table width="100%" cellspacing="0" cellpadding="0" border="0">
 	<caption>
-		<span class="title">{$lang->nowconnect}</span>
-		<span class="userCount">{number_format($total_count)}</span>
+		<span class="title">
+			<block cond="$module_info->title">{htmlspecialchars($module_info->title)}</block>
+			<block cond="!$module_info->title">{$lang->nowconnect}</block> 
+			<span class="label{$labelClass}">{number_format($total_count)}</span>
+		</span>
 		<span class="adminMenu">
 			<span class="realtime" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000">
 				<input type="checkbox" id="use_realtime" class="checkbox" /> 
@@ -21,13 +24,13 @@
 	<colgroup>
 		<col class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')" />
 		<col class="user" />
-		<col class="ipaddress" cond="!$module_info->display_ipaddress || $module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')" />
+		<col class="ipaddress" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')" />
 	</colgroup>
 	<thead>
 	<tr>
 		<th class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')"><div><span>{$lang->no}</span></div></th>
 		<th class="user"><div><span>{$lang->nick_name}</span></div></th>
-		<th class="user" cond="!$module_info->display_ipaddress || $module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')"><div><span>IP</span></div></th>
+		<th class="user" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')"><div><span>IP</span></div></th>
 		<th class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')"><div><span>{$lang->current_location}</span></div></th>
 	</tr>
 	</thead>
@@ -39,9 +42,9 @@
 			<span class="userIcon guest" cond="!$user->member_srl"></span>
 			<span class="userName member_{$user->member_srl}" cond="$user->member_srl && !$user->isCrawler">{$user->nick_name}</span>
 			<span class="userName" cond="!$user->member_srl">{$user->nick_name}</span>
-			<span class="userIcon mobile" cond="$user->isMobileDevice"></span>
+			<i class="glyphicon glyphicon-phone" cond="$user->isMobileDevice"></i>
 		</td>
-		<td class="ipaddress" cond="$module_info->display_ipaddress == 'show' || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
+		<td class="ipaddress" cond="($module_info->display_ipaddress == 'show' && $logged_info->is_admin == 'Y') || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
 		<td class="ipaddress" cond="($module_info->display_ipaddress == 'show' && $logged_info->is_admin != 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.$2.*.$4', $user->ipaddress)}</td>
 		<td class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
 			<block cond="$user->location && ($user->is_admin =='N' || $user->is_admin == 'Y' && $logged_info->is_admin == 'Y')">
