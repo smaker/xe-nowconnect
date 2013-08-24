@@ -19,30 +19,12 @@ class nowconnectModel extends nowconnect
 	 */
 	function getNowconnectUserCount()
 	{
-		$excludeAdmin = (Context::get('exclude_admin') == 'Y');
-		// 관리자를 제외할 경우 관리자 회원 번호를 모두 가져옵니다.
-		if($excludeAdmin)
-		{
-			$adminOutput = executeQueryArray('nowconnect.getAdminUsers');
-			if(count($adminOutput->data))
-			{
-				foreach($adminOutput->data as $key => $val)
-				{
-					$admin_member_srls[] = $val->member_srl;
-				}
-			}
+		$args = new stdClass;
+		$args->excludeAdmin = Context::get('exclude_admin');
 
-			$admin_member_srl = implode(',', $admin_member_srls);
-		}
+		$totalCount = $this->getNowconnectedUserCount($args);
 
-		if(!$args->period_time) $args->period_time = 3;
-		$args->last_update = date('YmdHis', time() - $args->period_time*60);
-		$args->but_member_srl = $admin_member_srl;
-
-		$output = executeQueryArray('nowconnect.getConnectedUserCount', $args);
-		if(!$output->toBool()) return $output;	
-
-		$this->add('count', $output->data->count);
+		$this->add('totalCount', $totalCount);
 	}
 
 	/**
@@ -85,7 +67,7 @@ class nowconnectModel extends nowconnect
 		}
 
 		$output = $oCommunicator->post('api/users/count', $params);
-		return $output->getResult()->totalCount;
+		return (int)$output->getResult()->totalCount;
 	}
 
 	/**
@@ -162,6 +144,13 @@ class nowconnectModel extends nowconnect
 	 * 현재 접속자 모듈 정보를 가져옵니다
 	 */
 	function getNowconnectInfo() {
+		static $module_info;
+
+		if($module_info)
+		{
+			return $module_info;
+		}
+
 		// 현재 접속자 모듈의 module_srl을 가져옴
 		$output = executeQuery('nowconnect.getNowconnect');
 		if(!$output->data->module_srl) return NULL;
@@ -170,6 +159,7 @@ class nowconnectModel extends nowconnect
 		$oModuleModel = getModel('module');
 
 		// 모듈 정보를 구해서 return
-		return $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
+		return $module_info;
 	}
 }
