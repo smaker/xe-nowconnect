@@ -19,12 +19,12 @@ class nowconnectController extends nowconnect
 	 */
 	function triggerAfterModuleProc(&$oModule)
 	{
-		if(Context::getResponseMethod() != 'HTML') return new Object();
-
 		$module = $oModule->module;
 		$module_info = $oModule->module_info;
 		$act = $module_info->act;
 		if(!$act) $act = $oModule->act;
+
+		if(Context::getResponseMethod() != 'HTML' && !($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')) return new Object();
 
 		$location = Context::getBrowserTitle();
 		$locationByAct = _getLocationByAct($act);
@@ -84,8 +84,16 @@ class nowconnectController extends nowconnect
 
 		$mid = $module_info->mid;
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
-		$uri = $_SERVER['REQUEST_URI'];
 
+
+		$uri = $_SERVER['REQUEST_URI'];
+		
+		if($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC' && $_SESSION['NOWCONNECT_LOCATION_URL'])
+		{
+			$uri = $_SESSION['NOWCONNECT_LOCATION_URL'];
+		}
+
+		$_SESSION['NOWCONNECT_LOCATION_URL'] = $_SERVER['REQUEST_URI'];
 		$user_info = array(
 			'mid' => $mid,
 			'member_srl' => $member_srl,
