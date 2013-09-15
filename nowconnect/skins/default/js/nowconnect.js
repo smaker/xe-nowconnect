@@ -1,21 +1,37 @@
 var nowconnectTimer;
 var nowconnectChecker = false;
+var realtimeStatus = false;
 
 (function($){
-	$(document).ready(function(){
+	function activeRealtimeUpdate() 
+	{
 		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
-			$('#use_realtime').change(function(){
+			$(document).on('change', '#use_realtime', function(){
+				var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > .rt > label[for=use_realtime]');
 				if(this.checked) {
+					realtimeStatus = true;
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-					$('div.ncxe .realtime label[for=use_realtime]').find('i.unchecked').remove();
-					$('div.ncxe .realtime label[for=use_realtime]').prepend('<i class="checked"></i>');
+					$lbl
+						.find('i.unchecked')
+							.remove()
+						.end()
+						.prepend('<i class="checked"></i>');
 				} else {
+					realtimeStatus = false;
 					clearInterval(nowconnectTimer);
-					$('div.ncxe .realtime label[for=use_realtime]').find('i.checked').remove();
-					$('div.ncxe .realtime label[for=use_realtime]').prepend('<i class="unchecked"></i>');
+					$lbl
+						.find('i.checked')
+							.remove()
+						.end()
+						.prepend('<i class="unchecked"></i>');
 				}
 			});
 		}
+	}
+
+	$(document).ready(function()
+	{
+		activeRealtimeUpdate();
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
 	});
@@ -41,25 +57,18 @@ function callbackRefreshNowconnect(response) {
 
 	var html = response.html;
 	if(html) {
-		jQuery('div.ncxe').html(html);
+		var $ = jQuery;
+		$('div.ncxe').html($html);
+		if(realtimeStatus)
+		{
+			var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > .rt > label[for=use_realtime]');
+			$lbl.click();
+		}
+
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
 
 		clearInterval(nowconnectTimer);
-
-		jQuery('#use_realtime').change(function(){
-			if(this.checked) {
-				nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-				jQuery('div.ncxe .realtime label[for=use_realtime]').find('i.unchecked').remove();
-				jQuery('div.ncxe .realtime label[for=use_realtime]').prepend('<i class="checked"></i>');
-			} else {
-				clearInterval(nowconnectTimer);
-				jQuery('div.ncxe .realtime label[for=use_realtime]').find('i.checked').remove();
-				jQuery('div.ncxe .realtime label[for=use_realtime]').prepend('<i class="unchecked"></i>');
-			}
-		});
-
-		jQuery('#use_realtime').click();
 	}
 }
 
