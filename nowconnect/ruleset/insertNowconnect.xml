@@ -6,6 +6,8 @@
 	<fields>
 		<field name="nowconnect_name" required="true" length=":40" rule="mid" />
 		<field name="browser_title" required="true" length=":250" />
+		<field name="api_site_url" required="true" />
+		<field name="api_key" required="true" />
 		<field name="realtime_duration" rule="number">
 			<if test="$use_realtime == 'Y'" attr="required" value="true" />
 		</field>
