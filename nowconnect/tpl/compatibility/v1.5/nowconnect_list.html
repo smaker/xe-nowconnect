@@ -15,7 +15,7 @@
 </thead>
 {@
 	$no = 1;
-	$myId = session_id();
+	$myId = Context::get('myUID');
 }
 <tr class="itsMe"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
 	<td>{$no}</td>
@@ -33,7 +33,7 @@
 			<a href="{$user->location_url}">{$user->location}</a>
 		</block>
 		<block cond="!$user->location">
-			{$lang->locationList['Unknown']} <img src="../..//img/question.png" alt="" title="{$user->location_url}" style="vertical-align:middle; margin-left:6px;" />
+			{$lang->locationList['Unknown']} <img src="../../img/question.png" alt="" title="{$user->location_url}" style="vertical-align:middle; margin-left:6px;" />
 		</block>
 	</td>
 	{@$no++}

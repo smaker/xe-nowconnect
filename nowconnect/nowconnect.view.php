@@ -7,10 +7,11 @@
 
 class nowconnectView extends nowconnect
 {
+
 	/**
-	 * @brief 초기화
+	 * @brief 현재 접속자 보기
 	 */
-	function init()
+	function dispNowconnect()
 	{
 		if($this->module_info->skin)
 		{
@@ -34,13 +35,7 @@ class nowconnectView extends nowconnect
 		Context::set('module_info', $this->module_info);
 
 		$this->setTemplatePath($templatePath);
-	}
 
-	/**
-	 * @brief 현재 접속자 보기
-	 */
-	function dispNowconnect()
-	{
 		if(!$this->module_info->module_srl)
 		{
 			return $this->stop('msg_invalid_request');
@@ -52,7 +47,7 @@ class nowconnectView extends nowconnect
 		}
 
 		$logged_info = Context::get('logged_info');
-		$oNowconnectModel = &getModel('nowconnect');
+		$oNowconnectModel = getModel('nowconnect');
 
 		$args->exclude_admin = $this->module_info->exclude_admin;
 		$args->list_count = $this->module_info->list_count;
@@ -67,26 +62,22 @@ class nowconnectView extends nowconnect
 
 		$output = $oNowconnectModel->getConnectedUsers($args);
 
-		$responseMethod = Context::getResponseMethod();
-		switch($responseMethod)
+
+		// 중복 접속자 처리
+		if($this->module_info->include_duplicated_user == 'Y')
 		{
-			case 'XMLRPC':
-				$selectedTheme = Context::get('selectedTheme');
-				$oTemplateHandler = TemplateHandler::getInstance();
-				Context::set('user_list', $output->result);
-				Context::set('page_navigation', $output->page_navigation);
-				Context::set('total_count', $output->totalCount);
-				Context::set('from_ajax', true);
-				$html = $oTemplateHandler->compile($this->getTemplatePath(), '_nowconnect.list');
-				$this->add('html', $html);
-				break;
-			case 'HTML':
-				Context::set('user_list', $output->result);
-				Context::set('page_navigation', $output->page_navigation);
-				Context::set('total_count', $output->totalCount);
-				$this->setTemplateFile('nowconnect');
-				break;
+			$uid = session_id();
 		}
+		else
+		{
+			$uid = sha1(md5($_SERVER['REMOTE_ADDR']));
+		}
+
+		Context::set('user_list', $output->result);
+		Context::set('page_navigation', $output->page_navigation);
+		Context::set('total_count', $output->totalCount);
+
+		$this->setTemplateFile('nowconnect');
 	}
 }
 

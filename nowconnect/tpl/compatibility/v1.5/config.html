@@ -100,11 +100,21 @@
 			<p class="desc">{$lang->about_realtime_duration}</p>
 		</li>
 		<li>
-			<p class="q">제외 IP</p>
+			<p class="q">{$lang->exclude_ip}</p>
 			<p class="a">
 				<textarea name="exclude_ip" rows="4" id="exclude_ip">{htmlspecialchars($module_info->exclude_ip)}</textarea>
 			</p>
-			<p class="desc">특정 IP를 접속자 현황 수집에서 제외할 수 있습니다.</p>
+			<p class="desc">{$lang->about_exclude_ip}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->include_duplicated_user}</p>
+			<p class="a">
+				<select name="include_duplicated_user">
+					<option value="N" selected="selected"|cond="$module_info->include_duplicated_user=='N'">{$lang->not_include}</option>
+					<option value="Y" selected="selected"|cond="$module_info->include_duplicated_user=='Y'">{$lang->include}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_include_duplicated_user}</p>
 		</li>
 		<li>
 			<p class="q">{$lang->header_text}</p>

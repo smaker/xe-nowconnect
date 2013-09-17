@@ -44,6 +44,12 @@ $lang->about_use_realtime = '페이지 새로고침 없이 현재 접속자 목�
 $lang->about_realtime_duration = '접속자 목록을 얼마나 자주 새로고침할 지 입력해주세요. (1000 = 1초)';
 $lang->about_api_key = '발급받은 현재 접속자 API 키를 정확히 입력해 주세요.';
 $lang->about_api_site_url = '사이트의 대표 URL을 입력해주세요. (API 키 발급 시 입력한 사이트 URL을 입력해주세요.)';
+$lang->exclude_ip = '제외 IP';
+$lang->about_exclude_ip = '특정 IP를 접속자 현황 수집에서 제외할 수 있습니다.<br>여러 개의 IP를 입력하려면 줄바꿈을 해서 입력해주세요.';
+$lang->include_duplicated_user = '중복 접속자 포함';
+$lang->about_include_duplicated_user = 'IP가 동일한 접속자를 접속자 현황 수집에서 포함할 지 여부를 결정합니다.';
+$lang->not_include = '포함하지 않음';
+$lang->include = '포함';
 
 $lang->cmd_refresh = '새로고침';
 

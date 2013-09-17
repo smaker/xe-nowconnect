@@ -69,7 +69,18 @@ class nowconnectController extends nowconnect
 
 		$member_srl = (int)$logged_info->member_srl;
 		$nick_name = $logged_info->nick_name;
-		$uid = session_id();
+
+		// 중복 접속자 처리
+		if($nowconnect_info->include_duplicated_user == 'Y')
+		{
+			$uid = session_id();
+		}
+		else
+		{
+			$uid = sha1(md5($_SERVER['REMOTE_ADDR']));
+		}
+
+		Context::set('myUID', $uid);
 
 		// 로그인하지 않은 경우 임의로 닉네임을 생성함
 		if(!$nick_name)
@@ -85,7 +96,6 @@ class nowconnectController extends nowconnect
 		$mid = $module_info->mid;
 		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
-
 		$uri = $_SERVER['REQUEST_URI'];
 		
 		if($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC' && $_SESSION['NOWCONNECT_LOCATION_URL'])
@@ -94,6 +104,7 @@ class nowconnectController extends nowconnect
 		}
 
 		$_SESSION['NOWCONNECT_LOCATION_URL'] = $_SERVER['REQUEST_URI'];
+
 		$user_info = array(
 			'mid' => $mid,
 			'member_srl' => $member_srl,

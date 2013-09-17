@@ -1,8 +1,8 @@
 	<div class="pagination">
-		<a href="{getUrl('page', '1')}" class="prevEnd">{$lang->first_page}</a>
+		<a href="{getUrl('page', '1')}" class="prevEnd">&laquo; {$lang->first_page}</a>
 		<!--@while($page = $page_navigation->getNextPage())-->
 		<a href="{getUrl('page', $page)}" cond="$page != $page_navigation->cur_page">{$page}</a>
 		<strong cond="$page == $page_navigation->cur_page">{$page}</strong>
 		<!--@end-->
-		<a href="{getUrl('page', $page_navigation->last_page)}" class="nextEnd">{$lang->last_page}</a>
+		<a href="{getUrl('page', $page_navigation->last_page)}" class="nextEnd">{$lang->last_page} &raquo;</a>
 	</div>

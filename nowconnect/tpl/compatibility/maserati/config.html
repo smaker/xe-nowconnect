@@ -123,15 +123,27 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="realtime_duration">{$lang->realtime_duration}</label>
 			<div class="x_controls">
-				<input type="number" name="realtime_duration" value="{$module_info->realtime_duration}" style="width:60px">
+				<input type="number" name="realtime_duration" value="{$module_info->realtime_duration}" min="1000" style="width:60px">
 				<p class="x_help-inline">{$lang->about_realtime_duration}</p>
 			</div>
 		</div>
 		<div class="x_control-group">
-			<label class="x_control-label" for="exclude_ip">제외 IP</label>
+			<label class="x_control-label" for="exclude_ip">{$lang->exclude_ip}</label>
 			<div class="x_controls">
 				<textarea name="exclude_ip" rows="4" id="exclude_ip">{htmlspecialchars($module_info->exclude_ip)}</textarea>
-				<p class="x_help-inline">특정 IP를 접속자 현황 수집에서 제외할 수 있습니다.</p>
+				<p class="x_help-inline">{$lang->about_exclude_ip}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="include_duplicated_user">{$lang->include_duplicated_user}</label>
+			<div class="x_controls">
+				<select name="include_duplicated_user" id="include_duplicated_user">
+					<option value="N" selected="selected"|cond="$module_info->include_duplicated_user=='N'">{$lang->not_include}</option>
+
+					<option value="Y" selected="selected"|cond="$module_info->include_duplicated_user=='Y'">{$lang->include}</option>
+				</select>
+				<a href="#aboutIncludeDuplicatedUser" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutIncludeDuplicatedUser" hidden>{$lang->about_include_duplicated_user}</p>
 			</div>
 		</div>
 		<div class="x_control-group">

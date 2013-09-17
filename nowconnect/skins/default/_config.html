@@ -23,10 +23,13 @@
 <block cond="!$module_info->display_ipaddress">
 {@ $module_info->display_ipaddress = 'show'; }
 </block>
-<block cond="$module_info->colorset == 'white'">
-{@ $labelClass = ' label-warning'; }
+<block cond="$module_info->colorset == 'white' || $module_info->colorset == 'defaultD'">
+{@ $labelClass = ' label-info'; }
 </block>
 <block cond="$module_info->colorset == 'black'">
+{@ $labelClass = ' label-default'; }
+</block>
+<block cond="$module_info->colorset == 'blackD'">
 {@ $labelClass = ' label-default'; }
 </block>
 <block cond="$module_info->colorset == 'orange'">

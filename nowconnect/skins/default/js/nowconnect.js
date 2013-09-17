@@ -7,23 +7,21 @@ var realtimeStatus = false;
 	{
 		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
 			$(document).on('change', '#use_realtime', function(){
-				var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > .rt > label[for=use_realtime]');
+				var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
 				if(this.checked) {
 					realtimeStatus = true;
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
 					$lbl
-						.find('i.unchecked')
-							.remove()
-						.end()
-						.prepend('<i class="checked"></i>');
+						.find('i.icon-check-empty')
+							.removeClass('icon-check-empty')
+							.addClass('icon-check');
 				} else {
 					realtimeStatus = false;
 					clearInterval(nowconnectTimer);
 					$lbl
-						.find('i.checked')
-							.remove()
-						.end()
-						.prepend('<i class="unchecked"></i>');
+						.find('i.icon-check')
+						.removeClass('icon-check')
+						.addClass('icon-check-empty');
 				}
 			});
 		}
@@ -34,6 +32,10 @@ var realtimeStatus = false;
 		activeRealtimeUpdate();
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
+	});
+
+	$(window).load(function(){
+		Cufon.replace('.nowconnectList caption .title .brand', { fontFamily: 'NanumGothic' } );
 	});
 })(jQuery);
 
@@ -58,10 +60,10 @@ function callbackRefreshNowconnect(response) {
 	var html = response.html;
 	if(html) {
 		var $ = jQuery;
-		$('div.ncxe').html($html);
+		$('div.ncxe').html(html);
 		if(realtimeStatus)
 		{
-			var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > .rt > label[for=use_realtime]');
+			var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
 			$lbl.click();
 		}
 
@@ -71,8 +73,6 @@ function callbackRefreshNowconnect(response) {
 		clearInterval(nowconnectTimer);
 	}
 }
-
-
 
 /* ========================================================================
  * Bootstrap: tooltip.js v3.0.0

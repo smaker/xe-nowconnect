@@ -15,7 +15,7 @@
 </thead>
 {@
 	$no = 1;
-	$myId = session_id();
+	$myId = Context::get('myUID');
 }
 <tr class="x_warning"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
 	<td cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>

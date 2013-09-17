@@ -2,23 +2,20 @@
 {@
 	$selectedTheme = $module_info->colorset;
 	if(!$selectedTheme) $selectedTheme = 'white';
-	$myId = session_id();
+
+	$myId = Context::get('myUID');
 }
 	<!--// 현재 접속자 목록 -->
 	<table class="nowconnectList" cellspacing="0" cellpadding="0">
 	<caption>
 		<span class="title">
-			<block cond="$module_info->title">{htmlspecialchars($module_info->title)}</block>
-			<block cond="!$module_info->title">{$lang->nowconnect}</block> 
-			<span class="userCount label{$labelClass}">{number_format($total_count)}</span>
+			<span class="brand" cond="$module_info->title">{htmlspecialchars($module_info->title)}</span>
+			<span class="brand" cond="!$module_info->title">{$lang->nowconnect}</span> 
+			<span class="userCount label {$labelClass}">{number_format($total_count)}</span>
 		</span>
 		<span class="rm">
-			<span class="rt" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000">
-				<input type="checkbox" id="use_realtime" class="checkbox" /> 
-				<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}"><i class="unchecked"></i>{$lang->realtime_update}</label>
-			</span>
-			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="icon-cog"></i> {$lang->cmd_module_config}</a>&nbsp;&nbsp;
-			<a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-danger"><i class="icon-th"></i> {$lang->cmd_manage_skin}</a>
+			<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000"><button type="button" class="nbtn nbtn-default"><i class="icon-check-empty"></i> {$lang->realtime_update}</button><input type="checkbox" id="use_realtime" class="checkbox" hidden="hidden" /> </label>
+			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="icon-cog"></i></a>
 		</span>
 		</caption>
 	<colgroup>
@@ -35,6 +32,7 @@
 	</tr>
 	</thead>
 	{@ $no = 1;}
+
 	<tr class="itsMe"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
 		<td class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>
 		<td class="user">
@@ -53,12 +51,12 @@
 				<span cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location}"|cond="cut_str($user->location, $module_info->cut_location_size) != $user->location">{cut_str($user->location, $module_info->cut_location_size)}</span>
 			</block>
 			<block cond="!$user->location || ($user->is_admin == 'Y' && $logged_info->is_admin != 'Y')">
-				<span class="location" title="알 수 없음"><a href="{$user->location_url}">{$lang->locationList['Unknown']}</a></span>
+				<span class="location" title="알 수 없음"|cond="$user->is_admin == 'Y' && $logged_info->is_admin != 'Y'" title="알 수 없음 ({$user->location})"|cond="$logged_info->is_admin 
+				== 'Y'"><a href="{$user->location_url}" cond="!($user->is_admin == 'Y' && $logged_info->is_admin != 'Y')">{$lang->locationList['Unknown']}</a><block cond="$user->is_admin == 'Y' && $logged_info->is_admin != 'Y'">{$lang->locationList['Unknown']}</block></span>
 			</block>
 		</td>
 		{@$no++}
 	</tr>
 	</table>
-
 	<!--// 페이지-->
 	<include target="_nowconnect.page.html" />

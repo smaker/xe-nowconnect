@@ -3,11 +3,12 @@
 .ncxe a{text-decoration:none}
 /* User List */
 .ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center;font-size:12px}
-.ncxe table caption{margin:0 0 5px;text-align:left}
+.ncxe table caption{margin:3px 0 5px;text-align:left}
 .ncxe table caption img{vertical-align:middle}
 .ncxe table caption strong{color:#F60;font-family:Tahoma;font-size:11px}
-.ncxe table caption .title{margin:7px 0 0;float:left;font:bold 16px "나눔고딕","맑은 고딕",NanumGothic,"Malgun Gothic",Sans-serif,Verdena}
-.ncxe table caption .userCount{font-size:.8em}
+.ncxe table caption .title {float:left}
+.ncxe table caption .brand{margin:-3px 5px 0 0;font:18px "나눔고딕","맑은 고딕",NanumGothic,"Malgun Gothic",Sans-serif,Verdena;font-weight:800;letter-spacing:-1px;position:relative;top:1px}
+.ncxe table caption .userCount{font-size:13px;font-weight:800}
 .ncxe table caption .rm{float:right;font-weight:normal}
 .ncxe table caption .rt{margin:7px 12px 0 0;float:left;font-size:12px;font-weight:normal}
 .ncxe table caption .rt input{vertical-align:middle;display:none}
