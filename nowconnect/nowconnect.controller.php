@@ -136,7 +136,12 @@ class nowconnectController extends nowconnect
 
 		$user_info = $oCrypt->encrypt(serialize($user_info));
 
+		if($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')
+		{
+			$realtime = TRUE;
+		}
 		$params = array(
+			'realtime' => $realtime,
 			'site_url' => $nowconnect_info->api_site_url,
 			'user_info' => $user_info
 		);
