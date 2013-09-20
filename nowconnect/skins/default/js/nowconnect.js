@@ -19,10 +19,7 @@ var realtimeStatus = false;
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
 					var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
 
-					$lbl
-						.find('i.icon-check-empty')
-							.removeClass('icon-check-empty')
-							.addClass('icon-check');
+					$lbl.click();
 				}
 			}
 
