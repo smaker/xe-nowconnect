@@ -40,7 +40,7 @@
 </block>
 <script type="text/javascript">
 <!--@if($module_info->use_realtime == 'Y' && ((int)$module_info->realtime_duration) >= 1000)-->
-var current_page = {$page};
+var current_page = {(int)$page};
 var nowconnectRefresh = true;
 var nowconnectRefreshDuration = {(int)$module_info->realtime_duration};
 <!--@end-->

@@ -6,10 +6,31 @@ var realtimeStatus = false;
 	function activeRealtimeUpdate() 
 	{
 		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
+			var ncxeRt = $.cookie('ncxeRt');
+			if(typeof ncxeRt == 'undefined')
+			{
+				$.cookie('ncxeRt', false, { expires : 7 });
+			}
+			else
+			{
+				if(ncxeRt)
+				{
+					realtimeStatus = true;
+					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
+					var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
+
+					$lbl
+						.find('i.icon-check-empty')
+							.removeClass('icon-check-empty')
+							.addClass('icon-check');
+				}
+			}
+
 			$(document).on('change', '#use_realtime', function(){
 				var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
 				if(this.checked) {
 					realtimeStatus = true;
+					$.cookie('ncxeRt', true, { expires: 7 });
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
 					$lbl
 						.find('i.icon-check-empty')
@@ -17,6 +38,7 @@ var realtimeStatus = false;
 							.addClass('icon-check');
 				} else {
 					realtimeStatus = false;
+					$.cookie('ncxeRt', false, { expires: 7 });
 					clearInterval(nowconnectTimer);
 					$lbl
 						.find('i.icon-check')
