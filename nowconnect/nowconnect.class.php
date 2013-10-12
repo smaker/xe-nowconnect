@@ -1,17 +1,19 @@
 <?php
 if(!class_exists('Crypt'))
 {
-	require_once(_XE_PATH_.'modules/nowconnect/libs/Crypt.php');
+	require(_XE_PATH_.'modules/nowconnect/libs/Crypt.php');
 }
-if(!class_exists('ApiBase'))
+if(!class_exists('ApiServer'))
 {
-require_once(_XE_PATH_.'modules/nowconnect/libs/ApiBase.php');
+	require(_XE_PATH_.'modules/nowconnect/libs/API/Server.php');
 }
 
 if(!class_exists('CommunicatorBase'))
 {
-	require_once(_XE_PATH_.'modules/nowconnect/libs/Communicator.php');
+	require(_XE_PATH_.'modules/nowconnect/libs/Communicator.php');
 }
+
+	require(_XE_PATH_.'modules/nowconnect/libs/API/Result.php');
 
 /**
  * @class nowconnect

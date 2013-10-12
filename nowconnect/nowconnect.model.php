@@ -54,11 +54,10 @@ class nowconnectModel extends nowconnect
 
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator->setApiKey($module_info->api_key);
 		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
 
-		$params = array(
-			'site_url' => $module_info->api_site_url
-		);
+		$params = array();
 
 		// 관리자를 제외할 경우 excludeAdmin 피라미터 추가
 		if($args->exclude_admin == 'Y')
@@ -104,11 +103,10 @@ class nowconnectModel extends nowconnect
 
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator->setApiKey($module_info->api_key);
 		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
 
-		$params = array(
-			'site_url' => $module_info->api_site_url
-		);
+		$params = array();
 
 		if($isPage)
 		{
@@ -133,7 +131,7 @@ class nowconnectModel extends nowconnect
 
 		if($isPage)
 		{
-			$tmp->page_navigation = new PageHandler($tmp->totalCount, $tmp->totalPage, $args->page, $args->page_count);
+			$tmp->page_navigation = new PageHandler($tmp->result->totalCount, $tmp->result->totalPage, $args->page, $args->page_count);
 			$tmp->page = $tmp->page_navigation->cur_page;
 		}
 
@@ -143,10 +141,18 @@ class nowconnectModel extends nowconnect
 	/**
 	 * 현재 접속자 모듈 정보를 가져옵니다
 	 */
-	function getNowconnectInfo() {
+	function getNowconnectInfo()
+	{
 		static $module_info;
 
-		if($module_info)
+		// 현재 보고 있는 페이지가 현재 접속자 페이지라면 현재 모듈 정보를 그대로 return
+		if($this->module_info->module == 'nowconnect')
+		{
+			return ($module_info = $this->module_info);
+		}
+
+		// 모듈 정보가 있으면 그대로 return
+		if(isset($module_info))
 		{
 			return $module_info;
 		}
@@ -160,6 +166,7 @@ class nowconnectModel extends nowconnect
 
 		// 모듈 정보를 구해서 return
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
+
 		return $module_info;
 	}
 }

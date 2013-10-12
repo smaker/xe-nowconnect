@@ -46,7 +46,7 @@ class nowconnectAdminView extends nowconnect
 		$output = $oNowconnectModel->getConnectedUsers($args);
 
 		// 템플릿에서 쓸 수 있도록 Context::set()
-		Context::set('user_list', $output->result);
+		Context::set('user_list', $output->result->users);
 		Context::set('page_navigation', $output->page_navigation);
 		Context::set('page', $output->page);
 		Context::set('total_page', $output->totalPage);

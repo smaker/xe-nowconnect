@@ -26,14 +26,14 @@
 	</td>
 	<td>{$user->ipaddress}</td>
 	<td class="location">
-		<block cond="$user->location">
+		<block cond="$user->location->title">
 			<img src="../../img/bot.png" width="16" height="16" alt="검색봇" title="검색봇" style="vertical-align:middle; margin-right:6px;" cond="$user->isCrawler" />
 			<img src="../../img/mobile.png" width="16" height="16" alt="모바일 기기" title="모바일 기기" style="vertical-align:middle; margin-right:6px;" cond="$user->isMobileDevice" />
 			<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
-			<a href="{$user->location_url}">{$user->location}</a>
+			<a href="{$user->location->uri}">{$user->location->title}</a>
 		</block>
-		<block cond="!$user->location">
-			{$lang->locationList['Unknown']} <img src="../../img/question.png" alt="" title="{$user->location_url}" style="vertical-align:middle; margin-left:6px;" />
+		<block cond="!$user->location->title">
+			{$lang->locationList['Unknown']} <img src="../../img/question.png" alt="" title="{$user->location->uri}" style="vertical-align:middle; margin-left:6px;" />
 		</block>
 	</td>
 	{@$no++}

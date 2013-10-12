@@ -2,21 +2,26 @@
 /**
  * @brief API 서버와 통신하기 위한 API 클래스
  */
-class ApiBase
+class ApiServer
 {
-	var $api_server; // << API 서버 주소
-	var $api_key; // < API 키
+	protected $api_server; // << API 서버 주소
+	protected $api_key; // < API 키
 
 	/**
-	 * @brief API 서버 지정
+	 * API 서버 지정
 	 */
 	function setServer($server_name)
 	{
+		if(!$server_name)
+		{
+			return FALSE;
+		}
+
 		$this->api_server = $server_name;
 	}
 
 	/**
-	 * @brief API 키 지정
+	 * API 키 지정
 	 */
 	function setApiKey($api_key)
 	{
@@ -26,5 +31,10 @@ class ApiBase
 	function getServer()
 	{
 		return $this->api_server;
+	}
+
+	function getApiKey()
+	{
+		return $this->api_key;
 	}
 }

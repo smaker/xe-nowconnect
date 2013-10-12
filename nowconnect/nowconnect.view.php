@@ -7,9 +7,8 @@
 
 class nowconnectView extends nowconnect
 {
-
 	/**
-	 * @brief 현재 접속자 보기
+	 * @brief 현재 접속자
 	 */
 	function dispNowconnect()
 	{
@@ -36,11 +35,13 @@ class nowconnectView extends nowconnect
 
 		$this->setTemplatePath($templatePath);
 
+		// 비정상적인 경로로 접근했을 때
 		if(!$this->module_info->module_srl)
 		{
 			return $this->stop('msg_invalid_request');
 		}
 
+		// 목록 보기 권한이 없을 때
 		if(!$this->grant->list)
 		{
 			return $this->stop('msg_not_permitted');
@@ -62,7 +63,6 @@ class nowconnectView extends nowconnect
 
 		$output = $oNowconnectModel->getConnectedUsers($args);
 
-
 		// 중복 접속자 처리
 		if($this->module_info->include_duplicated_user == 'Y')
 		{
@@ -73,9 +73,9 @@ class nowconnectView extends nowconnect
 			$uid = sha1(md5($_SERVER['REMOTE_ADDR']));
 		}
 
-		Context::set('user_list', $output->result);
+		Context::set('user_list', $output->result->users);
 		Context::set('page_navigation', $output->page_navigation);
-		Context::set('total_count', $output->totalCount);
+		Context::set('total_count', $output->result->totalCount);
 
 		$this->setTemplateFile('nowconnect');
 	}

@@ -67,6 +67,7 @@ class nowconnectController extends nowconnect
 			}
 		}
 
+
 		$member_srl = (int)$logged_info->member_srl;
 		$nick_name = $logged_info->nick_name;
 
@@ -106,10 +107,10 @@ class nowconnectController extends nowconnect
 		$_SESSION['NOWCONNECT_LOCATION_URL'] = $_SERVER['REQUEST_URI'];
 
 		$user_info = array(
+			'_id' => $uid,
 			'mid' => $mid,
 			'member_srl' => $member_srl,
 			'nick_name' => $nick_name,
-			'uid' => $uid,
 			'user-agent' => $user_agent,
 			'is_admin' => $logged_info->is_admin,
 			'isMobileDevice' => Mobile::isMobileCheckByAgent(),
@@ -142,16 +143,16 @@ class nowconnectController extends nowconnect
 		}
 		$params = array(
 			'realtime' => $realtime,
-			'site_url' => $nowconnect_info->api_site_url,
 			'user_info' => $user_info
 		);
 
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator->setApiKey($nowconnect_info->api_key);
 		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
 
 		// API 요청
-		$output = $oCommunicator->post('api/tick', $params);
+		$oCommunicator->post('api/tick', $params);
 
 		return new Object();
 	}

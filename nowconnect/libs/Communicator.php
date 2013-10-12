@@ -2,7 +2,7 @@
 /**
  * @brief API 서버와 통신하기 위한 모듈
  */
-class CommunicatorBase extends ApiBase
+class CommunicatorBase extends ApiServer
 {
 	private $format = 'xml'; // << API 요청 타입 (xml, json, csv)
 	protected $supported_formats = array(
@@ -23,8 +23,12 @@ class CommunicatorBase extends ApiBase
 		'application/vnd.php.serialized' => 'serialize'
 	);
 	protected $buffer = NULL; // API 요청 결과값
+	protected $options = array();
 	private $result = NULL; // 파싱 결과값
+	private $httpHeader = array();
 	private $httpCode;
+	private $ch;
+	private $method;
 
 	/**
 	 * Constructor
@@ -36,11 +40,47 @@ class CommunicatorBase extends ApiBase
 			$this->format = $format;
 			$this->mime_type = $this->supported_formats[$format];
 		}
-
 		else
 		{
 			$this->mime_type = $format;
 		}
+
+		$this->ch = curl_init();
+
+		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
+	}
+
+	/**
+	 * PUT
+	 */
+	public function put()
+	{
+		curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+		array_push($this->httpHeader, 'X-HTTP-Method-Override: PUT');
+
+		return $this;
+	}
+
+	public function setOption($options = array())
+	{
+		$this->options = $options;
+	}
+
+	public function addOption($key, $value)
+	{
+		if(!$key || !isset($value))
+		{
+			return FALSE;
+		}
+
+		$this->options[$key] = $value;
+
+		return $this;
+	}
+
+	public function send()
+	{
+
 	}
 
 	/**
@@ -49,12 +89,6 @@ class CommunicatorBase extends ApiBase
 	 */
 	public function get($method, $params = array(), $options = array())
 	{
-		// 옵션을 입력하지 않았을 때, 에러가 나지 않도록 초기화함
-		if(!is_array($options))
-		{
-			$options = array();
-		}
-
 		$options['post'] = FALSE;
 
 		return $this->_send($method, $params, $options);
@@ -66,11 +100,10 @@ class CommunicatorBase extends ApiBase
 	 */
 	public function post($method, $params = array(), $options = array())
 	{
-		// 옵션을 입력하지 않았을 때, 에러가 나지 않도록 초기화함
-		if(!is_array($options))
-		{
-			$options = array();
-		}
+		$this->options['post'] = TRUE;
+
+		curl_setopt($this->ch, CURLOPT_POST, TRUE);
+		curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'POST');
 
 		$options['post'] = TRUE;
 
@@ -85,8 +118,6 @@ class CommunicatorBase extends ApiBase
 	{
 		$url = $this->getServer() . $method;
 
-		$ch = curl_init();
-
 		if(is_object($params))
 		{
 			$params = (array)$params;
@@ -97,31 +128,22 @@ class CommunicatorBase extends ApiBase
 			$params = array();
 		}
 
+		if(parent::getApiKey())
+		{
+			$params['X-API-KEY'] = parent::getApiKey();
+		}
+
 		$queryString =  http_build_query($params, NULL, '&');
 
-		$httpHeader = array(
+		$this->httpHeader = array(
 			'Content-Type : ' . $this->mime_type,
 			'Content-Length : ' . strlen($queryString),
 			'Accept : ' . $this->mime_type
 		);
  
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-		if(isset($options['post']) && $options['post'] == TRUE)
-		{
-			curl_setopt($ch, CURLOPT_POST, TRUE);
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-		}
-
-		if(isset($options['put']) && $options['put'] == TRUE)
-		{
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-			array_push($httpHeader, 'X-HTTP-Method-Override: PUT');
-		}
-
 		if(is_array($params) && count($params))
 		{
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $queryString);
+			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $queryString);
 		}
 
 		if($this->format)
@@ -129,36 +151,37 @@ class CommunicatorBase extends ApiBase
 			$url .= '?format=' . $this->format;
 		}
 
-		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($this->ch, CURLOPT_URL, $url);
 
 		if(isset($options['auth']))
 		{
-			curl_setopt($ch, CURLOPT_USERPWD, $options['auth']);
+			curl_setopt($this->ch, CURLOPT_USERPWD, $options['auth']);
 		}
 
-		curl_setopt($ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
-//		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-//		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+		curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
+		curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
+		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 3);
+		curl_setopt($this->ch, CURLOPT_TIMEOUT, 3);
+		curl_setopt($this->ch, CURLOPT_REFERER, getNotEncodedFullUrl());
 
-		$this->buffer = curl_exec($ch);
+		$this->buffer = curl_exec($this->ch);
 
 		list($header, $data) = explode("\n\n", $this->buffer, 2);
-		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$http_code = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
 		// Redirection이 발생한 경우 Redirection된 주소로 한 번 더 요청을 보냄
 		if ($http_code == 301 || $http_code == 302)
 		{
-			curl_close($ch);
+			curl_close($this->ch);
 			preg_match('/Location: (.*?)\n/', $header, $matches);
 
 			$url = $matches[1];
 
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-			curl_setopt($ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $httpHeader);
+			$this->ch = curl_init();
+			curl_setopt($this->ch, CURLOPT_URL, $url);
+			curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
+			curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
 
 			if(is_array($params) && count($params))
 			{
@@ -167,34 +190,23 @@ class CommunicatorBase extends ApiBase
 
 			if(isset($options['auth']))
 			{
-				curl_setopt($ch, CURLOPT_USERPWD, $options['auth']);
+				curl_setopt($this->ch, CURLOPT_USERPWD, $options['auth']);
 			}
 
-			$this->buffer = curl_exec($ch);
+			$this->buffer = curl_exec($this->ch);
 		}
 
 
-		$this->httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
-		curl_close($ch);
+		curl_close($this->ch);
 
 		if(!$this->buffer)
 		{
 			return $this;
 		}
 
-		switch($this->format)
-		{
-			case 'json':
-				$this->result = json_decode($this->buffer);
-				break;
-			case 'xml':
-				$xml = simplexml_load_string($this->buffer);
-				$this->result = $xml->children();
-				break;
-			case 'csv':
-				break;
-		}
+		$this->result = new ApiResult($this->format, $this->buffer);
 
 		return $this;
 	}
