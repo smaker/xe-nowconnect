@@ -1,0 +1,24 @@
+.nowconnectWidget ul,
+.nowconnectWidget li{margin:0;padding:0;list-style:none}
+
+.nowconnectWidget h2{font-size:14px !important;padding:0 0 5px;border-bottom:1px solid #D8D8D8}
+
+.nowconnectWidget li {line-height:2.2;font-size:12px;*zoom:1}
+.nowconnectWidget li:after {content:"";display:block;clear:both}
+
+.nowconnectWidget li .user{color:#333}
+
+.nowconnectWidget li dl,
+.nowconnectWidget li dd { margin:0; padding:0; }
+.nowconnectWidget li dd { margin:0 6px 0 0; float:left; }
+.nowconnectWidget li dd em { font-style:normal; color:#999; }
+.nowconnectWidget img{vertical-align:middle}
+.nowconnectWidget .itsMe{font-weight:bold;color:#56aaff;background:lightyellow}
+
+
+.nowconnectWidget .widgetNavigator{ margin:0; padding:0; text-align:right; clear:both;}
+.nowconnectWidget .widgetNavigator li{ list-style:none; display:inline; float:left; margin-right:2px;}
+.nowconnectWidget .widgetNavigator li button{ width:16px; height:16px; padding:0; background-color:transparent; background-image:url(../img/buttonWidgetNavigation.gif); border:1px solid #999; cursor:pointer;}
+.nowconnectWidget .widgetNavigator li button.prev{ background-position:left center; *background-position:-1px center;}
+.nowconnectWidget .widgetNavigator li button.next{ background-position:right center; *background-position:13px center;}
+.nowconnectWidget .widgetNavigator li button span{ position:absolute; display:block; width:0; height:0; overflow:hidden; visibility:hidden;}

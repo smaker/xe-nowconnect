@@ -1,0 +1,29 @@
+<load target="./css/nowconnect.css" />
+<load target="./js/nowconnect_widget.js" />
+
+{@
+	$myId = session_id();
+	$_idx=0;
+}
+<div class="nowconnectWidget">
+	<h2><span>{$lang->nowconnect}<block cond="$widget_info->show_user_count == 'Y'"> ({$widget_info->user_count}명)</block></span></h2>
+	<ul>
+		<li class="itsMe"|cond="$user->_id == $myId" loop="$widget_info->user_list => $key, $user" style="display:none"|cond="$_idx >= $widget_info->list_count">
+			<dl>
+				<dd>
+					<span class="user">
+						<img src="./img/guest.png" width="16" height="16" alt="손님" title="" style="margin-right:6px;" cond="!$user->member_srl" />
+						<img src="./img/member.png" width="16" height="16" alt="" title="" style="margin-right:6px" cond="$user->member_srl" />
+						<img src="./img/mobile.png" width="16" height="16" alt="모바일 기기" title="모바일 기기" cond="$vuser->isMobileDevice" style="margin-right:6px;" />
+						<span class="member_{$user->member_srl}"|cond="$user->member_srl"> {$user->nick_name}</span>
+					</span>
+				</dd>
+			</dl>
+		{@$_idx++}
+		</li>
+	</ul>
+	<ul class="widgetNavigator" cond="$widget_info->page_count > 1 && $widget_info->list_count<$_idx">
+		<li><button type="button" class="prev" title="{$lang->cmd_prev}" onclick="nowconnect_widget_prev(jQuery(this).parents('ul.widgetNavigator').prev('ul'),{$widget_info->list_count})"><span>{$lang->cmd_prev}</span></button></li>
+		<li><button type="button" class="next" title="{$lang->cmd_next}" onclick="nowconnect_widget_next(jQuery(this).parents('ul.widgetNavigator').prev('ul'),{$widget_info->list_count})"><span>{$lang->cmd_next}</span></button></li>
+	</ul>
+</div>
