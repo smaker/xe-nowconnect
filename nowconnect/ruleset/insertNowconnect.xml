@@ -11,12 +11,10 @@
 		<field name="page_count" required="true" rule="number" />
 		<field name="exclude_admin" rule="yn" />
 		<field name="use_realtime" rule="yn" />
-		<field name="api_site_url" required="true" />
 		<field name="api_key" required="true" length="40:40" />
 		<field name="realtime_duration" rule="number,more_than_1000">
 			<if test="$use_realtime == 'Y'" attr="required" value="true" />
 		</field>
 		<field name="include_duplicated_user" rule="yn" />
-
 	</fields>
 </ruleset>

@@ -71,13 +71,6 @@
 			<p class="desc">{$lang->about_api_key}</p>
 		</li>
 		<li>
-			<p class="q">{$lang->api_site_url}</p>
-			<p class="a">
-				<input type="text" name="api_site_url" value="{htmlspecialchars($module_info->api_site_url)}" />
-			</p>
-			<p class="desc">{$lang->about_api_site_url}</p>
-		</li>
-		<li>
 			<p class="q">{$lang->exclude_admin}</p>
 			<p class="a"><input type="radio" id="exclude_admin_y" name="exclude_admin" value="Y" checked="checkec"|cond="$module_info->exclude_admin == 'Y'" /> <label for="exclude_admin_y" class="x_inline">{$lang->yes}</label> <input type="radio"  id="exclude_admin_n" name="exclude_admin" value="N" checked="checkec"|cond="$module_info->exclude_admin != 'Y'" /> <label for="exclude_admin_n" class="x_inline">{$lang->not}</label></p>
 			<p class="desc">{$lang->about_exclude_admin}</p>
