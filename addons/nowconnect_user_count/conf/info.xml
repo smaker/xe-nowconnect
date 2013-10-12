@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon version="0.2">
+	<version>0.2</version>
+	<license>GPL</license>
+	<date>2013-05-05</date>
+	<link>http://funnyxe.com/</link>
+	<title xml:lang="ko">현재 접속자 수 출력 애드온</title>
+	<description xml:lang="ko">이 애드온을 활성화하면 레이아웃에 현재 접속중인 유저 수를 출력할 수 있습니다. 반드시 필요한 페이지에만 적용해주세요^^</description>
+	<author email_address="admin@funnyxe.com" link="http://funnyxe.com/marketQnA">
+		<name xml:lang="ko">퍼니엑스이</name>
+	</author>
+	<extra_vars>
+	<!--
+		<group>
+			<title xml:lang="ko">실시간 업데이트 기능 (작동 안함)</title>
+			<var name="use_realtime" type="select">
+				<title xml:lang="ko">실시간 업데이트 기능 사용</title>
+				<description xml:lang="ko">실시간 업데이트 기능은 AJAX를 이용하여 일정 시간마다 현재 접속자 수를 갱신하는 기능입니다.</description>
+				<options value="Y">
+					<title xml:lang="ko">사용</title>
+				</options>
+				<options value="N">
+					<title xml:lang="ko">사용 안함</title>
+				</options>
+			</var>
+			<var name="duration" type="text">
+				<title xml:lang="ko">업데이트 주기</title>
+				<description xml:lang="ko">현재 접속자 수를 얼마나 자주 갱신할지 설정해 주세요. (3000 = 1초, 3초 이상이어야 기능이 작동합니다.)</description>
+			</var>
+			<var name="css_selector" type="select">
+				<title xml:lang="ko">CSS Selector</title>
+				<description xml:lang="ko">
+				현재 접속자 수를 출력할 영억의 .CLASS 값이나 #ID 값을 입력해 주세요.(jQuery에서 지원하는 모든 CSS selector 입력 가능)
+				아무것도 입력하지 않으면 기본값은 .ncxeCount로 지정됩니다.
+				</description>
+			</var>
+		</group>-->
+	</extra_vars>
+</addon>
