@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <addon version="0.2">
-	<version>0.2</version>
+	<version>0.3.2</version>
 	<license>GPL</license>
-	<date>2013-05-05</date>
+	<date>2013-10-13</date>
 	<link>http://funnyxe.com/</link>
 	<title xml:lang="ko">현재 접속자 수 출력 애드온</title>
 	<description xml:lang="ko">이 애드온을 활성화하면 레이아웃에 현재 접속중인 유저 수를 출력할 수 있습니다. 반드시 필요한 페이지에만 적용해주세요^^</description>

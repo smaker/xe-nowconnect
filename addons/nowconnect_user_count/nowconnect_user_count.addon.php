@@ -26,6 +26,14 @@ if($oNowconnectModel)
 		$output = str_replace('[#CONNECT_USER#]', $userCount, $output);
 	}
 
+	if(strpos($output, '[#CONNECT_MEMBER#]') !== FALSE)
+	{
+		$args = new stdClass;
+		$args->nowconnect_target = 'member';
+		$userCount = $oNowconnectModel->getNowconnectedUserCount($args);
+		$output = str_replace('[#CONNECT_MEMBER#]', $userCount, $output);
+	}
+
 	if(strpos($output, '[#CONNECT_USER_EXCEPT_ADMIN#]') !== FALSE)
 	{
 		$args = new stdClass;
