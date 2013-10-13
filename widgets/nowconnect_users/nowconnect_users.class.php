@@ -33,13 +33,21 @@ class nowconnect_users
 			$show_user_count = 'N';
 		}
 
-		$use_mid = $args->use_mid;
-		if($use_mid == 'mid') $mid = Context::get('mid');
-		else $mid = null;
+		$only_member = $args->only_member;
+		$only_member_list = array('Y' => 1, 'N' => 1);
+		if(!isset($only_member_list[$only_member]))
+		{
+			$only_member = 'N';
+		}
 
 		$obj->list_count = $list_count * $page_count;
 		$obj->mid = $mid;
 		$obj->exclude_admin = $exclude_admin;
+
+		if($only_member == 'Y')
+		{
+			$obj->nowconnect_target = 'member';
+		}
 
 		// nowconnectModel 객체 생성
 		$oNowconnectModel = getModel('nowconnect');
@@ -49,6 +57,7 @@ class nowconnect_users
 		$widget_info->list_count = $list_count;
 		$widget_info->page_count = $page_count;
 		$widget_info->show_user_count = $show_user_count;
+		$widget_info->only_member = $only_member;
 		Context::set('widget_info', $widget_info);
 
 		// 템플릿의 스킨 경로를 지정 (skin, colorset에 따른 값을 설정)
