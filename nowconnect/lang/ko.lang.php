@@ -35,6 +35,11 @@ $lang->current_location = '현재 위치';
 $lang->api_key = 'API 키';
 $lang->api_site_url = '대표 URL';
 
+$lang->nowconnect_target = '접속자 현황 수집 대상';
+$lang->about_nowconnect_target = '접속자 현황을 수집할 접속자를 선택해 주세요.';
+$lang->ncxe_all_member = '모든 접속자';
+$lang->ncxe_logged_member_only = '로그인한 접속자만';
+$lang->about_exclude_admin = '현재 접속자 목록에서 최고관리자를 제외할 수 있습니다.';
 $lang->exclude_admin = '최고관리자 제외';
 $lang->about_exclude_admin = '현재 접속자 목록에서 최고관리자를 제외할 수 있습니다.';
 $lang->use_realtime = '실시간 업데이트 기능';

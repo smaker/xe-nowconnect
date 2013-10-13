@@ -37,7 +37,7 @@ class nowconnectAPI extends nowconnect
 		// 중복 접속자 처리
 		if($module_info->include_duplicated_user == 'Y')
 		{
-			$uid = session_id();
+			$uid = sha1(md5(session_id()));
 		}
 		else
 		{

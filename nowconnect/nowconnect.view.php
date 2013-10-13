@@ -55,6 +55,7 @@ class nowconnectView extends nowconnect
 		$args->page_count = $this->module_info->page_count;
 		$args->page = Context::get('page');
 		$args->hide_ipaddress = ($logged_info->is_admin == 'Y') ? FALSE : TRUE;
+		$args->nowconnect_target = $this->module_info->nowconnect_target;
 
 		if(!$args->page)
 		{

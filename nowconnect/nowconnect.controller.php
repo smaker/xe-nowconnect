@@ -58,15 +58,23 @@ class nowconnectController extends nowconnect
 			return new Object();
 		}
 
-		$exclude_ip_list = explode("\n", $nowconnect_info->exclude_ip);
-		if(count($exclude_ip_list) > 0)
+		if($nowconnect_info->nowconnect_target == 'member' && !$logged_info)
 		{
-			if(in_array($_SERVER['REMOTE_ADDR'], $exclude_ip_list))
+			return new Object();
+		}
+
+		$ipaddress = $_SERVER['REMOTE_ADDR'];
+		$exclude_ip_list = explode("\n", $nowconnect_info->exclude_ip);
+		$count = count($exclude_ip_list);
+
+		for($i=0;$i<$count;$i++)
+		{
+			$ip = str_replace('.', '\.', str_replace('*','(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)',$exclude_ip_list[$i]));
+			if(preg_match('/^'.$ip.'$/', $ipaddress, $matches))
 			{
 				return new Object();
 			}
 		}
-
 
 		$member_srl = (int)$logged_info->member_srl;
 		$nick_name = $logged_info->nick_name;
@@ -74,7 +82,7 @@ class nowconnectController extends nowconnect
 		// 중복 접속자 처리
 		if($nowconnect_info->include_duplicated_user == 'Y')
 		{
-			$uid = session_id();
+			$uid = sha1(md5(session_id()));
 		}
 		else
 		{
@@ -119,7 +127,7 @@ class nowconnectController extends nowconnect
 				'title' => $location,
 				'uri' => $uri
 			),
-			'ipaddress' => $_SERVER['REMOTE_ADDR'],
+			'ipaddress' => $ipaddress,
 			'extraOption' => array(
 				'hide' => $_COOKIE['NCXE_HIDE_MODE']
 			)

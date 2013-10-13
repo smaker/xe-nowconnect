@@ -96,11 +96,6 @@ class nowconnectModel extends nowconnect
 			return NULL;
 		}
 
-		if(!$module_info->api_site_url)
-		{
-			return NULL;
-		}
-
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
 		$oCommunicator->setApiKey($module_info->api_key);
@@ -119,6 +114,11 @@ class nowconnectModel extends nowconnect
 		if($args->exclude_admin == 'Y')
 		{
 			$params['excludeAdmin'] = 'Y';
+		}
+
+		if($args->nowconnect_target == 'member')
+		{
+			$params['target'] = 'member';
 		}
 
 		$output = $oCommunicator->post('api/users', $params);

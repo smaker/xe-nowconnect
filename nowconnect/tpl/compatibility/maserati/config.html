@@ -97,6 +97,17 @@
 			</div>
 		</div>
 		<div class="x_control-group">
+			<label class="x_control-label" for="nowconnect_target">{$lang->nowconnect_target}</label>
+			<div class="x_controls">
+				<select name="nowconnect_target" id="nowconnect_target">
+					<option value="all" selected="selected"|cond="$module_info->nowconnect_target=='all'">{$lang->ncxe_all_member}</option>
+					<option value="member" selected="selected"|cond="$module_info->nowconnect_target=='member'">{$lang->ncxe_logged_member_only}</option>
+				</select>
+				<a href="#aboutNowconnectTarget" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutNowconnectTarget" hidden>{$lang->about_nowconnect_target}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
 			<label class="x_control-label" for="use_realtime">{$lang->use_realtime}</label>
 			<div class="x_controls">
 				<select name="use_realtime" id="use_realtime">

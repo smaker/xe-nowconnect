@@ -76,6 +76,16 @@
 			<p class="desc">{$lang->about_exclude_admin}</p>
 		</li>
 		<li>
+			<p class="q">{$lang->nowconnect_target}</p>
+			<p class="a">
+				<select name="nowconnect_target">
+					<option value="all" selected="selected"|cond="$module_info->nowconnect_target=='all'">{$lang->ncxe_all_member}</option>
+					<option value="member" selected="selected"|cond="$module_info->nowconnect_target=='member'">{$lang->ncxe_logged_member_only}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_nowconnect_target}</p>
+		</li>
+		<li>
 			<p class="q">{$lang->use_realtime}</p>
 			<p class="a">
 				<select name="use_realtime">

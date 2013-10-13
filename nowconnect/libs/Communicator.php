@@ -13,7 +13,7 @@ class CommunicatorBase extends ApiServer
 		'csv'				=> 'text/csv'
 	);
 
-    protected $auto_detect_formats = array(
+	protected $auto_detect_formats = array(
 		'application/xml' 	=> 'xml',
 		'text/xml' 			=> 'xml',
 		'application/json' 	=> 'json',
@@ -167,7 +167,6 @@ class CommunicatorBase extends ApiServer
 		$this->buffer = curl_exec($this->ch);
 
 		list($header, $data) = explode("\n\n", $this->buffer, 2);
-		$http_code = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
 		// Redirection이 발생한 경우 Redirection된 주소로 한 번 더 요청을 보냄
 		if ($http_code == 301 || $http_code == 302)
@@ -195,7 +194,6 @@ class CommunicatorBase extends ApiServer
 
 			$this->buffer = curl_exec($this->ch);
 		}
-
 
 		$this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
@@ -227,8 +225,11 @@ class CommunicatorBase extends ApiServer
 		return $this->result;
 	}
 
+	/**
+	 * HTTP 응답 코드를 반환합니다
+	 */
 	public function getHttpCode()
 	{
-		return $this->httpCode;
+		return (int)$this->httpCode;
 	}
 }
