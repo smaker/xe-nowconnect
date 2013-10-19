@@ -31,7 +31,7 @@
 		<th class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')"><div><span>{$lang->current_location}</span></div></th>
 	</tr>
 	</thead>
-	{@ $no = 1;}
+	{@ $no = 1 * ($page_navigation->cur_page - 1) * ($module_info->list_count) + 1;}
 	<tr class="itsMe"|cond="$user->_id == $myId" loop="$user_list => $key, $user">
 		<td class="no" cond="$module_info->display_num == 'show' || ($module_info->display_num == 'showadmin' && $logged_info->is_admin == 'Y')">{$no}</td>
 		<td class="user">
@@ -46,8 +46,8 @@
 		<td class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
 			<block cond="$user->location->title && ($user->is_admin =='N' || $user->is_admin == 'Y' && $logged_info->is_admin == 'Y')">
 				<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
-				<a href="{$user->location->uri}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)">{$user->location->title}</a>
-				<span cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location->title}"|cond="cut_str($user->location->title, $module_info->cut_location_size) != $user->location->title">{cut_str($user->location->title, $module_info->cut_location_size)}</span>
+				<a href="{$user->location->uri}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)" title="{$user->location->title}">{cut_str($user->location->title, $module_info->cut_location_size)}</a>
+				<span class="location" cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location->title}">{cut_str($user->location->title, $module_info->cut_location_size)}</span>
 			</block>
 			<block cond="!$user->location->title || ($user->is_admin == 'Y' && $logged_info->is_admin != 'Y')">
 				<span class="location" title="알 수 없음"|cond="$user->is_admin == 'Y' && $logged_info->is_admin != 'Y'" title="알 수 없음 ({$user->location->title})"|cond="$logged_info->is_admin 
