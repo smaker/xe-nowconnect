@@ -1,0 +1,142 @@
+<include target="header.html" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form ruleset="insertNowconnect" action="./" method="post" enctype="multipart/form-data" class="form">
+	<input type="hidden" name="module" value="nowconnect" />
+	<input type="hidden" name="act" value="procNowconnectAdminCreate" />
+	<ul>
+		<li>
+			<p class="q">{$lang->mid}</p>
+			<p class="a"><input type="text" name="nowconnect_name" value="" /></p>
+			<p class="desc">{$lang->about_mid}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->module_category}</p>
+			<p class="a">
+				<select name="module_category_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$module_category => $key, $val" value="{$key}">{$val->title}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_module_category}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->browser_title}</p>
+			<p class="a multiLangEdit">
+				<input type="hidden" name="browser_title" value="" class="vLang" />
+				<input type="text" value="" id="browser_title">
+				<span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">{$lang->cmd_set_multilingual}</a></span>
+			</p>
+			<p class="desc">{$lang->about_browser_title}</p>
+		<li>
+			<p class="q">{$lang->layout}</p>
+			<p class="a">
+				<select name="layout_srl">
+					<option value="{$val->layout_srl}" loop="$layout_list => $key, $val">{$val->title}<block cond="$val->layout_srl != -1"> ({$val->layout})</block></option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_layout}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->skin}</p>
+			<p class="a">
+				<select name="skin">
+					<option value="{$key}" loop="$skin_list => $key, $val">{$val->title}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_skin}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->list_count}</label>
+			<p class="a">
+				<input type="text" name="list_count" value="20" style="width:30px" />
+			</p>
+			<p class="desc">{$lang->about_nowconnect_list_count}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->page_count}</p>
+			<p class="a">
+				<input type="text" name="page_count" value="20" style="width:30px" />
+			</p>
+			<p class="desc">{$lang->about_page_count}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->api_key}</p>
+			<p class="a">
+				<input type="text" name="api_key" value="" maxlength="40" />
+			</p>
+			<p class="desc">{$lang->about_api_key}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->exclude_admin}</p>
+			<p class="a"><input type="radio" id="exclude_admin_y" name="exclude_admin" value="Y" /> <label for="exclude_admin_y" class="x_inline">{$lang->yes}</label> <input type="radio"  id="exclude_admin_n" name="exclude_admin" value="N" /> <label for="exclude_admin_n" class="x_inline">{$lang->not}</label></p>
+			<p class="desc">{$lang->about_exclude_admin}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->nowconnect_target}</p>
+			<p class="a">
+				<select name="nowconnect_target">
+					<option value="all">{$lang->ncxe_all_member}</option>
+					<option value="member">{$lang->ncxe_logged_member_only}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_nowconnect_target}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->use_realtime}</p>
+			<p class="a">
+				<select name="use_realtime">
+					<option value="N">{$lang->notuse}</option>
+					<option value="Y">{$lang->use}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_use_realtime}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->realtime_duration}</p>
+			<p class="a">
+				<input type="number" name="realtime_duration" value="" style="width:80px;" />
+			</p>
+			<p class="desc">{$lang->about_realtime_duration}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->exclude_ip}</p>
+			<p class="a">
+				<textarea name="exclude_ip" rows="4" id="exclude_ip"></textarea>
+			</p>
+			<p class="desc">{$lang->about_exclude_ip}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->include_duplicated_user}</p>
+			<p class="a">
+				<select name="include_duplicated_user">
+					<option value="N">{$lang->not_include}</option>
+					<option value="Y">{$lang->include}</option>
+				</select>
+			</p>
+			<p class="desc">{$lang->about_include_duplicated_user}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->header_text}</p>
+			<p class="a multiLangEdit">
+				<input type="hidden" name="header_text" value="" class="vLang" />
+				<textarea id="header_text" class="vLang" rows="8" cols="42"></textarea>
+				<span class="desc"><a href="#langEditTextarea" class="editUserLang tgAnchor">{$lang->cmd_set_multilingual}</a></span>
+			</p>
+			<p class="desc">{$lang->about_header_text}</p>
+		</li>
+		<li>
+			<p class="q">{$lang->footer_text}</p>
+			<p class="a multiLangEdit">
+				<input type="hidden" name="footer_text" value="" class="vLang" />
+				<textarea id="footer_text" class="vLang" rows="8" cols="42"></textarea>
+				<span class="desc"><a href="#langEditTextarea" class="editUserLang tgAnchor">{$lang->cmd_set_multilingual}</a></span>
+			</p>
+			<p class="desc">{$lang->about_footer_text}</p>
+		</li>
+	</ul>
+	<span class="btn"><input type="submit" value="{$lang->cmd_create_nowconnect}" /></span>
+</form>

@@ -1,0 +1,167 @@
+<include target="header.html" />
+
+<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<p>{$XE_VALIDATOR_MESSAGE}</p>
+</div>
+
+<form ruleset="insertNowconnect" action="./" method="post" enctype="multipart/form-data" class="x_form-horizontal">
+	<input type="hidden" name="module" value="nowconnect" />
+	<input type="hidden" name="act" value="procNowconnectAdminCreate" />
+	<section class="section">
+		<h1>{$lang->subtitle_primary} <button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button></h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="nowconnect_name">{$lang->mid}</label>
+			<div class="x_controls">
+				<input type="text" name="nowconnect_name" id="nowconnect_name">
+				<a href="#aboutMid" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutMid" hidden>{$lang->about_mid}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->browser_title}</label>
+			<div class="x_controls">
+				<input type="text" name="browser_title" id="browser_title" value=""  class="lang_code"/>
+				<a href="#aboutBrowserTitle" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutBrowserTitle" hidden>{$lang->about_browser_title}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="layout_srl">{$lang->layout}</label>
+			<div class="x_controls">
+				<select name="layout_srl" id="layout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$layout_list => $key, $val" value="{$val->layout_srl}">{$val->title} ({$val->layout})</option>
+				</select>
+				<a href="#aboutLayout" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutLayout" hidden>{$lang->about_layout}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="skin">{$lang->skin}</label>
+			<div class="x_controls">
+				<select name="skin" id="skin" style="width:auto">
+					<option loop="$skin_list=> $key, $val" value="{$key}">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="header_text">{$lang->header_text}</label>
+			<div class="x_controls">
+				<textarea name="header_text" id="header_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_header_text}"></textarea>
+				<a href="#header_text_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="header_text_help" class="x_help-block" hidden>{$lang->about_header_text}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="footer_text">{$lang->footer_text}</label>
+			<div class="x_controls">
+				<textarea name="footer_text" id="footer_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_footer_text}"></textarea>
+				<a href="#footer_text_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="footer_text_help" class="x_help-block" hidden>{$lang->about_footer_text}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="api_key">{$lang->api_key}</label>
+			<div class="x_controls">
+				<input type="text" name="api_key" id="api_key" placeholder="{$lang->api_key}" value="" maxlength="40" style="width:320px;"> 
+				<a href="#api_key_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="api_key_help" class="x_help-block" hidden>{$lang->about_api_key}</p>
+			</div>
+		</div>
+	</section>
+	<section class="section">
+		<h1>{$lang->subtitle_advanced} <button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button></h1>
+		<div class="x_control-group">
+			<label class="x_control-label" for="list_count">{$lang->list_count}</label>
+			<div class="x_controls">
+				<input type="text" name="list_count" id="list_count" value="20" style="width:30px" />
+				<p class="x_help-inline">{$lang->about_nowconnect_list_count}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="page_count">{$lang->page_count}</label>
+			<div class="x_controls">
+				<input type="text" name="page_count" id="page_count" value="20" style="width:30px" />
+				<p class="x_help-inline">{$lang->about_page_count}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="exclude_admin">{$lang->exclude_admin}</label>
+			<div class="x_controls">
+				<select name="exclude_admin" id="exclude_admin">
+					<option value="Y">{$lang->yes}</option>
+					<option value="N">{$lang->not}</option>
+				</select>
+				<a href="#aboutExcludeAdmin" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutExcludeAdmin" hidden>{$lang->about_exclude_admin}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="nowconnect_target">{$lang->nowconnect_target}</label>
+			<div class="x_controls">
+				<select name="nowconnect_target" id="nowconnect_target">
+					<option value="all">{$lang->ncxe_all_member}</option>
+					<option value="member">{$lang->ncxe_logged_member_only}</option>
+				</select>
+				<a href="#aboutNowconnectTarget" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutNowconnectTarget" hidden>{$lang->about_nowconnect_target}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="use_realtime">{$lang->use_realtime}</label>
+			<div class="x_controls">
+				<select name="use_realtime" id="use_realtime">
+					<option value="N">{$lang->notuse}</option>
+					<option value="Y">{$lang->use}</option>
+				</select>
+				<a href="#aboutUseRealtime" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutUseRealtime" hidden>{$lang->about_use_realtime}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="realtime_duration">{$lang->realtime_duration}</label>
+			<div class="x_controls">
+				<input type="number" name="realtime_duration" value="" min="1000" style="width:60px">
+				<p class="x_help-inline">{$lang->about_realtime_duration}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="exclude_ip">{$lang->exclude_ip}</label>
+			<div class="x_controls">
+				<textarea name="exclude_ip" rows="4" id="exclude_ip"></textarea>
+				<p class="x_help-inline">{$lang->about_exclude_ip}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="include_duplicated_user">{$lang->include_duplicated_user}</label>
+			<div class="x_controls">
+				<select name="include_duplicated_user" id="include_duplicated_user">
+					<option value="N">{$lang->not_include}</option>
+					<option value="Y">{$lang->include}</option>
+				</select>
+				<a href="#aboutIncludeDuplicatedUser" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutIncludeDuplicatedUser" hidden>{$lang->about_include_duplicated_user}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="module_category_srl">{$lang->module_category}</label>
+			<div class="x_controls">
+				<select name="module_category_srl" id="module_category_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$module_category => $key, $val" value="{$key}">{$val->title}</option>
+				</select>
+				<a href="#aboutCategory" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutCategory" hidden>{$lang->about_module_category}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="description">{$lang->description}</label>
+			<div class="x_controls">
+				<textarea name="description" id="description" rows="4" cols="42" placeholder="{$lang->about_description}"></textarea>
+				<a href="#description_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="description_help" class="x_help-block" hidden>{$lang->about_description}</p>
+			</div>
+		</div>
+	</section>
+	<span class="btn"><input type="submit" value="{$lang->cmd_create_nowconnect}" /></span>
+</form>
