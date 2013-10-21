@@ -47,11 +47,6 @@ class nowconnectModel extends nowconnect
 			return NULL;
 		}
 
-		if(!$module_info->api_site_url)
-		{
-			return NULL;
-		}
-
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
 		$oCommunicator->setApiKey($module_info->api_key);
@@ -66,7 +61,7 @@ class nowconnectModel extends nowconnect
 		}
 
 		$output = $oCommunicator->post('api/users/count', $params);
-		return (int)$output->getResult()->totalCount;
+		return (int)$output->getResult()->result->totalCount;
 	}
 
 	/**
