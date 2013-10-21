@@ -74,14 +74,14 @@
 		<div class="x_control-group">
 			<label class="x_control-label" for="list_count">{$lang->list_count}</label>
 			<div class="x_controls">
-				<input type="text" name="list_count" id="list_count" value="20" style="width:30px" />
+				<input type="number" name="list_count" id="list_count" value="20" min="1" style="width:30px" />
 				<p class="x_help-inline">{$lang->about_nowconnect_list_count}</p>
 			</div>
 		</div>
 		<div class="x_control-group">
 			<label class="x_control-label" for="page_count">{$lang->page_count}</label>
 			<div class="x_controls">
-				<input type="text" name="page_count" id="page_count" value="20" style="width:30px" />
+				<input type="number" name="page_count" id="page_count" value="10" min="10" style="width:30px" />
 				<p class="x_help-inline">{$lang->about_page_count}</p>
 			</div>
 		</div>
