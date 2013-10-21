@@ -46,7 +46,7 @@
 		<td class="location" cond="!$module_info->display_location || $module_info->display_location == 'show' || ($module_info->display_location == 'showadmin' && $logged_info->is_admin == 'Y')">
 			<block cond="$user->location->title && ($user->is_admin =='N' || $user->is_admin == 'Y' && $logged_info->is_admin == 'Y')">
 				<strong cond="$user->isMobile">[{$lang->locationList['Mobile']}] </strong>
-				<a href="{$user->location->uri}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)" title="{$user->location->title}">{cut_str($user->location->title, $module_info->cut_location_size)}</a>
+				<a href="{$user->location->uri}" cond="$module_info->location_url == 'link' || ($module_info->location_url == 'linkadmin' && $logged_info->is_admin)" title="{$user->location->title}"><span class="location">{cut_str($user->location->title, $module_info->cut_location_size)}</span></a>
 				<span class="location" cond="$module_info->location_url == '' || $module_info->location_url == 'notlink'" title="{$user->location->title}">{cut_str($user->location->title, $module_info->cut_location_size)}</span>
 			</block>
 			<block cond="!$user->location->title || ($user->is_admin == 'Y' && $logged_info->is_admin != 'Y')">
