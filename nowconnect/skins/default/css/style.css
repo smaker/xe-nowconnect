@@ -3,7 +3,7 @@
 .ncxe a{text-decoration:none}
 /* User List */
 .ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center;font-size:12px}
-.ncxe table caption{margin:3px 0 5px;text-align:left}
+.ncxe table caption{margin:3px 0 5px;text-align:left;display:table-caption}
 .ncxe table caption img{vertical-align:middle}
 .ncxe table caption strong{color:#F60;font-family:Tahoma;font-size:11px}
 .ncxe table caption .title {float:left}
@@ -13,7 +13,7 @@
 .ncxe table caption .rt{margin:7px 12px 0 0;float:left;font-size:12px;font-weight:normal}
 .ncxe table caption .rt input{vertical-align:middle;display:none}
 .ncxe table caption .rt label{cursor:pointer}
-.ncxe th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ncxe th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
 .ncxe td{padding:8px 0;border:0 none}
 .ncxe td.no{white-space:nowrap}
 .ncxe td.user{text-align:left;padding:8px 0 8px 15px;white-space:nowrap}
