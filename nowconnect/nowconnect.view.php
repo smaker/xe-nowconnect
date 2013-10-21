@@ -47,6 +47,11 @@ class nowconnectView extends nowconnect
 			return $this->stop('msg_not_permitted');
 		}
 
+		if(Context::getRequestMethod() == 'XMLRPC' && !$this->grant->realtime_update)
+		{
+			return $this->stop('msg_not_permitted');
+		}
+
 		$logged_info = Context::get('logged_info');
 		$oNowconnectModel = getModel('nowconnect');
 

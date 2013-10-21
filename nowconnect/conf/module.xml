@@ -4,6 +4,9 @@
 		<grant name="list">
 			<title xml:lang="ko">접속자 목록</title>
 		</grant>
+		<grant name="realtime_update">
+			<title xml:lang="ko">실시간 업데이트</title>
+		</grant>
 	</grants>
 	<permissions />
 	<actions>
