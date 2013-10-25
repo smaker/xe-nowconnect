@@ -2,7 +2,7 @@
 <module version="0.2">
 	<title xml:lang="ko">현재 접속자</title>
 	<description xml:lang="ko">현재 접속자 정보를 수집하고 접속자 목록을 보여줍니다.</description>
-	<version>0.3.3</version>
+	<version>0.3.3.1</version>
 	<date>2013-10-21</date>
 	<category>service</category>
 
