@@ -4,7 +4,7 @@
  */
 class CommunicatorBase extends ApiServer
 {
-	private $format = 'xml'; // << API 요청 타입 (xml, json, csv)
+	private $format = 'json'; // << API 요청 타입 (xml, json, csv)
 	protected $supported_formats = array(
 		'xml' 				=> 'application/xml',
 		'json' 				=> 'application/json',
@@ -29,22 +29,14 @@ class CommunicatorBase extends ApiServer
 	private $httpCode;
 	private $ch;
 	private $method;
+	private $params;
 
 	/**
 	 * Constructor
 	 */
-	public function __construct($format = NULL)
+	public function __construct()
 	{
-		if (array_key_exists($format, $this->supported_formats))
-		{
-			$this->format = $format;
-			$this->mime_type = $this->supported_formats[$format];
-		}
-		else
-		{
-			$this->mime_type = $format;
-		}
-
+		$this->mime_type = $this->supported_formats['json'];
 		$this->ch = curl_init();
 
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -61,9 +53,11 @@ class CommunicatorBase extends ApiServer
 		return $this;
 	}
 
-	public function setOption($options = array())
+	public function option($options = array())
 	{
 		$this->options = $options;
+
+		return $this;
 	}
 
 	public function addOption($key, $value)
@@ -78,73 +72,75 @@ class CommunicatorBase extends ApiServer
 		return $this;
 	}
 
-	public function send()
+	public function param($params)
 	{
+		$this->params = $params;
 
+		if(is_object($this->params))
+		{
+			$this->params = (array)$this->params;
+		}
+
+		if(!is_array($this->params))
+		{
+			$this->params = array();
+		}
+ 
+		$api_key = parent::getApiKey();
+		if($api_key)
+		{
+			$this->params['X-API-KEY'] = $api_key;
+		}
+
+		if(count($this->params))
+		{
+			$this->queryString =  http_build_query($this->params, NULL, '&');
+			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $this->queryString);
+		}
+
+		return $this;
 	}
 
 	/**
 	 * GET 요청을 보냄
 	 * @access public
 	 */
-	public function get($method, $params = array(), $options = array())
+	public function get($method)
 	{
-		$options['post'] = FALSE;
+		$this->method = $method;
+		$this->addOption('post', FALSE);
 
-		return $this->_send($method, $params, $options);
+		return $this;
 	}
 
 	/**
 	 * POST 요청을 보냄
 	 * @access public
 	 */
-	public function post($method, $params = array(), $options = array())
+	public function post($method)
 	{
-		$this->options['post'] = TRUE;
+		$this->method = $method;
+		$this->addOption('post', TRUE);
 
 		curl_setopt($this->ch, CURLOPT_POST, TRUE);
 		curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'POST');
 
-		$options['post'] = TRUE;
-
-		return $this->_send($method, $params, $options);
+		return $this;
 	}
 
 	/**
 	 * API 요청을 보냄
-	 * @access protected
+	 * @access public
 	 */
-	protected function _send($method, $params = array(), $options = array())
+	public function send()
 	{
-		$url = $this->getServer() . $method;
-
-		if(is_object($params))
-		{
-			$params = (array)$params;
-		}
-
-		if(!is_array($params))
-		{
-			$params = array();
-		}
-
-		if(parent::getApiKey())
-		{
-			$params['X-API-KEY'] = parent::getApiKey();
-		}
-
-		$queryString =  http_build_query($params, NULL, '&');
+		$url = $this->getServer() . $this->method;
 
 		$this->httpHeader = array(
 			'Content-Type : ' . $this->mime_type,
-			'Content-Length : ' . strlen($queryString),
+			'Content-Length : ' . strlen($this->queryString),
 			'Accept : ' . $this->mime_type
 		);
- 
-		if(is_array($params) && count($params))
-		{
-			curl_setopt($this->ch, CURLOPT_POSTFIELDS, $queryString);
-		}
 
 		if($this->format)
 		{
@@ -152,24 +148,20 @@ class CommunicatorBase extends ApiServer
 		}
 
 		curl_setopt($this->ch, CURLOPT_URL, $url);
-
-		if(isset($options['auth']))
-		{
-			curl_setopt($this->ch, CURLOPT_USERPWD, $options['auth']);
-		}
-
 		curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
 		curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
-		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 3);
-		curl_setopt($this->ch, CURLOPT_TIMEOUT, 3);
+		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt($this->ch, CURLOPT_TIMEOUT, 2);
 		curl_setopt($this->ch, CURLOPT_REFERER, getNotEncodedFullUrl());
 
 		$this->buffer = curl_exec($this->ch);
 
 		list($header, $data) = explode("\n\n", $this->buffer, 2);
 
+		$httpCode = $this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+
 		// Redirection이 발생한 경우 Redirection된 주소로 한 번 더 요청을 보냄
-		if ($http_code == 301 || $http_code == 302)
+		if ($httpCode == 301 || $httpCode == 302)
 		{
 			curl_close($this->ch);
 			preg_match('/Location: (.*?)\n/', $header, $matches);
@@ -182,14 +174,14 @@ class CommunicatorBase extends ApiServer
 			curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
 			curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
 
-			if(is_array($params) && count($params))
+			if(is_array($this->params) && count($this->params))
 			{
 				curl_setopt($ch, CURLOPT_POSTFIELDS, $queryString);
 			}
 
-			if(isset($options['auth']))
+			if(isset($this->options['auth']))
 			{
-				curl_setopt($this->ch, CURLOPT_USERPWD, $options['auth']);
+				curl_setopt($this->ch, CURLOPT_USERPWD, $this->options['auth']);
 			}
 
 			$this->buffer = curl_exec($this->ch);
@@ -209,15 +201,13 @@ class CommunicatorBase extends ApiServer
 		return $this;
 	}
 
-	public function flush()
-	{
-		$this->buffer = NULL;
-		$this->result = NULL;
-	}
-
-	public function getBuffer()
+	public function buffer()
 	{
 		return $this->buffer;
+	}
+	public function result()
+	{
+		return $this->result;
 	}
 
 	public function getResult()
