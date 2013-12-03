@@ -67,3 +67,5 @@ $lang->msg_api_site_url_required = '대표 URL을 입력해주세요.';
 
 $lang->msg_invalid_api_site_url = '라이선스가 등록되지 않은 사이트입니다. 대표 URL을 확인해주세요.';
 $lang->msg_invalid_api_key = '등록되지 않은 API 키입니다.';
+
+$lang->mcrypt_extension_required = 'mcrypt 확장 기능이 설치되어 있지 않습니다.'. PHP_EOL . '설치 후 사용 가능합니다.';

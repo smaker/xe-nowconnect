@@ -18,4 +18,8 @@
 <load target="./css/theme-red.css" cond="$selectedTheme == 'red'" />
 <load target="./css/theme-blue.css" cond="$selectedTheme == 'blue'" />
 
+<div class="message alert" cond="!extension_loaded('mcrypt')">
+	<p>{nl2br($lang->mcrypt_extension_required)}</p>
+</div>
+
 <div class="ncxe {$selectedTheme}">

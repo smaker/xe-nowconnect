@@ -11,3 +11,7 @@
 		<li class="active"|cond="$act == 'dispNowconnectAdminSkinInfo'" cond="$module_info->module_srl"><a href="{getUrl('act', 'dispNowconnectAdminSkinInfo')}">{$lang->cmd_manage_skin}</a></li>
 	</ul>
 </div>
+
+<div class="message alert" cond="!extension_loaded('mcrypt')">
+	<p>{nl2br($lang->mcrypt_extension_required)}</p>
+</div>

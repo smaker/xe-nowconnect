@@ -141,7 +141,14 @@ class nowconnectController extends nowconnect
 			'base64'	=>	true
 		);
 
-		$oCrypt = new Crypt($options);
+		try
+		{
+			$oCrypt = new Crypt($options);
+		}
+		catch(Exception $e)
+		{
+			return new Object();
+		}
 
 		$user_info = $oCrypt->encrypt(serialize($user_info));
 
