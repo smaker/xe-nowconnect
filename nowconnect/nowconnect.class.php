@@ -8,12 +8,15 @@ if(!class_exists('ApiServer'))
 	require(_XE_PATH_.'modules/nowconnect/libs/API/Server.php');
 }
 
+if(!class_exists('ApiResult'))
+{
+	require(_XE_PATH_.'modules/nowconnect/libs/API/Result.php');
+}
+
 if(!class_exists('CommunicatorBase'))
 {
 	require(_XE_PATH_.'modules/nowconnect/libs/Communicator.php');
 }
-
-	require(_XE_PATH_.'modules/nowconnect/libs/API/Result.php');
 
 /**
  * @class nowconnect

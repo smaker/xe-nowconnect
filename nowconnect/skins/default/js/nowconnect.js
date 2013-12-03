@@ -1,89 +1,129 @@
-var nowconnectTimer;
 var nowconnectStopTimer;
 var nowconnectRetry = 0;
 var nowconnectChecker = false;
-var realtimeStatus = false;
 
-var ncxe = {
-	'isActiveRTU' : function() {
-		if(typeof(nowconnectRefresh) == 'undefined') {
-			return false;
-		}
-
-		return jQuery.cookie('ncxeRt') == 'y';
-	},
-	'activeRTU' : function()
-	{
-		realtimeStatus = true;
-		jQuery.cookie('ncxeRt', 'y', { expires : 7 });
-	},
-	'deactiveRTU' : function()
-	{
-		realtimeStatus = false;
-		jQuery.cookie('ncxeRt', 'n', { expires : 7 });
-
-		clearInterval(nowconnectTimer);
-	},
-	'_doRTU': function()
-	{
-	},
-	'setChecked': function() {
-		var $lbl = jQuery('#lblRt');
-
-		$lbl
-			.find('i.icon-check-empty')
-				.removeClass('icon-check-empty')
-				.addClass('icon-check');
-	},
-	'setUnchecked': function() {
-		var $lbl = jQuery('#lblRt');
-
-		$lbl
-			.find('i.icon-check')
-				.removeClass('icon-check')
-				.addClass('icon-check-empty');
-	}
-};
 (function($){
+	var ncxe = {
+		/* Variables */
+		'nowconnectTimer' : null,
+		'nowconnectStopTimer' : null,
+		'realtimeStatus' : false,
+		/* Callback */
+		'callbackRefreshNowconnect' : function (response) {
+			var error = parseInt(response.error);
+			if(error) {
+				alert(response.message);
+				nowconnectRetry++;
 
-	function activeRealtimeUpdate() 
-	{
-		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
-			var ncxeRt = $.cookie('ncxeRt');
-			if(typeof ncxeRt == 'undefined')
+				if(nowconnectRetry > 5)
+				{
+					var $lbl = $('#lblRt');
+					$lbl.click();
+				}
+
+				clearInterval(this.nowconnectTimer);
+			}
+
+			var html = response.html;
+			if(html) {
+				$('div.ncxe').html(html);
+				if(this.realtimeStatus)
+				{
+					var $lbl = $('#lblRt');
+					$lbl.click();
+				}
+
+				var options = { placement : 'auto' };
+				$('div.ncxe span.location').tooltip(options);
+
+				clearInterval(this.nowconnectTimer);
+			}
+		},
+		/* Timer Callback */
+		'refreshNowconnect' : function() {
+			if($('#chkRt').is(':checked')) {
+				var response_tags = new Array('error', 'message', 'html');
+				show_waiting_message = false;
+				exec_xml('nowconnect', 'dispNowconnect', { 'mid' : current_mid, 'page' : current_page }, this.callbackRefreshNowconnect, response_tags);
+				show_waiting_message = true;
+				this.nowconnectStopTimer = setTimeout(this.refreshStop, 600000);
+			} else {
+				clearInterval(this.nowconnectTimer);
+				clearTimeout(this.nowconnectStopTimer);
+			}
+		},
+		'refreshStop': function() {
+			this
+				.setUnchecked()
+				.deactiveRealtimeUpdate();
+		},
+		/* Methods */
+		'isActiveRealtimeUpdate' : function() {
+			return $.cookie('ncxeRt') == 'y';
+		},
+		'activeRealtimeUpdate' : function() {
+			this.realtimeStatus = true;
+			$.cookie('ncxeRt', 'y', { expires : 7 });
+			return this;
+		},
+		'deactiveRealtimeUpdate' : function() {
+			this.realtimeStatus = false;
+			$.cookie('ncxeRt', 'n', { expires : 7 });
+			clearInterval(this.nowconnectTimer);
+			return this;
+		},
+		'setChecked': function() {
+			var $lbl = $('#lblRt');
+
+			$lbl
+				.find('i.icon-check-empty')
+					.removeClass('icon-check-empty')
+					.addClass('icon-check');
+			return this;
+		},
+		'setUnchecked': function() {
+			var $lbl = $('#lblRt');
+
+			$lbl
+				.find('i.icon-check')
+					.removeClass('icon-check')
+					.addClass('icon-check-empty');
+			return this;
+		},
+		'init': function() {
+			if(typeof(nowconnectRefresh) == 'undefined' || !nowconnectRefresh) return false;
+			if(typeof($.cookie('ncxeRt')) == 'undefined')
 			{
-				ncxe.deactiveRTU();
+				this.deactiveRealtimeUpdate();
 			}
 			else
 			{
-				if(ncxe.isActiveRTU())
+				if(this.isActiveRealtimeUpdate())
 				{
-					realtimeStatus = true;
-					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-					//nowconnectStopTimer = setTimeout(stopRefresh, 60 * 10);
-
-					ncxe.setChecked();
-
+					this.activeRealtimeUpdate();
+					this.nowconnectTimer = setInterval(this.refreshNowconnect, nowconnectRefreshDuration);
+					this.setChecked();
 					$('#chkRt').prop('checked', true);
 				}
 			}
 		}
-	}
-
+	};
 	$(document).ready(function()
 	{
 			$(document).on('change', '#chkRt', function(){
 				if(this.checked) {
-					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-					ncxe.activeRTU();
-					ncxe.setChecked();
+					ncxe.nowconnectTimer = setInterval(ncxe.refreshNowconnect, nowconnectRefreshDuration);
+					ncxe
+						.activeRealtimeUpdate()
+						.setChecked();
 				} else {
-					ncxe.deactiveRTU();
-					ncxe.setUnchecked();
+					ncxe
+						.deactiveRealtimeUpdate()
+						.setUnchecked();
 				}
 			});
 
-			activeRealtimeUpdate();
+			ncxe.init();
 
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
@@ -93,50 +133,6 @@ var ncxe = {
 		Cufon.replace('.nowconnectList caption .title .brand', { fontFamily: 'NanumGothic' } );
 	});
 })(jQuery);
-
-function refreshNowconnect()
-{
-	if(jQuery('#chkRt').is(':checked')) {
-		var response_tags = new Array('error', 'message', 'html');
-		show_waiting_message = false;
-		jQuery.exec_xml('nowconnect', 'dispNowconnect', { 'mid' : current_mid, 'page' : current_page }, callbackRefreshNowconnect, response_tags);
-		show_waiting_message = true;
-	} else {
-		clearInterval(nowconnectTimer);
-	}
-}
-
-function callbackRefreshNowconnect(response) {
-	var error = parseInt(response.error);
-	if(error) {
-		alert(response.message);
-		nowconnectRetry++;
-
-		if(nowconnectRetry > 5)
-		{
-			var $lbl = jQuery('#lblRt');
-			$lbl.click();
-		}
-
-		clearInterval(nowconnectTimer);
-	}
-
-	var html = response.html;
-	if(html) {
-		var $ = jQuery;
-		$('div.ncxe').html(html);
-		if(realtimeStatus)
-		{
-			var $lbl = $('#lblRt');
-			$lbl.click();
-		}
-
-		var options = { placement : 'auto' };
-		$('div.ncxe span.location').tooltip(options);
-
-		clearInterval(nowconnectTimer);
-	}
-}
 
 /* ========================================================================
  * Bootstrap: tooltip.js v3.0.0

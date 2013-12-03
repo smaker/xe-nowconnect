@@ -13,7 +13,7 @@ class nowconnectAdminView extends nowconnect
 	function init()
 	{
 		// nowconnectModel의 객체 생성
-		$oNowconnectModel = &getModel('nowconnect');
+		$oNowconnectModel = getModel('nowconnect');
 
 		// nowconnect 모듈 정보를 구해서 Context::set()
 		$this->module_info = $oNowconnectModel->getNowconnectInfo();
@@ -37,7 +37,7 @@ class nowconnectAdminView extends nowconnect
 		$logged_info = Context::get('logged_info');
 
 		// nowconnectModel의 객체 생성
-		$oNowconnectModel = &getModel('nowconnect');
+		$oNowconnectModel = getModel('nowconnect');
 
 		// 기본 설정값 지정
 		$args->list_count = 30;
@@ -61,7 +61,7 @@ class nowconnectAdminView extends nowconnect
 	 */
 	function dispNowconnectAdminGlobalConfig()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$config = $oModuleModel->getModuleConfig('nowconnect');
 
 		Context::set('config', $config);
@@ -76,10 +76,10 @@ class nowconnectAdminView extends nowconnect
 	function dispNowconnectAdminModuleConfig()
 	{
 		// moduleModel의 객체 생성
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 
 		// layoutModel의 객체 생성
-		$oLayoutModel = &getModel('layout');
+		$oLayoutModel = getModel('layout');
 
 		// 생성한 모듈 분류를 가져옴
 		$module_category = $oModuleModel->getModuleCategories();
@@ -110,7 +110,7 @@ class nowconnectAdminView extends nowconnect
 	function dispNowconnectAdminGrantInfo()
 	{
 		// Common module settings page, call rights
-		$oModuleAdminModel = &getAdminModel('module');
+		$oModuleAdminModel = getAdminModel('module');
 		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
 		Context::set('grant_content', $grant_content);
 
@@ -122,7 +122,7 @@ class nowconnectAdminView extends nowconnect
 	 */
 	function dispNowconnectAdminSkinInfo()
 	{
-		$oModuleAdminModel = &getAdminModel('module');
+		$oModuleAdminModel = getAdminModel('module');
 		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
 		Context::set('skin_content', $skin_content);
 

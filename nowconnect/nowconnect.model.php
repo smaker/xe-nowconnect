@@ -47,10 +47,22 @@ class nowconnectModel extends nowconnect
 			return NULL;
 		}
 
+		if($this->module_info->module == 'nowconnect')
+		{
+			if($args->nowconnect_target == $module_info->nowconnect_target && $args->exclude_admin == $module_info->exclude_admin)
+			{
+				$totalCount = Context::get('total_count');
+				if(!is_null($totalCount))
+				{
+					return (int)$totalCount;
+				}
+			}
+		}
+
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
 		$oCommunicator->setApiKey($module_info->api_key);
-		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
+		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/api/');
 
 		$params = array();
 
@@ -60,7 +72,7 @@ class nowconnectModel extends nowconnect
 			$params['excludeAdmin'] = 'Y';
 		}
 
-		$output = $oCommunicator->post('api/users/count', $params);
+		$output = $oCommunicator->post('users/count')->param($params)->send();
 		return (int)$output->getResult()->result->totalCount;
 	}
 
@@ -92,9 +104,9 @@ class nowconnectModel extends nowconnect
 		}
 
 		// Communicator 객체 생성
-		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator = new CommuniCatorBase();
 		$oCommunicator->setApiKey($module_info->api_key);
-		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
+		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/api/');
 
 		$params = array();
 
@@ -116,8 +128,8 @@ class nowconnectModel extends nowconnect
 			$params['target'] = 'member';
 		}
 
-		$output = $oCommunicator->post('api/users', $params);
-		$tmp = $output->getResult();
+		$output = $oCommunicator->post('users')->param($params)->send();
+		$tmp = $output->result();
 		if(!$tmp)
 		{
 			$tmp = new stdClass;
