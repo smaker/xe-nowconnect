@@ -157,10 +157,10 @@ class nowconnectController extends nowconnect
 		// Communicator 객체 생성
 		$oCommunicator = new CommuniCatorBase('json');
 		$oCommunicator->setApiKey($nowconnect_info->api_key);
-		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/');
+		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/api/');
 
 		// API 요청
-		$oCommunicator->post('api/tick', $params);
+		$oCommunicator->post('tick')->param($params)->send();
 
 		return new Object();
 	}
