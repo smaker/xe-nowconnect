@@ -14,7 +14,8 @@
 			<span class="userCount label {$labelClass}">{number_format($total_count)}</span>
 		</span>
 		<span class="rm" cond="($module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update) || ($module_info->module_srl && $logged_info->is_admin == 'Y')">
-			<label for="use_realtime" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update"><button type="button" class="nbtn nbtn-default"><i class="icon-check-empty"></i> {$lang->realtime_update}</button><input type="checkbox" id="use_realtime" class="checkbox" hidden="hidden" /> </label>
+			<label id="lblRt" for="chkRt" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update" class="nbtn nbtn-default"><i class="icon-check-empty"></i> {$lang->realtime_update}</label>
+			<input type="checkbox" id="chkRt" class="checkbox" hidden />
 			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="icon-cog"></i></a>
 		</span>
 		</caption>

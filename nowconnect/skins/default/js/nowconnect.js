@@ -1,59 +1,90 @@
 var nowconnectTimer;
+var nowconnectStopTimer;
+var nowconnectRetry = 0;
 var nowconnectChecker = false;
 var realtimeStatus = false;
 
+var ncxe = {
+	'isActiveRTU' : function() {
+		if(typeof(nowconnectRefresh) == 'undefined') {
+			return false;
+		}
+
+		return jQuery.cookie('ncxeRt') == 'y';
+	},
+	'activeRTU' : function()
+	{
+		realtimeStatus = true;
+		jQuery.cookie('ncxeRt', 'y', { expires : 7 });
+	},
+	'deactiveRTU' : function()
+	{
+		realtimeStatus = false;
+		jQuery.cookie('ncxeRt', 'n', { expires : 7 });
+
+		clearInterval(nowconnectTimer);
+	},
+	'_doRTU': function()
+	{
+	},
+	'setChecked': function() {
+		var $lbl = jQuery('#lblRt');
+
+		$lbl
+			.find('i.icon-check-empty')
+				.removeClass('icon-check-empty')
+				.addClass('icon-check');
+	},
+	'setUnchecked': function() {
+		var $lbl = jQuery('#lblRt');
+
+		$lbl
+			.find('i.icon-check')
+				.removeClass('icon-check')
+				.addClass('icon-check-empty');
+	}
+};
 (function($){
+
 	function activeRealtimeUpdate() 
 	{
 		if(typeof(nowconnectRefresh) != 'undefined' && nowconnectRefresh) {
 			var ncxeRt = $.cookie('ncxeRt');
 			if(typeof ncxeRt == 'undefined')
 			{
-				$.cookie('ncxeRt', 'n', { expires : 7 });
+				ncxe.deactiveRTU();
 			}
 			else
 			{
-				if(ncxeRt == 'y')
+				if(ncxe.isActiveRTU())
 				{
 					realtimeStatus = true;
 					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-					var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
+					//nowconnectStopTimer = setTimeout(stopRefresh, 60 * 10);
 
-					$lbl
-						.find('i.icon-check-empty')
-							.removeClass('icon-check-empty')
-							.addClass('icon-check');
+					ncxe.setChecked();
 
-					$('#use_realtime').prop('checked', true);
+					$('#chkRt').prop('checked', true);
 				}
 			}
-
-			$(document).on('change', '#use_realtime', function(){
-				var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
-				if(this.checked) {
-					realtimeStatus = true;
-					$.cookie('ncxeRt', 'y', { expires: 7 });
-					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
-					$lbl
-						.find('i.icon-check-empty')
-							.removeClass('icon-check-empty')
-							.addClass('icon-check');
-				} else {
-					realtimeStatus = false;
-					$.cookie('ncxeRt', 'n', { expires: 7 });
-					clearInterval(nowconnectTimer);
-					$lbl
-						.find('i.icon-check')
-						.removeClass('icon-check')
-						.addClass('icon-check-empty');
-				}
-			});
 		}
 	}
 
 	$(document).ready(function()
 	{
-		activeRealtimeUpdate();
+			$(document).on('change', '#chkRt', function(){
+				if(this.checked) {
+					nowconnectTimer = setInterval(refreshNowconnect, nowconnectRefreshDuration);
+					ncxe.activeRTU();
+					ncxe.setChecked();
+				} else {
+					ncxe.deactiveRTU();
+					ncxe.setUnchecked();
+				}
+			});
+
+			activeRealtimeUpdate();
+
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
 	});
@@ -65,7 +96,7 @@ var realtimeStatus = false;
 
 function refreshNowconnect()
 {
-	if(jQuery('#use_realtime').is(':checked')) {
+	if(jQuery('#chkRt').is(':checked')) {
 		var response_tags = new Array('error', 'message', 'html');
 		show_waiting_message = false;
 		jQuery.exec_xml('nowconnect', 'dispNowconnect', { 'mid' : current_mid, 'page' : current_page }, callbackRefreshNowconnect, response_tags);
@@ -78,6 +109,15 @@ function refreshNowconnect()
 function callbackRefreshNowconnect(response) {
 	var error = parseInt(response.error);
 	if(error) {
+		alert(response.message);
+		nowconnectRetry++;
+
+		if(nowconnectRetry > 5)
+		{
+			var $lbl = jQuery('#lblRt');
+			$lbl.click();
+		}
+
 		clearInterval(nowconnectTimer);
 	}
 
@@ -87,7 +127,7 @@ function callbackRefreshNowconnect(response) {
 		$('div.ncxe').html(html);
 		if(realtimeStatus)
 		{
-			var $lbl = $('div.ncxe > table.nowconnectList > caption > .rm > label[for=use_realtime]');
+			var $lbl = $('#lblRt');
 			$lbl.click();
 		}
 
