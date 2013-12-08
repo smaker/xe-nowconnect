@@ -10,14 +10,14 @@ class nowconnectModel extends nowconnect
 	/**
 	 * @brief 초기화
 	 */
-	function init()
+	public function init()
 	{
 	}
 
 	/**
 	 * 현재 접속자 수 API
 	 */
-	function getNowconnectUserCount()
+	public function getNowconnectUserCount()
 	{
 		$args = new stdClass;
 		$args->excludeAdmin = Context::get('exclude_admin');
@@ -30,7 +30,7 @@ class nowconnectModel extends nowconnect
 	/**
 	 * 현재 접속자 수를 가져옴
 	 */
-	function getNowconnectedUserCount($args)
+	public function getNowconnectedUserCount($args)
 	{
 		if(!$args->site_srl)
 		{
@@ -84,7 +84,7 @@ class nowconnectModel extends nowconnect
 	 * period_time: "n" specifies the time range in minutes since the last update
 	 * mid: a user who belong to a specified mid
 	 **/
-	function getConnectedUsers($args, $isPage = TRUE) {
+	public function getConnectedUsers($args, $isPage = TRUE) {
 		if(!$args->site_srl)
 		{
 			$site_module_info = Context::get('site_module_info');
@@ -148,7 +148,7 @@ class nowconnectModel extends nowconnect
 	/**
 	 * 현재 접속자 모듈 정보를 가져옵니다
 	 */
-	function getNowconnectInfo()
+	public function getNowconnectInfo()
 	{
 		static $module_info;
 
@@ -159,7 +159,7 @@ class nowconnectModel extends nowconnect
 		}
 
 		// 모듈 정보가 있으면 그대로 return
-		if(isset($module_info))
+		if($module_info)
 		{
 			return $module_info;
 		}
@@ -172,8 +172,6 @@ class nowconnectModel extends nowconnect
 		$oModuleModel = getModel('module');
 
 		// 모듈 정보를 구해서 return
-		$module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
-
-		return $module_info;
+		return ($module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl));
 	}
 }

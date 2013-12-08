@@ -4,24 +4,6 @@
  */
 class CommunicatorBase extends ApiServer
 {
-	private $format = 'json'; // << API 요청 타입 (xml, json, csv)
-	protected $supported_formats = array(
-		'xml' 				=> 'application/xml',
-		'json' 				=> 'application/json',
-		'serialize' 		=> 'application/vnd.php.serialized',
-		'php' 				=> 'text/plain',
-		'csv'				=> 'text/csv'
-	);
-
-	protected $auto_detect_formats = array(
-		'application/xml' 	=> 'xml',
-		'text/xml' 			=> 'xml',
-		'application/json' 	=> 'json',
-		'text/json' 		=> 'json',
-		'text/csv' 			=> 'csv',
-		'application/csv' 	=> 'csv',
-		'application/vnd.php.serialized' => 'serialize'
-	);
 	protected $buffer = NULL; // API 요청 결과값
 	protected $options = array();
 	private $result = NULL; // 파싱 결과값
@@ -36,7 +18,6 @@ class CommunicatorBase extends ApiServer
 	 */
 	public function __construct()
 	{
-		$this->mime_type = $this->supported_formats['json'];
 		$this->ch = curl_init();
 
 		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -134,18 +115,13 @@ class CommunicatorBase extends ApiServer
 	 */
 	public function send()
 	{
-		$url = $this->getServer() . $this->method;
+		$url = $this->getServer() . $this->method . '?format=json';
 
 		$this->httpHeader = array(
-			'Content-Type : ' . $this->mime_type,
+			'Content-Type : application/json',
 			'Content-Length : ' . strlen($this->queryString),
-			'Accept : ' . $this->mime_type
+			'Accept : application/json'
 		);
-
-		if($this->format)
-		{
-			$url .= '?format=' . $this->format;
-		}
 
 		curl_setopt($this->ch, CURLOPT_URL, $url);
 		curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
@@ -156,7 +132,8 @@ class CommunicatorBase extends ApiServer
 
 		$this->buffer = curl_exec($this->ch);
 
-		list($header, $data) = explode("\n\n", $this->buffer, 2);
+		$headerSeparator = PHP_EOL . PHP_EOL;
+		list($header, $data) = explode($headerSeparator, $this->buffer, 2);
 
 		$httpCode = $this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
@@ -196,7 +173,7 @@ class CommunicatorBase extends ApiServer
 			return $this;
 		}
 
-		$this->result = new ApiResult($this->format, $this->buffer);
+		$this->result = new ApiResult($this->buffer);
 
 		return $this;
 	}

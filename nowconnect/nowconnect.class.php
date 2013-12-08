@@ -47,7 +47,7 @@ class nowconnect extends ModuleObject
 	/**
 	 * 업데이트가 필요한지 확인
 	 **/
-	function checkUpdate()
+	public function checkUpdate()
 	{
 		$oModuleModel = getModel('module');
 		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
@@ -61,10 +61,10 @@ class nowconnect extends ModuleObject
 	/**
 	 * 모듈 업데이트
 	 **/
-	function moduleUpdate()
+	public function moduleUpdate()
 	{
 		$oModuleModel = getModel('module');
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 
 		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
 		{
@@ -77,7 +77,7 @@ class nowconnect extends ModuleObject
 	/**
 	 * 캐시 파일 재생성
 	 **/
-	function recompileCache()
+	public function recompileCache()
 	{
 	}
 }

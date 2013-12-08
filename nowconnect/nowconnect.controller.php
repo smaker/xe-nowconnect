@@ -10,14 +10,14 @@ class nowconnectController extends nowconnect
 	/**
 	 * @brief 초기화
 	 */
-	function init()
+	public function init()
 	{
 	}
 
 	/**
 	 * after_module_proc에 대응하는 트리거
 	 */
-	function triggerAfterModuleProc(&$oModule)
+	public function triggerAfterModuleProc(&$oModule)
 	{
 		$module = $oModule->module;
 		$module_info = $oModule->module_info;
@@ -26,20 +26,7 @@ class nowconnectController extends nowconnect
 
 		if(Context::getResponseMethod() != 'HTML' && !($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')) return new Object();
 
-		$location = Context::getBrowserTitle();
-		$locationByAct = _getLocationByAct($act);
-		if(!$location)
-		{
-			$location = $module_info->browser_title;
-		}
-
-		if($locationByAct)
-		{
-			$location .= ' - ' . $locationByAct;
-		}
-
-		$logged_info = Context::get('logged_info');
-
+		// nowconnectModel 객체 생성
 		$oNowconnectModel = getModel('nowconnect');
 
 		// 현재 접속자 모듈일 경우, DB에서 모듈 정보를 가져오지 않도록 합니다
@@ -53,27 +40,67 @@ class nowconnectController extends nowconnect
 			$nowconnect_info = $oNowconnectModel->getNowconnectInfo();
 		}
 
+		// API 키를 입력하지 않았다면 실행을 중단합니다
 		if(!$nowconnect_info->api_key)
 		{
 			return new Object();
 		}
 
+		// 로그인 정보를 구합니다
+		$logged_info = Context::get('logged_info');
+
+		// 접속자 현황 수집 대상이 회원이고 로그인을 하지 않았다면 실행을 중단합니다
 		if($nowconnect_info->nowconnect_target == 'member' && !$logged_info)
 		{
 			return new Object();
 		}
 
-		$ipaddress = $_SERVER['REMOTE_ADDR'];
-		$exclude_ip_list = explode("\n", $nowconnect_info->exclude_ip);
-		$count = count($exclude_ip_list);
+		// 브라우저 제목을 가져옵니다
+		$location = Context::getBrowserTitle();
+		// 현재 페이지에 브라우저 제목이 없는 경우
+		if(!$location)
+		{
+			// 모듈 정보에 등록된 브라우저 제목으로 대체
+			$location = $module_info->browser_title;
+		}
 
-		for($i=0;$i<$count;$i++)
+		// act 값으로 정확한 현재 위치를 구합니다
+		$locationByAct = _getLocationByAct($act);
+		// act 값으로 현재 위치를 가져왔다면
+		if($locationByAct)
+		{
+			// 끝에 덧붙임
+			$location .= ' - ' . $locationByAct;
+		}
+
+		$exclude_ip_list = explode(PHP_EOL, $nowconnect_info->exclude_ip);
+
+		for($i=0,$c=count($exclude_ip_list);$i<$c;$i++)
 		{
 			$ip = str_replace('.', '\.', str_replace('*','(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)',$exclude_ip_list[$i]));
-			if(preg_match('/^'.$ip.'$/', $ipaddress, $matches))
+			if(preg_match('/^'.$ip.'$/', $_SERVER['REMOTE_ADDR'], $matches))
 			{
 				return new Object();
 			}
+		}
+
+		// 암호화 옵션
+		$options = array(
+			'key'		=>	$nowconnect_info->api_key,
+			'mode'		=>	'ecb',
+			'algorithm'	=>	'blowfish',
+			'base64'	=>	true
+		);
+
+		try
+		{
+			// 암호화를 위한 Crypt 객체 생성
+			$oCrypt = new Crypt($options);
+		}
+		catch(Exception $e)
+		{
+			// mcrypt 확장 기능이 설치되어 있지 않으면 실행 중단
+			return new Object();
 		}
 
 		$member_srl = (int)$logged_info->member_srl;
@@ -89,24 +116,17 @@ class nowconnectController extends nowconnect
 			$uid = sha1(md5($_SERVER['REMOTE_ADDR']));
 		}
 
+		// 접속자를 구분하기 위한 고유값을 템플릿에서 쓸 수 있도록 Context::set()
 		Context::set('myUID', $uid);
 
 		// 로그인하지 않은 경우 임의로 닉네임을 생성함
 		if(!$nick_name)
 		{
-			$nick_name = '손님'.substr(sha1($uid),0, 5);
+			$nick_name = '손님' . substr(sha1($uid),0, 5);
 		}
-
-		if(!$logged_info->is_admin)
-		{
-			$logged_info->is_admin = 'N';
-		}
-
-		$mid = $module_info->mid;
-		$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 		$uri = $_SERVER['REQUEST_URI'];
-		
+
 		if($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC' && $_SESSION['NOWCONNECT_LOCATION_URL'])
 		{
 			$uri = $_SESSION['NOWCONNECT_LOCATION_URL'];
@@ -116,11 +136,11 @@ class nowconnectController extends nowconnect
 
 		$user_info = array(
 			'_id' => $uid,
-			'mid' => $mid,
+			'mid' => $module_info->mid,
 			'member_srl' => $member_srl,
 			'nick_name' => $nick_name,
-			'user-agent' => $user_agent,
-			'is_admin' => $logged_info->is_admin,
+			'user-agent' => $_SERVER['HTTP_USER_AGENT'],
+			'is_admin' => $logged_info->is_admin ? $logged_info->is_admin : 'N',
 			'isMobileDevice' => Mobile::isMobileCheckByAgent(),
 			'isMobile' => Mobile::isFromMobilePhone(),
 			'location' => array(
@@ -133,23 +153,7 @@ class nowconnectController extends nowconnect
 			)
 		);
 
-		// 암호화 옵션
-		$options = array(
-			'key'		=>	$nowconnect_info->api_key,
-			'mode'		=>	'ecb',
-			'algorithm'	=>	'blowfish',
-			'base64'	=>	true
-		);
-
-		try
-		{
-			$oCrypt = new Crypt($options);
-		}
-		catch(Exception $e)
-		{
-			return new Object();
-		}
-
+		// 사용자 정보를 암호화합니다
 		$user_info = $oCrypt->encrypt(serialize($user_info));
 
 		if($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')
