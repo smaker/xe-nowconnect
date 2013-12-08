@@ -150,8 +150,8 @@ class CommunicatorBase extends ApiServer
 		curl_setopt($this->ch, CURLOPT_URL, $url);
 		curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
 		curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
-		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 2);
-		curl_setopt($this->ch, CURLOPT_TIMEOUT, 2);
+		curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, 1);
+		curl_setopt($this->ch, CURLOPT_TIMEOUT, 1);
 		curl_setopt($this->ch, CURLOPT_REFERER, getNotEncodedFullUrl());
 
 		$this->buffer = curl_exec($this->ch);
