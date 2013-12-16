@@ -130,7 +130,7 @@
 			<title xml:lang="ko">고급 설정</title>
 			<var name="load_cufon" type="select" default="Y">
 				<title xml:lang="ko">Cufon 포함</title>
-				<description xml:lang="ko">미려한 디자인을 적용하기 위해 Cufon을 불러옵니다. 기본적으로 Cufon을 포함하도록 설정되어 있지만, 레이아웃에서 Cufon을 불러올 경우 Cufon을 포함하지 않도록 설정해주세요.</description>
+				<description xml:lang="ko">미려한 글꼴을 적용하기 위해 Cufon을 불러옵니다. 기본적으로 Cufon을 포함하도록 설정되어 있지만, 레이아웃에서 Cufon을 불러올 경우 Cufon을 포함하지 않도록 설정해주세요.</description>
 				<options value="Y">
 					<title xml:lang="ko">포함</title>
 				</options>

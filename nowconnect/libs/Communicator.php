@@ -135,10 +135,10 @@ class CommunicatorBase extends ApiServer
 		$headerSeparator = PHP_EOL . PHP_EOL;
 		list($header, $data) = explode($headerSeparator, $this->buffer, 2);
 
-		$httpCode = $this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+		$this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
 		// Redirection이 발생한 경우 Redirection된 주소로 한 번 더 요청을 보냄
-		if ($httpCode == 301 || $httpCode == 302)
+		if ($this->httpCode == 301 || $this->httpCode == 302)
 		{
 			curl_close($this->ch);
 			preg_match('/Location: (.*?)\n/', $header, $matches);
@@ -148,7 +148,7 @@ class CommunicatorBase extends ApiServer
 			$this->ch = curl_init();
 			curl_setopt($this->ch, CURLOPT_URL, $url);
 			curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
-			curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator');
+			curl_setopt($this->ch, CURLOPT_USERAGENT, 'XpressEngine Nowconnect Module Communicator v0.3.4');
 			curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->httpHeader);
 
 			if(is_array($this->params) && count($this->params))
@@ -162,9 +162,8 @@ class CommunicatorBase extends ApiServer
 			}
 
 			$this->buffer = curl_exec($this->ch);
+			$this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 		}
-
-		$this->httpCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
 		curl_close($this->ch);
 

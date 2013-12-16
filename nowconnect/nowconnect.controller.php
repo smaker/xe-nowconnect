@@ -147,7 +147,7 @@ class nowconnectController extends nowconnect
 				'title' => $location,
 				'uri' => $uri
 			),
-			'ipaddress' => $ipaddress,
+			'ipaddress' => $_SERVER['REMOTE_ADDR'],
 			'extraOption' => array(
 				'hide' => $_COOKIE['NCXE_HIDE_MODE']
 			)

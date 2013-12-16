@@ -16,5 +16,6 @@
 			<if test="$use_realtime == 'Y'" attr="required" value="true" />
 		</field>
 		<field name="include_duplicated_user" rule="yn" />
+		<field name="nowconnect_target" required="true" />
 	</fields>
 </ruleset>

@@ -57,20 +57,6 @@ class nowconnectAdminView extends nowconnect
 	}
 
 	/**
-	 * 기본 설정
-	 */
-	function dispNowconnectAdminGlobalConfig()
-	{
-		$oModuleModel = getModel('module');
-		$config = $oModuleModel->getModuleConfig('nowconnect');
-
-		Context::set('config', $config);
-
-		// 템플릿 파일 지정
-		$this->setTemplateFile('globalConfig');
-	}
-
-	/**
 	 * @brief 현재 접속자 모듈 설정
 	 */
 	function dispNowconnectAdminModuleConfig()

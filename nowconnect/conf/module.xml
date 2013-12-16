@@ -11,7 +11,6 @@
 	<permissions />
 	<actions>
 		<action name="dispNowconnectAdminNowList" type="view" admin_index="true" menu_name="nowconnect" menu_index="true" />
-		<action name="dispNowconnectAdminGlobalConfig" type="view" menu_name="nowconnect" />
 		<action name="dispNowconnectAdminModuleConfig" type="view" menu_name="nowconnect" />
 		<action name="dispNowconnectAdminGrantInfo" type="view" menu_name="nowconnect" />
 		<action name="dispNowconnectAdminSkinInfo" type="view" menu_name="nowconnect" />
