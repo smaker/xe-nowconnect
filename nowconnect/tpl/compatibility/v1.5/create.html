@@ -26,8 +26,8 @@
 		<li>
 			<p class="q">{$lang->browser_title}</p>
 			<p class="a multiLangEdit">
-				<input type="hidden" name="browser_title" value="" class="vLang" />
-				<input type="text" value="" id="browser_title">
+				<input type="hidden" name="browser_title" value="<!--@if(strpos($module_info->browser_title, '$user_lang->') === false)-->{$module_info->browser_title}<!--@else-->{htmlspecialchars($module_info->browser_title)}<!--@end-->" class="vLang" />
+				<input type="text" id="browser_title" value="{$module_info->browser_title}" class="vLang" />
 				<span class="desc"><a href="#langEdit" class="editUserLang tgAnchor">{$lang->cmd_set_multilingual}</a></span>
 			</p>
 			<p class="desc">{$lang->about_browser_title}</p>
@@ -139,4 +139,7 @@
 		</li>
 	</ul>
 	<span class="btn"><input type="submit" value="{$lang->cmd_create_nowconnect}" /></span>
+
+	<include target="../../module/tpl/include.multilang.html" />
+	<include target="../../module/tpl/include.multilang.textarea.html" />
 </form>
