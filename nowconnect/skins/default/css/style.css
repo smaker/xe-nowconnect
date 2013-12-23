@@ -1,5 +1,6 @@
 /* Default UI */
 .ncxe *{font-family:"나눔고딕","맑은 고딕",NanumGothic,"Malgun Gothic",Sans-serif,Verdena}
+.ncxe [class^="icon-"], [class*=" icon-"]{font-family:FontAwesome}
 .ncxe a{text-decoration:none}
 /* User List */
 .ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center;font-size:12px}
