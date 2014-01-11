@@ -1,6 +1,6 @@
 <?php
 /**
-* @class 출석부 모듈의 nowconnectmobile 클래스
+* @class 현재접속자 모듈의 nowconnectmobile 클래스
 * @author BJRambo (sosifam@070805.co.kr)
 * @모바일에서 요청된 작업 수행
 *
