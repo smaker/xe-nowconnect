@@ -1,0 +1,17 @@
+<include target="header.html" />
+
+<form ruleset="insertNowconnectConfig" action="./" method="post" enctype="multipart/form-data" class="form">
+	<input type="hidden" name="module" value="nowconnect" />
+	<input type="hidden" name="act" value="procNowconnectAdminInsertConfig" />
+	<input type="hidden" name="success_return_url" value="{getRequestUriByServerEnviroment()}" />
+	<ul>
+		<li>
+			<p class="q">{$lang->exclude_admin}</p>
+			<p class="a"><input type="radio" id="exclude_admin_y" name="exclude_admin" value="Y" checked="checkec"|cond="$config->exclude_admin == 'Y'" /> <label for="exclude_admin_y" class="x_inline">{$lang->yes}</label> <input type="radio"  id="exclude_admin_n" name="exclude_admin" value="N" checked="checkec"|cond="$config->exclude_admin != 'Y'" /> <label for="exclude_admin_n" class="x_inline">{$lang->not}</label></p>
+			<p class="desc">{$lang->about_exclude_admin}</p>
+		</li>
+	</ul>
+	<div class="btnArea">
+		<span class="btn"><input type="submit" value="{$lang->cmd_submit}" /></span>
+	</div>
+</form>

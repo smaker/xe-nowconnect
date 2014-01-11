@@ -75,9 +75,15 @@ class nowconnectAdminView extends nowconnect
 		$skin_list = $oModuleModel->getSkins($this->module_path);
 		Context::set('skin_list', $skin_list);
 
+		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
+		Context::set('mskin_list', $mskin_list);
+
 		// 레이아웃 목록을 가져옴
 		$layout_list = $oLayoutModel->getLayoutList();
 		Context::set('layout_list', $layout_list);
+
+		$mobile_layout_list = $oLayoutModel->getLayoutList(0,"M");
+		Context::set('mlayout_list', $mobile_layout_list);
 
 		if(!$this->module_info->module_srl)
 		{
@@ -106,10 +112,20 @@ class nowconnectAdminView extends nowconnect
 	/**
 	 * @brief 스킨 관리
 	 */
+	// pc용 스킨
 	function dispNowconnectAdminSkinInfo()
 	{
 		$oModuleAdminModel = getAdminModel('module');
 		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
+		Context::set('skin_content', $skin_content);
+
+		$this->setTemplateFile('skin_info');
+	}
+	// 모바일용 스킨
+	function dispNowconnectAdminMobileSkinInfo()
+	{
+		$oModuleAdminModel = getAdminModel('module');
+		$skin_content = $oModuleAdminModel->getModuleMobileSkinHTML($this->module_info->module_srl);
 		Context::set('skin_content', $skin_content);
 
 		$this->setTemplateFile('skin_info');

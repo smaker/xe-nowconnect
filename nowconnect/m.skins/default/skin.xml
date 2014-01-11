@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skin version="0.2">
+	<title xml:lang="ko">현재 접속자 기본 모바일 스킨</title>
+	<description xml:lang="ko">
+	게시판과 유사한 형태로 구성된 목록형 스킨입니다.
+	</description>
+	<version>0.1</version>
+	<date>2012-10-28</date>
+
+	<author email_address="admin@funnyxe.com" link="http://funnyxe.com/">
+		<name xml:lang="ko">퍼니엑스이</name>
+	</author>
+	<colorset>
+		<color name="white">
+			<title xml:lang="ko">기본</title>
+		</color>
+		<color name="black">
+			<title xml:lang="ko">검은색</title>
+		</color>
+		<color name="blackD">
+			<title xml:lang="ko">검은색 (어두운 바탕용)</title>
+		</color>
+		<color name="orange">
+			<title xml:lang="ko">주황색</title>
+		</color>
+		<!--
+		<color name="red">
+			<title xml:lang="ko">빨간색</title>
+		</color>
+		-->
+	</colorset>
+	<extra_vars>
+		<group>
+			<title xml:lang="ko">기본 설정</title>
+			<var name="title" type="text">
+				<title xml:lang="ko">상단 제목</title>
+				<description xml:lang="ko">상단에 출력할 제목을 입력해주세요.</description>
+			</var>
+		</group>
+		<group>
+			<title xml:lang="ko">세부 설정</title>
+			<var name="noColumnWidth" type="text" default="65">
+				<title xml:lang="ko">'번호' 가로폭</title>
+				<description xml:lang="ko">'번호' 항목의 가로폭을 입력해 주세요.
+				(기본값 : 65, 단위 : px)</description>
+			</var>
+			<var name="nicknameColumnWidth" type="text" default="165">
+				<title xml:lang="ko">'닉네임' 가로폭</title>
+				<description xml:lang="ko">'닉네임' 항목의 가로폭을 입력해 주세요.
+				(기본값 : 165, 단위 : px)</description>
+			</var>
+			<var name="ipColumnWidth" type="text" default="130">
+				<title xml:lang="ko">'IP' 가로폭</title>
+				<description xml:lang="ko">'IP' 항목의 가로폭을 입력해 주세요.
+				(기본값 : 130, 단위 : px)</description>
+			</var>
+			<var name="cut_location_size" type="text">
+				<title xml:lang="ko">현재 위치 글자수</title>
+				<description xml:lang="ko">지정한 글자수만큼 현재 위치를 잘라서 보여줍니다. </description>
+			</var>
+			<var name="display_num" type="select" default="show">
+				<title xml:lang="ko">'번호' 표시</title>
+				<description xml:lang="ko">
+					접속자의 번호를 표시 할지 결정합니다.
+				</description>
+				<options value="show">
+					<title xml:lang="ko">출력</title>
+					<title xml:lang="en">Show</title>
+				</options>
+				<options value="showadmin">
+					<title xml:lang="ko">출력 (최고관리자만 볼 수 있음)</title>
+					<title xml:lang="en">Show (Only Super Admin)</title>
+				</options>
+				<options value="hide">
+					<title xml:lang="ko">출력하지 않음</title>
+					<title xml:lang="en">Hide</title>
+				</options>
+			</var>
+			<var name="display_ipaddress" type="select" default="show">
+				<title xml:lang="ko">IP 표시</title>
+				<title xml:lang="en">Display Ipaddress</title>
+				<description xml:lang="ko">
+					접속자의 IP를 표시 할지 결정합니다.
+				</description>
+				<options value="show">
+					<title xml:lang="ko">출력</title>
+					<title xml:lang="en">Show</title>
+				</options>
+				<options value="showadmin">
+					<title xml:lang="ko">출력 (최고관리자만 볼 수 있음)</title>
+					<title xml:lang="en">Show (Only Super Admin)</title>
+				</options>
+				<options value="hide">
+					<title xml:lang="ko">출력하지 않음</title>
+					<title xml:lang="en">Hide</title>
+				</options>
+			</var>
+			<var name="display_location" type="select" default="show">
+				<title xml:lang="ko">현재 위치 표시</title>
+				<description xml:lang="ko">
+					현재 위치를 클릭하면 접속자가 보고 있는 페이지의 링크로 연결되게 할 수 있습니다
+				</description>
+				<options value="show">
+					<title xml:lang="ko">출력</title>
+				</options>
+				<options value="showadmin">
+					<title xml:lang="ko">출력 (최고관리자만 볼 수 있음)</title>
+				</options>
+				<options value="hide">
+					<title xml:lang="ko">출력하지 않음</title>
+				</options>
+			</var>
+			<var name="location_url" type="select" default="link">
+				<title xml:lang="ko">현재 위치 URL 연결</title>
+				<description xml:lang="ko">
+					현재 위치를 클릭하면 접속자가 보고 있는 페이지의 링크로 연결되게 할 수 있습니다
+				</description>
+				<options value="link">
+					<title xml:lang="ko">연결</title>
+				</options>
+				<options value="linkadmin">
+					<title xml:lang="ko">연결 (최고관리자만 가능)</title>
+				</options>
+				<options value="notlink">
+					<title xml:lang="ko">연결하지 않음</title>
+				</options>
+			</var>
+		</group>
+		<group>
+			<title xml:lang="ko">고급 설정</title>
+			<var name="load_cufon" type="select" default="Y">
+				<title xml:lang="ko">Cufon 포함</title>
+				<description xml:lang="ko">미려한 글꼴을 적용하기 위해 Cufon을 불러옵니다. 기본적으로 Cufon을 포함하도록 설정되어 있지만, 레이아웃에서 Cufon을 불러올 경우 Cufon을 포함하지 않도록 설정해주세요.</description>
+				<options value="Y">
+					<title xml:lang="ko">포함</title>
+				</options>
+				<options value="N">
+					<title xml:lang="ko">포함하지 않음</title>
+				</options>
+			</var>
+		</group>
+	</extra_vars>
+</skin>
