@@ -42,7 +42,7 @@ class nowconnectController extends nowconnect
 				$isMobileBot = $oCacheHandler->get($cache_key2);
 			}
 
-			if(!$isBot == NULL || !$isBot == '')
+			if($isBot == NULL || $isBot == '')
 			{
 				if(!class_exists('Mobile_Detect'))
 				{
@@ -56,7 +56,7 @@ class nowconnectController extends nowconnect
 				}
 			}
 
-			if(!$isMobileBot == NULL || !$isMobileBot == '')
+			if($isMobileBot == NULL || $isMobileBot == '')
 			{
 				if(!class_exists('Mobile_Detect'))
 				{
