@@ -26,6 +26,57 @@ class nowconnectController extends nowconnect
 
 		if(Context::getResponseMethod() != 'HTML' && !($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')) return new Object();
 
+
+		// 로그인 정보를 구합니다
+		$logged_info = Context::get('logged_info');
+
+		if($logged_info->is_admin != 'Y')
+		{
+
+			$oCacheHandler = CacheHandler::getInstance('object');
+			if($oCacheHandler->isSupport())
+			{
+				$cache_key = 'isBot:'. md5($_SERVER['USER-AGENT']);
+				$cache_key2 = 'isMobileBot:'. md5($_SERVER['USER-AGENT']);
+				$isBot = $oCacheHandler->get($cache_key);
+				$isMobileBot = $oCacheHandler->get($cache_key2);
+			}
+
+			if(!$isBot == NULL || !$isBot == '')
+			{
+				if(!class_exists('Mobile_Detect'))
+				{
+					require _XE_PATH_ . 'modules/nowconnect/libs/Mobile_Detect.php';
+					$detect = new Mobile_Detect(null, $_SERVER['HTTP_USER_AGENT']);
+				}
+				$isBot = $detect->is('Bot');
+				if($oCacheHandler->isSupport())
+				{
+					$oCacheHandler->put($cache_key, $isBot);
+				}
+			}
+
+			if(!$isMobileBot == NULL || !$isMobileBot == '')
+			{
+				if(!class_exists('Mobile_Detect'))
+				{
+					require _XE_PATH_ . 'modules/nowconnect/libs/Mobile_Detect.php';
+					$detect = new Mobile_Detect(null, $_SERVER['HTTP_USER_AGENT']);
+				}
+
+				$isMobileBot = $detect->is('MobileBot');
+				if($oCacheHandler->isSupport())
+				{
+					$oCacheHandler->put($cache_key2, $isMobileBot);
+				}
+			}
+		
+			if($isBot || $isMobileBot)
+			{
+				return new Object();
+			}
+		}
+
 		// nowconnectModel 객체 생성
 		$oNowconnectModel = getModel('nowconnect');
 
@@ -46,8 +97,6 @@ class nowconnectController extends nowconnect
 			return new Object();
 		}
 
-		// 로그인 정보를 구합니다
-		$logged_info = Context::get('logged_info');
 
 		// 접속자 현황 수집 대상이 회원이고 로그인을 하지 않았다면 실행을 중단합니다
 		if($nowconnect_info->nowconnect_target == 'member' && !$logged_info)
