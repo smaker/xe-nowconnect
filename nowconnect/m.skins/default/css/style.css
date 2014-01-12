@@ -1,0 +1,236 @@
+/* Default UI */
+.ncxe *{font-family:"나눔고딕","맑은 고딕",NanumGothic,"Malgun Gothic",Sans-serif,Verdena}
+.ncxe [class^="icon-"], [class*=" icon-"]{font-family:FontAwesome}
+.ncxe a{text-decoration:none}
+/* User List */
+.ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center;font-size:12px}
+.ncxe table caption{margin:3px 0 5px;text-align:left;display:table-caption}
+.ncxe table caption img{vertical-align:middle}
+.ncxe table caption strong{color:#F60;font-family:Tahoma;font-size:11px}
+.ncxe table caption .title {float:left}
+.ncxe table caption .brand{margin:-3px 5px 0 0;font:18px "나눔고딕","맑은 고딕",NanumGothic,"Malgun Gothic",Sans-serif,Verdena;font-weight:800;letter-spacing:-1px;position:relative;top:1px}
+.ncxe table caption .userCount{font-size:13px;font-weight:800}
+.ncxe table caption .rm{float:right;font-weight:normal}
+.ncxe table caption .rt{margin:7px 12px 0 0;float:left;font-size:12px;font-weight:normal}
+.ncxe table caption .rt input{vertical-align:middle;display:none}
+.ncxe table caption .rt label{cursor:pointer}
+.ncxe th{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.ncxe td{padding:8px 0;border:0 none}
+.ncxe td.no{white-space:nowrap}
+.ncxe td.user{text-align:left;padding:8px 0 8px 15px;white-space:nowrap}
+.ncxe td.ipaddress{white-space:nowrap}
+.ncxe td.location{text-align:left;padding:8px 0 8px 15px}
+.ncxe th div{padding:8px 0}
+.ncxe .rNone {border-right:1px none !important}
+.ncxe .userName{margin:0 0 0 6px;vertical-align:top}
+.ncxe .userName img{vertical-align:top}
+.ncxe tr.itsMe td{background-color:#F5F5F5}
+.ncxe .user .icon-mobile-phone{font-size:16px}
+/* Pagiation */
+.ncxe .pagination{margin:10px 0 0 0;text-align:center}
+.ncxe .pagination a{padding:4px 7px 4px 7px;border:1px solid #DDD;font:1em Tahoma;color:#333;-webkit-transition:all 0.3s}
+.ncxe .pagination a:hover{-webkit-transition:all 0.3s;border:1px solid #999;color:#000}
+.ncxe .pagination strong{padding:4px 7px 4px 7px;border:1px solid #999;color:#000;background:#EFEFEF;font:bold 1em Tahoma}
+/* User Icon */
+.ncxe .userIcon{padding:0;background-image:url('../img/iconset.png');background-repeat:no-repeat;display:inline-block;width:16px;height:16px;vertical-align:middle}
+.ncxe .userIcon.guest{background-position:left top}
+.ncxe .userIcon.member{background-position:0 -16px}
+
+/* Bootstrap Button */
+.ncxe .nbtn{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:bold;line-height:1.428571429;text-align:center;white-space:nowrap;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none}.ncxe .nbtn:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}.ncxe .nbtn:hover,
+.ncxe .nbtn:focus{color:#333333;text-decoration:none}.ncxe .nbtn:active,
+.ncxe .nbtn.active{outline:0;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125)}.ncxe .nbtn.disabled,
+.ncxe .nbtn[disabled],
+.ncxe fieldset[disabled] .nbtn{pointer-events:none;cursor:default;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none}.ncxe .nbtn-default{color:#333333;background-color:#ffffff;border-color:#cccccc}
+.ncxe .nbtn-default:hover,
+.ncxe .nbtn-default:focus,
+.ncxe .nbtn-default:active,
+.ncxe .nbtn-default.active{color:#333333;background-color:#ebebeb;border-color:#adadad}
+.ncxe .nbtn-default.disabled,
+.ncxe .nbtn-default[disabled],
+.ncxe fieldset[disabled] .nbtn-default,
+.ncxe .nbtn-default.disabled:hover,
+.ncxe .nbtn-default[disabled]:hover,
+.ncxe fieldset[disabled] .nbtn-default:hover,
+.ncxe .nbtn-default.disabled:focus,
+.ncxe .nbtn-default[disabled]:focus,
+.ncxe fieldset[disabled] .nbtn-default:focus,
+.ncxe .nbtn-default.disabled:active,
+.ncxe .nbtn-default[disabled]:active,
+.ncxe fieldset[disabled] .nbtn-default:active,
+.ncxe .nbtn-default.disabled.active,
+.ncxe .nbtn-default[disabled].active,
+.ncxe fieldset[disabled] .nbtn-default.active{background-color:#ffffff;border-color:#cccccc}
+.ncxe .nbtn-primary{color:#ffffff;background-color:#428bca;border-color:#357ebd}
+.ncxe .nbtn-primary:hover,
+.ncxe .nbtn-primary:focus,
+.ncxe .nbtn-primary:active,
+.ncxe .nbtn-primary.active{color:#ffffff;background-color:#3276b1;border-color:#285e8e}
+.ncxe .nbtn-primary.disabled,
+.ncxe .nbtn-primary[disabled],
+.ncxe fieldset[disabled] .nbtn-primary,
+.ncxe .nbtn-primary.disabled:hover,
+.ncxe .nbtn-primary[disabled]:hover,
+.ncxe fieldset[disabled] .nbtn-primary:hover,
+.ncxe .nbtn-primary.disabled:focus,
+.ncxe .nbtn-primary[disabled]:focus,
+.ncxe fieldset[disabled] .nbtn-primary:focus,
+.ncxe .nbtn-primary.disabled:active,
+.ncxe .nbtn-primary[disabled]:active,
+.ncxe fieldset[disabled] .nbtn-primary:active,
+.ncxe .nbtn-primary.disabled.active,
+.ncxe .nbtn-primary[disabled].active,
+.ncxe fieldset[disabled] .nbtn-primary.active{background-color:#428bca;border-color:#357ebd}
+.ncxe .nbtn-warning{color:#ffffff;background-color:#f0ad4e;border-color:#eea236}
+.ncxe .nbtn-warning:hover,
+.ncxe .nbtn-warning:focus,
+.ncxe .nbtn-warning:active,
+.ncxe .nbtn-warning.active{color:#ffffff;background-color:#ed9c28;border-color:#d58512}
+.ncxe .nbtn-warning.disabled,
+.ncxe .nbtn-warning[disabled],
+.ncxe fieldset[disabled] .nbtn-warning,
+.ncxe .nbtn-warning.disabled:hover,
+.ncxe .nbtn-warning[disabled]:hover,
+.ncxe fieldset[disabled] .nbtn-warning:hover,
+.ncxe .nbtn-warning.disabled:focus,
+.ncxe .nbtn-warning[disabled]:focus,
+.ncxe fieldset[disabled] .nbtn-warning:focus,
+.ncxe .nbtn-warning.disabled:active,
+.ncxe .nbtn-warning[disabled]:active,
+.ncxe fieldset[disabled] .nbtn-warning:active,
+.ncxe .nbtn-warning.disabled.active,
+.ncxe .nbtn-warning[disabled].active,
+.ncxe fieldset[disabled] .nbtn-warning.active{background-color:#f0ad4e;border-color:#eea236}
+.ncxe .nbtn-danger{color:#ffffff;background-color:#d9534f;border-color:#d43f3a}
+.ncxe .nbtn-danger:hover,
+.ncxe .nbtn-danger:focus,
+.ncxe .nbtn-danger:active,
+.ncxe .nbtn-danger.active{color:#ffffff;background-color:#d2322d;border-color:#ac2925}
+.ncxe .nbtn-danger.disabled,
+.ncxe .nbtn-danger[disabled],
+.ncxe fieldset[disabled] .nbtn-danger,
+.nbtn-danger.disabled:hover,
+.nbtn-danger[disabled]:hover,
+fieldset[disabled] .nbtn-danger:hover,
+.nbtn-danger.disabled:focus,
+.nbtn-danger[disabled]:focus,
+fieldset[disabled] .nbtn-danger:focus,
+.nbtn-danger.disabled:active,
+.nbtn-danger[disabled]:active,
+fieldset[disabled] .nbtn-danger:active,
+.nbtn-danger.disabled.active,
+.nbtn-danger[disabled].active,
+fieldset[disabled] .nbtn-danger.active{background-color:#d9534f;border-color:#d43f3a}
+.nbtn-success{color:#ffffff;background-color:#5cb85c;border-color:#4cae4c}
+.nbtn-success:hover,
+.nbtn-success:focus,
+.nbtn-success:active,
+.nbtn-success.active{color:#ffffff;background-color:#47a447;border-color:#398439}
+.nbtn-success.disabled,
+.nbtn-success[disabled],
+fieldset[disabled] .nbtn-success,
+.nbtn-success.disabled:hover,
+.nbtn-success[disabled]:hover,
+fieldset[disabled] .nbtn-success:hover,
+.nbtn-success.disabled:focus,
+.nbtn-success[disabled]:focus,
+fieldset[disabled] .nbtn-success:focus,
+.nbtn-success.disabled:active,
+.ncxe .nbtn-success[disabled]:active,
+.ncxe fieldset[disabled] .nbtn-success:active,
+.ncxe .nbtn-success.disabled.active,
+.ncxe .nbtn-success[disabled].active,
+.ncxe fieldset[disabled] .nbtn-success.active{background-color:#5cb85c;border-color:#4cae4c}
+.ncxe .nbtn-info{color:#ffffff;background-color:#5bc0de;border-color:#46b8da}
+.ncxe .nbtn-info:hover,
+.ncxe .nbtn-info:focus,
+.ncxe .nbtn-info:active,
+.ncxe .nbtn-info.active{color:#ffffff;background-color:#39b3d7;border-color:#269abc}
+.ncxe .nbtn-info.disabled,
+.ncxe .nbtn-info[disabled],
+.ncxe fieldset[disabled] .nbtn-info,
+.ncxe .nbtn-info.disabled:hover,
+.ncxe .nbtn-info[disabled]:hover,
+fieldset[disabled] .nbtn-info:hover,
+.ncxe .nbtn-info.disabled:focus,
+.ncxe .nbtn-info[disabled]:focus,
+.ncxe fieldset[disabled] .nbtn-info:focus,
+.ncxe .nbtn-info.disabled:active,
+.ncxe .nbtn-info[disabled]:active,
+.ncxe fieldset[disabled] .nbtn-info:active,
+.ncxe .nbtn-info.disabled.active,
+.ncxe .nbtn-info[disabled].active,
+.ncxe fieldset[disabled] .nbtn-info.active{background-color:#5bc0de;border-color:#46b8da}
+.ncxe .nbtn-link{font-weight:normal;color:#428bca;cursor:pointer;border-radius:0}
+.ncxe .nbtn-link,
+.ncxe .nbtn-link:active,
+.ncxe .nbtn-link[disabled],
+.ncxe fieldset[disabled] .nbtn-link{background-color:transparent;-webkit-box-shadow:none;    box-shadow:none}
+.ncxe .nbtn-link,
+.ncxe .nbtn-link:hover,
+.ncxe .nbtn-link:focus,
+.ncxe .nbtn-link:active{border-color:transparent}
+.ncxe .nbtn-link:hover,
+.ncxe .nbtn-link:focus{color:#2a6496;text-decoration:underline;background-color:transparent}
+.ncxe .nbtn-link[disabled]:hover,
+.ncxe fieldset[disabled] .nbtn-link:hover,
+.ncxe .nbtn-link[disabled]:focus,
+.ncxe fieldset[disabled] .nbtn-link:focus{color:#999999;text-decoration:none}
+.ncxe .nbtn-lg{padding:10px 16px;font-size:18px;line-height:1.33;border-radius:6px}
+.ncxe .nbtn-sm,
+.ncxe .nbtn-xs{padding:5px 10px;font-size:12px;line-height:1.5;border-radius:3px}
+.ncxe .nbtn-xs{padding:3px 5px}
+.ncxe .nbtn-block{display:block;width:100%;padding-right:0;padding-left:0}
+.ncxe .nbtn-block + .nbtn-block{margin-top:5px}
+.ncxe input[type="submit"].nbtn-block,
+.ncxe input[type="reset"].nbtn-block,
+.ncxe input[type="button"].nbtn-block{width:100%}
+/* Bootstrap Tooltip */
+.tooltip{position:absolute;z-index:1030;display:block;font-size:12px;line-height:1.4;opacity:0;filter:alpha(opacity=0);visibility:visible}
+.tooltip.in{opacity:0.9;filter:alpha(opacity=90)}
+.tooltip.top{padding:5px 0;margin-top:-3px}
+.tooltip.right{padding:0 5px;margin-left:3px}
+.tooltip.bottom{padding:5px 0;margin-top:3px}
+.tooltip.left{padding:0 5px;margin-left:-3px}
+.tooltip-inner{max-width:200px;padding:3px 8px;color:#ffffff;text-align:center;text-decoration:none;background-color:#000000;border-radius:4px}
+.tooltip-arrow{position:absolute;width:0;height:0;border-color:transparent;border-style:solid}
+.tooltip.top .tooltip-arrow{bottom:0;left:50%;margin-left:-5px;border-top-color:#000000;border-width:5px 5px 0}
+.tooltip.top-left .tooltip-arrow{bottom:0;left:5px;border-top-color:#000000;border-width:5px 5px 0}
+.tooltip.top-right .tooltip-arrow{right:5px;bottom:0;border-top-color:#000000;border-width:5px 5px 0}
+.tooltip.right .tooltip-arrow{top:50%;left:0;margin-top:-5px;border-right-color:#000000;border-width:5px 5px 5px 0}
+.tooltip.left .tooltip-arrow{top:50%;right:0;margin-top:-5px;border-left-color:#000000;border-width:5px 0 5px 5px}
+.tooltip.bottom .tooltip-arrow{top:0;left:50%;margin-left:-5px;border-bottom-color:#000000;border-width:0 5px 5px}
+.tooltip.bottom-left .tooltip-arrow{top:0;left:5px;border-bottom-color:#000000;border-width:0 5px 5px}
+.tooltip.bottom-right .tooltip-arrow{top:0;right:5px;border-bottom-color:#000000;border-width:0 5px 5px}
+.ncxe .unchecked{display:inline-block;width:16px;height:16px;background:url(../img/unchecked.png) no-repeat;vertical-align:middle}.ncxe .checked{display:inline-block;width:16px;height:16px;background:url(../img/checked.png) no-repeat;vertical-align:middle}
+
+.label{display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:bold;line-height:1;color:#ffffff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em}
+.label[href]:hover,
+.label[href]:focus{color:#ffffff;text-decoration:none;cursor:pointer}
+.label:empty{display:none}
+.label-default{background-color:#999999}
+.label-default[href]:hover,
+.label-default[href]:focus{background-color:#808080}
+.label-primary{background-color:#428bca}
+.label-primary[href]:hover,
+.label-primary[href]:focus{background-color:#3071a9}
+.label-success{background-color:#5cb85c}
+.label-success[href]:hover,
+.label-success[href]:focus{background-color:#449d44}
+.label-info{background-color:#5bc0de}
+.label-info[href]:hover,
+.label-info[href]:focus{background-color:#31b0d5}
+.label-warning{background-color:#f0ad4e}
+.label-warning[href]:hover,
+.label-warning[href]:focus{background-color:#ec971f}
+.label-danger{background-color:#d9534f}
+.label-danger[href]:hover,
+.label-danger[href]:focus{background-color:#c9302c}
+.badge{display:inline-block;min-width:10px;padding:3px 7px;font-size:12px;font-weight:bold;line-height:1;color:#ffffff;text-align:center;white-space:nowrap;vertical-align:baseline;background-color:#999999;border-radius:10px}
+.badge:empty{display:none}
+a.badge:hover,
+a.badge:focus{color:#ffffff;text-decoration:none;cursor:pointer}
+.btn .badge{position:relative;top:-1px}
+a.list-group-item.active > .badge,
+.nav-pills > .active > a > .badge{color:#428bca;background-color:#ffffff}
+.nav-pills > li > a > .badge{margin-left:3px}

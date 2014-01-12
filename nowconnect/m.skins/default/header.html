@@ -1,0 +1,25 @@
+<include target="_config.html" />
+
+{$module_info->header_text}
+
+<load target="./css/style.css" />
+<load target="./css/style.ie7.css" targetie="IE 7" />
+<load target="./css/style.ie9.css" targetie="IE 9" />
+<load target="./js/nowconnect.js" />
+<load target="./js/nowconnect.ie.js" targetie="lte IE 8" />
+<load target="../../tpl/js/jquery.ck.js" cond="$module_info->use_realtime == 'Y' && ((int)$module_info->realtime_duration) >= 1000" />
+<load target="../../tpl/js/cufon/cufon-yui.js" cond="$module_info->load_cufon != 'N'" />
+<load target="../../tpl/js/cufon/fonts/NanumGothic_400.font.js" index="100" type="body" />
+
+<load target="./css/theme-white.css" cond="$selectedTheme == 'white'" />
+<load target="./css/theme-black.css" cond="$selectedTheme == 'black'" />
+<load target="./css/theme-blackD.css" cond="$selectedTheme == 'blackD'" />
+<load target="./css/theme-orange.css" cond="$selectedTheme == 'orange'" />
+<load target="./css/theme-red.css" cond="$selectedTheme == 'red'" />
+<load target="./css/theme-blue.css" cond="$selectedTheme == 'blue'" />
+
+<div class="message alert" cond="!extension_loaded('mcrypt')">
+	<p>{nl2br($lang->mcrypt_extension_required)}</p>
+</div>
+
+<div class="ncxe {$selectedTheme}">

@@ -45,6 +45,36 @@
 			</div>
 		</div>
 		<div class="x_control-group">
+			<label class="x_control-label" for="lang_browser_title">{$lang->mobile_view}</label>
+			<div class="x_controls">
+				<select name="use_mobile" id="skin" style="width:auto">
+					<option value="Y" selected="selected"|cond="$module_info->use_mobile == 'Y'">{$lang->use}</option>
+					<option value="N" selected="selected"|cond="$module_info->use_mobile == 'N'">{$lang->notuse}</option>
+				</select>
+				<a href="#mobile_view_help" class="x_icon-question-sign" data-toggle>{$lang->help}</a>
+				<p id="mobile_view_help" class="x_help-block" hidden>{$lang->about_mobile_view}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="layout_srl">{$lang->mobile_layout}</label>
+			<div class="x_controls">
+				<select name="mlayout_srl" id="layout_srl">
+					<option value="0">{$lang->notuse}</option>
+					<option loop="$mlayout_list => $key, $val" value="{$val->layout_srl}" selected="selected"|cond="$module_info->mlayout_srl==$val->layout_srl">{$val->title} ({$val->layout})</option>
+				</select>
+				<a href="#aboutmLayout" data-toggle class="x_icon-question-sign">{$lang->help}</a>
+				<p class="x_help-block" id="aboutmLayout" hidden>{$lang->about_layout}</p>
+			</div>
+		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="skin">{$lang->mobile} {$lang->skin}</label>
+			<div class="x_controls">
+				<select name="mskin" id="mskin" style="width:auto">
+					<option loop="$mskin_list=> $key, $val" value="{$key}" selected="selected"|cond="$module_info->mskin== $key || (!$module_info->skin && $key=='default')">{$val->title}</option>
+				</select>
+			</div>
+		</div>
+		<div class="x_control-group">
 			<label class="x_control-label" for="header_text">{$lang->header_text}</label>
 			<div class="x_controls">
 				<textarea name="header_text" id="header_text" class="lang_code" rows="8" cols="42" placeholder="{$lang->about_header_text}">{htmlspecialchars($module_info->header_text)}</textarea>
