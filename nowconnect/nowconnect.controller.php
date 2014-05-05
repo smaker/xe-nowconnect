@@ -8,6 +8,11 @@
 class nowconnectController extends nowconnect
 {
 	/**
+	 * 예외 act
+	 */
+	private $except_act = array('dispMemberLogout' => 1);
+
+	/**
 	 * @brief 초기화
 	 */
 	public function init()
@@ -26,6 +31,11 @@ class nowconnectController extends nowconnect
 
 		if(Context::getResponseMethod() != 'HTML' && !($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')) return new Object();
 
+		// 로그아웃 페이지는 예외 처리
+		if(isset($this->except_act[$act]))
+		{
+			return new Object();
+		}
 
 		// 로그인 정보를 구합니다
 		$logged_info = Context::get('logged_info');
