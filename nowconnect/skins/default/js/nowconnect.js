@@ -75,18 +75,18 @@ var nowconnectChecker = false;
 			var $lbl = $('#lblRt');
 
 			$lbl
-				.find('i.icon-check-empty')
-					.removeClass('icon-check-empty')
-					.addClass('icon-check');
+				.find('i.fa-square-o')
+					.removeClass('fa-square-o')
+					.addClass('fa-check-square-o');
 			return this;
 		},
 		'setUnchecked': function() {
 			var $lbl = $('#lblRt');
 
 			$lbl
-				.find('i.icon-check')
-					.removeClass('icon-check')
-					.addClass('icon-check-empty');
+				.find('i.fa-check-square-o')
+					.removeClass('fa-check-square-o')
+					.addClass('fa-square-o');
 			return this;
 		},
 		'init': function() {

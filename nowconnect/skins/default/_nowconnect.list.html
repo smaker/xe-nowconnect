@@ -14,9 +14,9 @@
 			<span class="userCount label {$labelClass}">{number_format($total_count)}</span>
 		</span>
 		<span class="rm" cond="($module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update) || ($module_info->module_srl && $logged_info->is_admin == 'Y')">
-			<label id="lblRt" for="chkRt" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update" class="nbtn nbtn-default"><i class="icon-check-empty"></i> {$lang->realtime_update}</label>
+			<label id="lblRt" for="chkRt" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update" class="nbtn nbtn-default"><i class="fa fa-check-empty"></i> {$lang->realtime_update}</label>
 			<input type="checkbox" id="chkRt" class="checkbox" hidden />
-			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="icon-cog"></i></a>
+			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="fa fa-cog"></i></a>
 		</span>
 		</caption>
 	<colgroup>
@@ -40,7 +40,7 @@
 			<span class="userIcon guest" cond="!$user->member_srl"></span>
 			<span class="userName member_{$user->member_srl}" cond="$user->member_srl && !$user->isCrawler">{$user->nick_name}</span>
 			<span class="userName" cond="!$user->member_srl">{$user->nick_name}</span>
-			<i class="icon-mobile-phone" cond="$user->isMobileDevice"></i>
+			<i class="fa fa-mobile-phone" cond="$user->isMobileDevice"></i>
 		</td>
 		<td class="ipaddress" cond="($module_info->display_ipaddress == 'show' && $logged_info->is_admin == 'Y') || ($module_info->display_ipaddress == 'showadmin' && $logged_info->is_admin == 'Y')">{$user->ipaddress}</td>
 		<td class="ipaddress" cond="($module_info->display_ipaddress == 'show' && $logged_info->is_admin != 'Y')">{preg_replace('/([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+)/','*.$2.*.$4', $user->ipaddress)}</td>
