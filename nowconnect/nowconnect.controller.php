@@ -31,6 +31,12 @@ class nowconnectController extends nowconnect
 
 		if(Context::getResponseMethod() != 'HTML' && !($act == 'dispNowconnect' && Context::getResponseMethod() == 'XMLRPC')) return new Object();
 
+		// 관리자 페이지에 있는 경우 접속자 정보를 수집하지 않습니다
+		if(Context::get('module') == 'admin')
+		{
+			return new Object();
+		}
+
 		// 로그아웃 페이지는 예외 처리
 		if(isset($this->except_act[$act]))
 		{
