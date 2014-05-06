@@ -98,6 +98,12 @@
 				<p id="api_key_help" class="x_help-block" hidden>{$lang->about_api_key}</p>
 			</div>
 		</div>
+		<div class="x_control-group">
+			<label class="x_control-label" for="active">현재 접속자 기능</label>
+			<div class="x_controls">
+				<input type="checkbox" name="active" id="active" value="Y" checked|cond="$module_info->active == 'Y'"> <label for="active" class="x_inline">활성화</label>
+			</div>
+		</div>
 	</section>
 	<section class="section">
 		<h1>{$lang->subtitle_advanced} <button type="button" class="snToggle x_icon-chevron-up">Toggle this section</button></h1>

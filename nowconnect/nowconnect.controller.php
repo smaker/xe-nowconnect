@@ -99,7 +99,11 @@ class nowconnectController extends nowconnect
 		// 현재 접속자 모듈일 경우, DB에서 모듈 정보를 가져오지 않도록 합니다
 		if($module_info->module == 'nowconnect')
 		{
-			$nowconnect_info = $module_info;
+			$nowconnect_info = &$module_info;
+			if(!isset($nowconnect_info->active))
+			{
+				$nowconnect_info->active = 'Y';
+			}
 		}
 		else
 		{
@@ -113,6 +117,11 @@ class nowconnectController extends nowconnect
 			return new Object();
 		}
 
+		// 현재 접속자 기능이 비활성화 되어 있으면 실행을 중단합니다
+		if($nowconnect_info->active != 'Y')
+		{
+			return new Object();
+		}
 
 		// 접속자 현황 수집 대상이 회원이고 로그인을 하지 않았다면 실행을 중단합니다
 		if($nowconnect_info->nowconnect_target == 'member' && !$logged_info)

@@ -172,6 +172,17 @@ class nowconnectModel extends nowconnect
 		$oModuleModel = getModel('module');
 
 		// 모듈 정보를 구해서 return
-		return ($module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl));
+		$module_info = $oModuleModel->getModuleInfoByModuleSrl($output->data->module_srl);
+		if(!$module_info)
+		{
+			$module_info = new stdClass;
+		}
+
+		if(!isset($module_info->active))
+		{
+			$module_info->active = 'Y';
+		}
+
+		return $module_info;
 	}
 }
