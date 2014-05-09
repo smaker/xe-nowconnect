@@ -127,10 +127,6 @@ var nowconnectChecker = false;
 		var options = { placement : 'auto' };
 		$('div.ncxe span.location').tooltip(options);
 	});
-
-	$(window).load(function(){
-		Cufon.replace('.nowconnectList caption .title .brand', { fontFamily: 'NanumGothic' } );
-	});
 })(jQuery);
 
 /* ========================================================================
