@@ -3,7 +3,7 @@
 .ncxe [class^="icon-"], [class*=" icon-"]{font-family:FontAwesome}
 .ncxe a{text-decoration:none}
 /* User List */
-.ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center;font-size:12px}
+.ncxe table{width:100%;border:0 none;border-collapse:collapse;text-align:center}
 .ncxe table caption{margin:3px 0 5px;text-align:left;display:table-caption}
 .ncxe table caption img{vertical-align:middle}
 .ncxe table caption strong{color:#F60;font-family:Tahoma;font-size:11px}
