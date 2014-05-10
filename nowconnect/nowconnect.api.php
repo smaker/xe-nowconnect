@@ -59,10 +59,23 @@ class nowconnectAPI extends nowconnect
 			// addonAdminModel 객체 생성
 			$oAddonModel = getAdminModel('addon');
 
+			// 회원 확장 정보 애드온이 활성화 되어 있으면
+			if($oAddonModel->isActivatedAddon('member_extra_info'))
+			{
+				require_once('./addons/member_extra_info/member_extra_info.lib.php');
+
+				$temp_output = preg_replace_callback('!<(div|span|a)([^\>]*)member_([0-9]+)([^\>]*)>(.*?)\<\/(div|span|a)\>!is', 'memberTransImageName', $html);
+				if($temp_output)
+				{
+					$html = $temp_output;
+				}
+				unset($temp_output);
+			}
+
 			// 포인트 레벨 애드온이 활성화 되어 있으면 레벨 아이콘을 추가합니다
 			if($oAddonModel->isActivatedAddon('point_level_icon'))
 			{
-				require_once(_XE_PATH_ . 'addons/point_level_icon/point_level_icon.lib.php');
+				require_once('./addons/point_level_icon/point_level_icon.lib.php');
 
 				$temp_output = preg_replace_callback('!<(div|span|a)([^\>]*)member_([0-9\-]+)([^\>]*)>(.*?)\<\/(div|span|a)\>!is', 'pointLevelIconTrans', $html);
 				if($temp_output)
@@ -71,6 +84,7 @@ class nowconnectAPI extends nowconnect
 				}
 				unset($temp_output);
 			}
+
 		}
 
 		$oModule->add('html', $html);
