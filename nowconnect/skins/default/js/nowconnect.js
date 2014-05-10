@@ -121,4 +121,7 @@ var nowconnectChecker = false;
 
 			ncxe.init();
 	});
+	$(window).load(function(){
+		Cufon.replace('.nowconnectList caption .title .brand', { fontFamily: 'NanumGothic' } );
+	});
 })(jQuery);
