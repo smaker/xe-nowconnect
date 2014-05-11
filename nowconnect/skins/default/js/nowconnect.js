@@ -33,6 +33,8 @@ var nowconnectChecker = false;
 				}
 
 				clearInterval(ncxe.nowconnectTimer);
+
+				Cufon.replace('.nowconnectList caption .title .brand', { fontFamily: 'NanumGothic' } );
 			}
 		},
 		/* Timer Callback */
