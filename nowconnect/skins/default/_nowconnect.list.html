@@ -5,7 +5,7 @@
 
 	$myId = Context::get('myUID');
 }
-	<!--// 현재 접속자 목록 -->
+	<!--현재 접속자 목록 -->
 	<table class="nowconnectList" cellspacing="0" cellpadding="0">
 	<caption>
 		<span class="title">
@@ -13,7 +13,7 @@
 			<span class="brand" cond="!$module_info->title">{$lang->nowconnect}</span> 
 			<span class="userCount label {$labelClass}">{number_format($total_count)}</span>
 		</span>
-		<span class="rm" cond="($module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update) || ($module_info->module_srl && $logged_info->is_admin == 'Y')">
+		<span class="rm" cond="$isRealtimeAvailable || ($module_info->module_srl && $logged_info->is_admin == 'Y')">
 			<label id="lblRt" for="chkRt" title="{$lang->click_to_enable_realtime_update}" cond="$module_info->use_realtime == 'Y' && (int)($module_info->realtime_duration) >= 1000 && $grant->realtime_update" class="nbtn nbtn-default"><i class="fa fa-square-o"></i> {$lang->realtime_update}</label>
 			<input type="checkbox" id="chkRt" class="checkbox" hidden />
 			<a href="{getUrl('act', 'dispNowconnectAdminModuleConfig')}" cond="$module_info->module_srl && $logged_info->is_admin == 'Y'" class="nbtn nbtn-primary"><i class="fa fa-cog"></i></a>
