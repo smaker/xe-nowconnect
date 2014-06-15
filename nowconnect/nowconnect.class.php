@@ -33,6 +33,7 @@ class nowconnect extends ModuleObject
 	{
 		$oModuleController = getController('module');
 		$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
+		$oModuleController->insertTrigger('member.doLogout', 'nowconnect', 'controller', 'triggerAfterMembmerLogout', 'after');
 		return new Object();
 	}
 
@@ -54,6 +55,10 @@ class nowconnect extends ModuleObject
 		{
 			return true;
 		}
+		if(!$oModuleModel->getTrigger('member.doLogout', 'nowconnect', 'controller', 'triggerAfterMemberLogout', 'after'))
+		{
+			return true;
+		}
 
 		return false;
 	}
@@ -69,6 +74,11 @@ class nowconnect extends ModuleObject
 		if(!$oModuleModel->getTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after'))
 		{
 			$oModuleController->insertTrigger('moduleObject.proc', 'nowconnect', 'controller', 'triggerAfterModuleProc', 'after');
+		}
+
+		if(!$oModuleModel->getTrigger('member.doLogout', 'nowconnect', 'controller', 'triggerAfterMemberLogout', 'after'))
+		{
+			$oModuleController->insertTrigger('member.doLogout', 'nowconnect', 'controller', 'triggerAfterMemberLogout', 'after');
 		}
 
 		return new Object(0, 'success_updated');

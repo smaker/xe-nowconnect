@@ -249,6 +249,80 @@ class nowconnectController extends nowconnect
 
 		return new Object();
 	}
+
+	/**
+	 * 로그아웃 시 동작하는 트리거
+	 */
+	public function triggerAfterMemberLogout(&$member_info)
+	{
+		// nowconnectModel 객체 생성
+		$oNowconnectModel = getModel('nowconnect');
+
+		// 현재 접속자 모듈 정보를 DB에서 가져옵니다
+		$nowconnect_info = $oNowconnectModel->getNowconnectInfo();
+
+		// API 키를 입력하지 않았다면 실행을 중단합니다
+		if(!$nowconnect_info->api_key)
+		{
+			return new Object();
+		}
+
+		// 현재 접속자 기능이 비활성화 되어 있으면 실행을 중단합니다
+		if($nowconnect_info->active != 'Y')
+		{
+			return new Object();
+		}
+
+		// 중복 접속자 처리
+		if($nowconnect_info->include_duplicated_user == 'Y')
+		{
+			$uid = sha1(md5(session_id()));
+		}
+		else
+		{
+			$uid = sha1(md5($_SERVER['REMOTE_ADDR']));
+		}
+
+		// 사용자 정보를 암호화합니다
+		$user_info = array(
+			'_id'	=> $uid
+		);
+
+		// 암호화 옵션
+		$options = array(
+			'key'		=>	$nowconnect_info->api_key,
+			'mode'		=>	'ecb',
+			'algorithm'	=>	'blowfish',
+			'base64'	=>	true
+		);
+
+		try
+		{
+			// 암호화를 위한 Crypt 객체 생성
+			$oCrypt = new Crypt($options);
+		}
+		catch(Exception $e)
+		{
+			// mcrypt 확장 기능이 설치되어 있지 않으면 실행 중단
+			return new Object();
+		}
+
+		$user_info = $oCrypt->encrypt(serialize($user_info));
+
+		$params = array(
+			'user_info' => $user_info
+		);
+
+		// Communicator 객체 생성
+		$oCommunicator = new CommuniCatorBase('json');
+		$oCommunicator->setApiKey($nowconnect_info->api_key);
+		$oCommunicator->setServer('http://api.ncxe.funnyxe.kr/api/');
+
+		// API 요청
+		$oCommunicator->post('destory')->param($params)->send();
+
+		return new Object();
+	}
 }
 
 /* End of file : nowconnect.controller.php */
