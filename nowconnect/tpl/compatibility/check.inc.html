@@ -1,9 +1,6 @@
 <block cond="version_compare(__XE_VERSION__, '1.7.0', '>=')">
-{@ $v17 = true}
+{@ $isSupport = true}
 </block>
-<block cond="version_compare(__XE_VERSION__, '1.7.0', '<') && version_compare(__XE_VERSION__, '1.5.0', '>=')">
-{@ $v15 = true}
-</block>
-<block cond="version_compare(__XE_VERSION__, '1.5.0', '<')">
-{@ $v14 = true}
-</block>
+<div class="message error" cond="version_compare(__XE_VERSION__, '1.7.0', '<')">
+	<p>'현재 접속자 모듈'은 XE Core 1.7.0 이상 환경에서 동작합니다.</p>
+</div>
